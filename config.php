@@ -86,6 +86,14 @@ define("INCLUDE_PATH", './includes');
 define("PAGE_PATH", './pages');
 
 
+// CONFIG_PATH - Filesystem path to the configs directory, relative to hlstats.php. This must be specified
+//		as a relative path.
+//
+//                Under Windows, make sure you use forward slash (/) instead
+//                of back slash (\) and use absolute paths if you are having any issue.
+define("CONFIG_PATH", './configs');
+
+
 // PAGE_PATH - Filesystem path to the hlstatsimg directory, relative to hlstats.php. This must be specified
 //		as a relative path.
 //

@@ -1043,6 +1043,8 @@ $admintasks['tools_ipstats'] = new AdminTask('Host Statistics', 80, 'tool', 'See
 $admintasks['tools_optimize'] = new AdminTask('Optimize Database', 100, 'tool', 'This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month.');
 //$admintasks['tools_synchronize'] = new AdminTask('Synchronize Statistics', 80, 'tool', 'Sychronize all players with the offical global ELstatsNEO banlist with catched VAC cheaters.');
 $admintasks['tools_resetdbcollations'] = new AdminTask('Reset All DB Collations to UTF8', 100, 'tool', 'Reset DB Collations to UTF-8 if you receive collation errors after an upgrade from another HLstats(X)-based system.');
+$admintasks['tools_checkversion'] = new AdminTask('Check for Updates', 100, 'tool', 'Check for updates for the HLstatsX: CE web panel.');
+
 
 // Sub-Tools
 $admintasks['tools_editdetails_player'] = new AdminTask('Edit Player Details', 80, 'subtool', 'Edit a player\'s profile information.');

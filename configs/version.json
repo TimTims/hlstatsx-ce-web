@@ -1,0 +1,7 @@
+{
+    "version": "1.7.0",
+    "git": "153",
+    "dev": true,
+    "gitlink": "https://github.com/TimTims/hlstatsx-community-edition",
+    "gitremoteversion": "https://raw.githubusercontent.com/TimTims/hlstatsx-community-edition/master/web/configs/version.json"
+}

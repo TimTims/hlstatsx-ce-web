@@ -79,6 +79,42 @@ function getFlag($flag, $type='url')
 		return IMAGE_PATH.'/flags/0.gif';
 }
 
+function getVersion($version_var)
+{
+	$version_array = file_get_contents(CONFIG_PATH . '/version.json');
+	$version_array_decoded = json_decode($version_array, false);
+
+	if ($version_var == "version"){
+		return $version_array_decoded->version;
+	}
+	if ($version_var == "git" && $version_array_decoded->dev == true){
+		return '<a href="'.$version_array_decoded->gitlink.'" target="_blank">| Git: '.$version_array_decoded->git.'</a>';
+	}
+	if ($version_var == "dev" && $version_array_decoded->dev == true){
+		return "Dev";
+	}
+	if ($version_var == "gitlink"){
+		return $version_array_decoded->gitlink;
+	}
+	if ($version_var == "gitversion"){
+		return $version_array_decoded->git;
+	}
+	if ($version_var == "remoteversion"){
+		$repo_array = file_get_contents($version_array_decoded->gitremoteversion); //Ensures it's only run when getVersion('remoteversion') is requested
+		$repo_array_decoded = json_decode($repo_array, false);
+		
+		if ($repo_array_decoded->git == $version_array_decoded->git){
+			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #008000"><p>Your HLstatsX: CE is up-to-date.</p></a>'; 
+		}
+		elseif ($repo_array_decoded->git > $version_array_decoded->git){
+			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #FF5733"><p>Your HLstatsX: CE is out-of-date.</p></a>';
+		}
+		else{
+			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #FF5733"><p>An unknown error has occured.</p></a>';
+		}
+	}
+}
+
 /**
  * valid_request()
  * 

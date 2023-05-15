@@ -36,55 +36,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 For support and installation notes visit http://www.hlxcommunity.com
 */
 
-    if (!defined('IN_HLSTATS')) {
-        die('Do not access this file directly.');
+if (!defined('IN_HLSTATS')) {
+    die('Do not access this file directly.');
+}
+
+    if ($auth->userdata["acclevel"] < 80) {
+    die ("Access denied!");
     }
-
-	// calculate the scripttime
-	global $scripttime, $db;
-	$scripttime = round(microtime(true) - $scripttime, 4);
 ?>
-<div style="clear:both;"></div>
-<br />
-<br />
-	<div id="footer">
-			<a href="http://www.hlxce.com" target="_blank"><img src="<?php echo IMAGE_PATH; ?>/footer-small.png" alt="HLstatsX Community Edition" border="0" /></a>
-	</div>
-<br />
-<div class="fSmall" style="text-align:center;">
-<?php
-	if (isset($_SESSION['nojs']) && $_SESSION['nojs'] == 1) {
-		echo 'You are currently viewing the basic version of this page, please enable JavaScript and reload the page to access full functionality.<br />';
-	}
 
-	echo 'Generated in real-time by <a href="https://github.com/NomisCZ/hlstatsx-community-edition" target="_blank">HLstatsX Community Edition '.getVersion('version').' '.getVersion('dev').'</a> '.getVersion('git');
-	if ($g_options['showqueries'] == 1) {
-		echo '
-			<br />
-			Executed '.$db->querycount." queries, generated this page in $scripttime Seconds\n";
-	}
-?>
-<br />
-All images are copyrighted by their respective owners.
+&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" ><strong>&nbsp;<?php echo $task->title; ?></strong>
 
-<?php
-	echo '<br /><br />[<a href="'.$g_options['scripturl']."?mode=admin\">Admin</a>]";
-
-	if (isset($_SESSION['loggedin'])) {
-
-		echo '&nbsp;[<a href="hlstats.php?logout=1">Logout</a>]';
-
-	}
-?>
-</div>
-</div>
-<?php
-	global $mode, $redirect_to_game;
-	if (($g_options["show_google_map"] == 1) && ($mode == "contents") && ($redirect_to_game > 0))
-	{
-		include(INCLUDE_PATH . '/google_maps.php');
-		printMap();
-	}
-?>
-</body>
-</html>
+<p></p>
+<table class="data-table">
+    <tr class="bg1">
+            <td width="40%"><label for="main-version"><b>Version:</b></label><p>Checks the main version of your HLX:CE.</p></td>
+            <td><p><?php echo getVersion('version'); ?></p></td>
+    </tr>
+    <tr class="bg2">
+            <td><label for="developer"><b>Development Branch:</b></label><p>Checks if this version of your HLX:CE is a development branch version.</p></td>
+            <td><p><?php if (getVersion('dev') == "Dev"){ echo "Yes"; } else { echo "No"; }?></p></td>
+    </tr>
+    <tr class="bg1">
+            <td><label for="git-version"><b>Current Git Version:</b></label><p>Checks the Git Version of this instance of HLX:CE.</p></td>
+            <td><p><?php echo getVersion('gitversion'); ?></p></td>
+    </tr>
+    <tr class="bg2">
+            <td><label for="repo-version"><b>Git Repo Version:</b></label><p>Checks the Git version of the remote repository. This will check to see if your version of HLX:CE is up-to-date.</p></td>
+            <td><p><?php echo getVersion('remoteversion'); ?></p></td>
+    </tr>
+</table>
