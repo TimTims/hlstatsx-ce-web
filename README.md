@@ -1,12 +1,13 @@
-## Notice of Current Development - 16/05/2023
+## HLStatsX: Community Edition Web Panel Development
 
-The development of this specific repo is highly unstable and is suited towards my needs. Using this repo to update current stable versions of HLstats will result in it breaking.
+This repo is a split of my fork of [A1mDev's](https://github.com/A1mDev/hlstatsx-community-edition) HLStatsX:CE repo. 
+This repo will focus solely on further developing the HLStats web panel.
+### :warning: WARNING
+This is a work-in-progress and may contain breaking changes for those updating or for those new to HLStats. It is not recommened to use this for production purposes. Bugs and breaking issues may occur!
 
-I take no responsibility for any issues, instabilities and breakages that occur when using my development of HLstats and will not provide support for this development.
+---
 
-Thank you to [A1mDev](https://github.com/A1mDev/hlstatsx-community-edition) for your fixes for PHP8.
-
-## HLstatsX : Community Edition
+## HLstatsX : Community Edition 
 
 
 HLstatsX Community Edition is an open-source project licensed
@@ -16,17 +17,10 @@ Edition uses a Perl daemon to parse the log streamed from the
 game server. The data is stored in a MySQL Database and has
 a PHP frontend.
 
-
-#### :loudspeaker: Important changes
-| Date  | Description | Additional information |
-| ------------- | ------------- | ------------- |
-| 07.01.2020  | [#45](https://github.com/NomisCZ/hlstatsx-community-edition/issues/45) GeoIP2 Linux script updated, GeoLite2 MaxMind database (GDPR and CCPA) | https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases/ |
-
-> Date format: DD.MM.YYYY
 ---
 
-### :book: Documentation
-* https://github.com/NomisCZ/hlstatsx-community-edition/wiki 🚧 Wiki - work in progress 🚧
-### :speech_balloon: Help
-*  https://forums.alliedmods.net/forumdisplay.php?f=156
+### :link: Links
+* Original Repo: https://github.com/NomisCZ/hlstatsx-community-edition
+* A1mDev's Repo: https://github.com/A1mDev/hlstatsx-community-edition
+
 ---
