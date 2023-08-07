@@ -22,5 +22,6 @@ a PHP frontend.
 ### :link: Links
 * Original Repo: https://github.com/NomisCZ/hlstatsx-community-edition
 * A1mDev's Repo: https://github.com/A1mDev/hlstatsx-community-edition
+* NomisCZ HLStatsX:CE Wiki: https://github.com/NomisCZ/hlstatsx-community-edition/wiki
 
 ---
