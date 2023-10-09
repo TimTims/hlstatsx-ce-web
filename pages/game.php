@@ -143,68 +143,52 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$db->free_result();
 ?>
 
-<div class="block">
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>
+                <?php
+					if (count($servers) == 1)
+					{
+						if ($total_kills > 0)
+							$hpk = sprintf("%.2f", ($total_headshots / $total_kills) * 100);
+						else
+							$hpk = sprintf("%.2f", 0);
+						if ($players_last_day > -1)
+							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+						else
+							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+					}
+					else
+					{
+						if ($total_kills > 0)
+							$hpk = sprintf("%.2f", ($total_headshots / $total_kills) * 100);
+						else
+							$hpk = sprintf("%.2f", 0);
+						if ($players_last_day > -1)
+							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+						else
+							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+				?></h6>
+            	</div>
+		<div class="table-responsive p-0">
+			<table class="table align-items-center mb-0">
+				<thead>
+					<tr>
+					<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Server</th>
+					<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Map</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Played</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Players</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kills</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Headshots</th>
+					<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HS:K</th>
+					</tr>
+				</thead>
 
-<?php	printSectionTitle('Participating Servers'); ?>
-		<div class="subblock">
-<?php
-	if (count($servers) == 1)
-	{
-?>
-
-    <table class="data-table">
-    <tr class="data-table-head"><td><?php
-		if ($total_kills > 0)
-			$hpk = sprintf("%.2f", ($total_headshots / $total_kills) * 100);
-		else
-			$hpk = sprintf("%.2f", 0);
-		if ($players_last_day > -1)
-			echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
-		else
-			echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
-?></td>
-		</tr>	
-    </table>
-
-<?php
-	}
-	else
-	{
-
-		if ($g_options['slider'] == 1) {
-?>
-    <table class="data-table" id="accordion">
-<?php
-		} else {
-?>
-	<table class="data-table">
-<?php
-	}
-?>
-
-      <tr class="data-table-head"><td colspan="9" style="padding:4px;width:100%;"><?php
-		if ($total_kills > 0)
-			$hpk = sprintf("%.2f", ($total_headshots / $total_kills) * 100);
-		else
-			$hpk = sprintf("%.2f", 0);
-		if ($players_last_day > -1)
-			echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
-		else
-			echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
-?></td>
-      </tr>
-      <tr class="data-table-head">
-		<td class="fSmall" style="width:37%;">&nbsp;Server</td>
-		<td class="fSmall" style="width:19%;">&nbsp;Address</td>
-		<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Map</td>
-		<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Played</td>
-		<td class="fSmall" style="width:10%;text-align:center;">&nbsp;Players</td>
-		<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Kills</td>
-		<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Headshots</td>
-		<td class="fSmall" style="width:6%;text-align:center;">&nbsp;HS:K</td>
-      </tr>
-
-<?php
+                        <?php
 		$i = 0;
 		for ($i = 0; $i < count($servers); $i++)
 		{
@@ -220,17 +204,17 @@ For support and installation notes visit http://www.hlxcommunity.com
 			$map_teama_wins = $rowdata['map_ct_wins'];
 			$map_teamb_wins = $rowdata['map_ts_wins'];
 ?>
-<?php
+                        <?php
 			if ($g_options['slider'] == 1) {
-?>
-	<tr class="game-table-row toggler" style="cursor: pointer;" onmouseover="this.setAttribute('class', 'game-table-row-hover');" onmouseout="this.setAttribute('class', 'game-table-row toggler');">
-            <td class="game-table-cell">
-<?php
+?>						<tbody>
+                        <tr>
+                            <td>
+                                <?php
 			} else {
 ?>
-        <tr class="game-table-row">
-            <td class="game-table-cell">
-<?php
+                        <tr>
+                            <td>
+                                <?php
 			}
 			$image = getImage("/games/$game/game");
 			echo '<img src="';
@@ -241,49 +225,49 @@ For support and installation notes visit http://www.hlxcommunity.com
 			echo "\" alt=\"$game\" />&nbsp;";
 			echo '<b>' . $rowdata['name'] . '</b>';
 ?></td>
-            <td class="game-table-cell"><?php
+                            <td><?php
 			echo "$addr (<a href=\"steam://connect/$addr\">Join</a>)";
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			echo $rowdata['act_map'];
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			$stamp = $rowdata['map_started']==0?0:time() - $rowdata['map_started'];
 			$hours = sprintf("%02d", floor($stamp / 3600));
 			$min = sprintf("%02d", floor(($stamp % 3600) / 60));
 			$sec = sprintf("%02d", floor($stamp % 60));
 			echo $hours . ":" . $min . ":" . $sec;
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			echo $player_string;
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			echo number_format($kills);
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			echo number_format($headshots);
 ?></td>
-            <td class="game-table-cell" style="text-align:center;"><?php
+                            <td style="text-align:center;"><?php
 			if ($kills > 0)
 				echo sprintf("%.2f", ($headshots / $kills));
 			else
 				echo sprintf("%.2f", 0);
 ?></td>
-        </tr>
-<?php
+                        </tr>
+                        <?php
 			if ($g_options['slider'] == 1) {
 ?>
-		<tr>
-			<td colspan="9" style="padding: 0px; border: none;">
-				<div class="opener">
-					<?php printserverstats($server_id); ?>
-					<div class="subblock">
-<?php
+                        <tr>
+                            <td style="padding: 0px; border: none;">
+                                <div class="opener">
+                                    <?php printserverstats($server_id); ?>
+                                    <div class="row">
+                                        <?php
 				$range_arr = array(1=>"24h View", 2=>"Last Week", 3=>"Last Month", 4=>"Last Year");
 				foreach($range_arr as $range_code => $range_name) {
-					print('<table class="data-table"><tr class="data-table-head">');
-					print('<td class="fSmall">&nbsp;'.$range_name.'</td></tr>');
-					print('<tr class="data-table-row"><td style="text-align:center; height: 200px; vertical-align:middle;">');
+					print('<div class="table-responsive p-0"><table class="table align-items-center mb-0"><tr>');
+					print('<td>&nbsp;'.$range_name.'</td></tr>');
+					print('<tr><td style="text-align:center;">');
 					print('<img ');
 					if(!$_SESSION['nojs']) {
 						/* Javascript is on, so delay loading the image, 
@@ -297,69 +281,48 @@ For support and installation notes visit http://www.hlxcommunity.com
 						'game='.$game.'&amp;server_id='.$server_id.'&amp;'.
 						'bgcolor='.$g_options['graphbg_load'].'&amp;color='.$g_options['graphtxt_load'].
 						'&amp;range='.$range_code.'" alt="'.$range_name.'" title="'.$range_name.'" />');
-					print('</td></tr>	</table><br /><br />');					
+					print('</td></tr>	</table></div><br /><br />');					
 				}
 ?>
 
-	</div>
-				</div>
-			</td>
-		</tr>
-    <?php	
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php	
 			}
 		}
+		echo '</tbody>';
 		echo '</table>';
-	
-		if ($g_options['slider'] == 1) {
-?>
-	<script type="text/javascript">
-		var myAccordion = new Accordion($('accordion'), 'tr.toggler', 'div.opener', {
-			opacity: false,
-			display: '-1',
-			alwaysHide: true,
-			onActive: function(toggler, element){
-				toggler.setStyle('color', '#ff3300');
-				/* here we set the 'src' attribute properly, 
-					so that the images load once the accordion is opened */
-					
-				element.getElements('img').each(function(el) { 
-					if(el.get('delaysrc')!=null)
-					el.set('src', el.get('delaysrc'));
-				});					
-			},
-			onBackground: function(toggler, element){
-				toggler.setStyle('color', '#222');
-			}
-		});
-	</script>
-<?php
-		}
+		echo '</div>';
 	}
 	
 	if (($g_options['show_google_map'] == 1) || ($g_options['show_server_load_image'] == 1)) {
  
-		echo '<table class="data-table" style="margin-bottom:40px;">';
+		echo '<div class="table-responsive p-0">';
+		echo '<table class="table align-items-center mb-0">';
 	
 		if ($g_options['show_google_map'] == 1)	{
-?>  
-        <tr class="data-table-row">
-			<td style="text-align:center;">
-				<div id="map" style="margin:10px auto;width: 870px; height: 380px; color:black;"></div>
-			</td>
-        </tr>  
-<?php
+?>
+                        <tr>
+                            <td style="text-align:center;">
+                                <div id="map" style="margin:10px auto;width: 870px; height: 380px; color:black;"></div>
+                            </td>
+                        </tr>
+                        <?php
 		}
 		if ($g_options['show_server_load_image'] == 1) {
 ?>
-		<tr class="data-table-row">
-			<td style="text-align:center;padding:0px;">
-				<img src="show_graph.php?type=1&amp;game=<?php echo $game ?>&amp;width=870&amp;height=200&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>" alt="Server Load Graph" title="serverLoadGraph" />
-			</td>
-		</tr>
-<?php
+                        <tr>
+                            <td style="text-align:center;">
+                                <img src="show_graph.php?type=1&amp;game=<?php echo $game ?>&amp;width=870&amp;height=200&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>"
+                                    alt="Server Load Graph" title="serverLoadGraph" />
+                            </td>
+                        </tr>
+                        <?php
 		}
 	
-		echo '</table>';
+		echo '</table></div>';
 	} 
 	if (($g_options['show_google_map'] == 0) && ($g_options['show_server_load_image'] == 0)) {
 		echo '<br />     ';
@@ -382,19 +345,22 @@ For support and installation notes visit http://www.hlxcommunity.com
 			$map_teama_wins = $rowdata['map_ct_wins'];
 			$map_teamb_wins = $rowdata['map_ts_wins'];
 ?>
-		  <table class="data-table">
-					<tr class="data-table-head">
-						<td class="fSmall" style="width:37%;">&nbsp;Server</td>
-						<td class="fSmall" style="width:19%;">&nbsp;Address</td>
-						<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Map</td>
-						<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Played</td>
-						<td class="fSmall" style="width:10%;text-align:center;">&nbsp;Players</td>
-						<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Kills</td>
-						<td class="fSmall" style="width:7%;text-align:center;">&nbsp;Headshots</td>
-						<td class="fSmall" style="width:6%;text-align:center;">&nbsp;HS:K</td>
-					</tr>
-					<tr class="game-table-row">
-						<td class="game-table-cell"><?php
+					<div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+							<thead>
+								<tr>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Server</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Address</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Map</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Played</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Players</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kills</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Headshots</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HS:K</th>
+								</tr>
+							</thead>
+                            <tr>
+                                <td><?php
 			$image = getImage("/games/$game/game");
 			echo '<img src="';
 			if ($image)
@@ -404,53 +370,57 @@ For support and installation notes visit http://www.hlxcommunity.com
 			echo "\" alt=\"$game\" />&nbsp;";
 			echo "<b><a href=\"" . $g_options['scripturl'] . "?mode=servers&amp;server_id=$server_id&amp;game=$game\" style=\"text-decoration:none;\">" . htmlspecialchars($rowdata['name']) . "</a></b>";
 	?></td>
-						<td class="game-table-cell"><?php
+                                <td><?php
 			echo "$addr <a href=\"steam://connect/$addr\" style=\"color:black\">(Join)</a>";
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			echo $rowdata['act_map'];
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			$stamp = $rowdata['map_started']==0?0:time() - $rowdata['map_started'];
 			$hours = sprintf('%02d', floor($stamp / 3600));
 			$min = sprintf('%02d', floor(($stamp % 3600) / 60));
 			$sec = sprintf('%02d', floor($stamp % 60));
 			echo $hours . ':' . $min . ':' . $sec;
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			echo $player_string;
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			echo number_format($kills);
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			echo number_format($headshots);
 	?></td>
-						<td class="game-table-cell" style="text-align:center;"><?php
+                                <td style="text-align:center;"><?php
 			if ($kills > 0)
 				echo sprintf('%.4f', ($headshots / $kills));
 			else
 				echo sprintf('%.4f', 0);
 	?></td>
-					</tr>
-			</table>        
-
-			<table class="data-table">
-			<tr class="data-table-row">
-			  <td style="padding:0px;text-align:center;">
-				<a href="<?php $g_options['scripturl'] ?>?mode=servers&amp;server_id=<?php echo $server_id ?>&amp;game=<?php echo $game ?>" style="text-decoration:none;"><img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>" style="border:0px;" alt="Server Load Graph" title="Server Load Graph" /></a>
-			  </td>
-			</tr>
-			</table>
-					
-	<?php
+                            </tr>
+                        </table>
+					</div>
+					<div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0 table-dark">
+                            <tr class="table-dark">
+                                <td style="text-align:center;" class="table-dark">
+                                    <a href="<?php $g_options['scripturl'] ?>?mode=servers&amp;server_id=<?php echo $server_id ?>&amp;game=<?php echo $game ?>"
+                                        style="text-decoration:none;"><img
+                                            src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>"
+                                            style="border:0px;" alt="Server Load Graph" title="Server Load Graph" /></a>
+                                </td>
+                            </tr>
+                        </table>
+					</div>
+                        <?php
 			printserverstats($server_id);
 
 		} // for servers
 	}
 ?>
-</div></div>
-<?php
+            </div>
+            <?php
 	if ($g_options['gamehome_show_awards'] == 1) {
 		$resultAwards = $db->query("
 			SELECT
@@ -499,16 +469,26 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 		if ($db->num_rows($resultAwards) > 0 && $awards_d_date) {
 ?>
-<div class="block" style="padding-top:20px">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+					<h6>
+						<?php
+						if($awards_numdays == 1){
+							echo "Daily Awards (" . $awards_d_date . ")"; 
+						} else {
+							echo $awards_numdays . "Day Awards (" . $awards_d_date . ")";
+						}
+						?>
+					</h6>
+				</div>
+		<div class="table-responsive p-0">
+            <table class="table table-hover align-items-center mb-0">
 
-<?php
-	printSectionTitle((($awards_numdays == 1) ? 'Daily' : "$awards_numdays Day")." Awards ($awards_d_date)");
-?>
-	<div class="subblock">
-
-		<table class="data-table">
-
-<?php
+                <?php
 			$c = 0;
 			while ($awarddata = $db->fetch_array($resultAwards))
 			{
@@ -516,11 +496,11 @@ For support and installation notes visit http://www.hlxcommunity.com
 				$c++;
 ?>
 
-<tr class="bg<?php echo $colour; ?>">
-	<td style="width:40%;"><?php
+                <tr>
+                    <td class="ps-5"><?php
 				echo '<a href="'.$g_options['scripturl'].'?mode=dailyawardinfo&amp;award='.$awarddata['awardId']."&amp;game=$game\">".htmlspecialchars($awarddata['name']).'</a>';
 ?></td>
-	<td style="width:60%;"><?php
+                    <td class="pe-5"><?php
 
 				if ($awarddata['d_winner_id']) {
 					if ($g_options['countrydata'] == 1) {
@@ -539,13 +519,17 @@ For support and installation notes visit http://www.hlxcommunity.com
 					echo '&nbsp;&nbsp; <em>No Award Winner</em>';
 				}
 ?></td>
-</tr>
+                </tr>
 
-<?php
+                <?php
 			}
-?></table>
-</div></div>
-<?php
+?>
+            </table>
+		</div>
+        </div>
+		</div>
+    </div>
+    <?php
 		}
 	}
 ?>

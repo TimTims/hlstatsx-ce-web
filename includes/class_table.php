@@ -130,24 +130,22 @@ class Table
 		global $g_options, $game, $realgame, $db;
 		$numpages = ceil($numitems / $this->numperpage);
 ?>
-
-<div class="subblock">
-
-<table class="data-table">
-	<tr class="data-table-head">
+<div class="table-responsive">
+<table class="table table-hover">
+	<tr>
 <?php
 		$totalwidth = 0;
 
 		if ($this->showranking)
 		{
 			$totalwidth += 5;
-			echo "<td style=\"width:5%;text-align:right;\" class=\"fSmall\">Rank</td>\n";
+			echo "<td style=\"width:5%;text-align:right;\">Rank</td>\n";
 		}
 
 		foreach ($this->columns as $col)
 		{
 			$totalwidth += $col->width;
-			echo "<td style=\"width:$col->width%;text-align:$col->align;\" class=\"fSmall\">";
+			echo "<td style=\"width:$col->width%;text-align:$col->align;\">";
 			if ($col->sort != 'no')
 			{
 				echo getSortArrow($this->sort, $this->sortorder, $col->name,
@@ -179,24 +177,24 @@ class Table
 		$numpages = ceil($numitems / $this->numperpage);
 ?>
 
-<div class="subblock" style="text-align:<?php echo $align; ?>;">
+<div class="table-responsive" style="text-align:<?php echo $align; ?>;">
 
-<table class="data-table">
+<table class="table table-hover">
 
-		<tr class="data-table-head">
+		<tr>
 <?php
 		$totalwidth = 0;
 
 		if ($this->showranking)
 		{
 			$totalwidth += 5;
-			echo "<td style=\"width:5%;text-align=:right;\" class=\"fSmall\">Rank</td>\n";
+			echo "<td style=\"width:5%;text-align=:right;\">Rank</td>\n";
 		}
 
 		foreach ($this->columns as $col)
 		{
 			$totalwidth += $col->width;
-			echo "<td style=\"width:$col->width%;text-align:$col->align;\" class=\"fSmall\">";
+			echo "<td style=\"width:$col->width%;text-align:$col->align;\">";
 			if ($col->sort != 'no')
 			{
 				echo getSortArrow($this->sort, $this->sortorder, $col->name,
@@ -229,7 +227,7 @@ class Table
 			{
 				$c = ($i % 2) + 1;
 				$i++;
-				echo "<td style=\"text-align:right;\" class=\"bg$c\">$rank</td>\n";
+				echo "<td style=\"text-align:right;\">$rank</td>\n";
 			}
 
 			foreach ($this->columns as $col)
@@ -406,7 +404,7 @@ class Table
 							. "/t2.gif\" alt=\"".$rowdata['last_skill_change']." Points\" />";
 				}
 				
-				echo "<td$colalign class=\"$class\">"
+				echo "<td$colalign>"
 						. $cellbody
 						. "</td>\n";
 				$i++;
@@ -418,12 +416,11 @@ class Table
 		}
 ?>
 		</table>
-</div><br /><br />
+</div>
 <?php
 		if ($numpages > 1)
 		{
 ?>
-<div class="subblock" style="text-align:right;">
 	<span style="text-align:right;">
 <?php
 			echo 'Page: ';
@@ -469,7 +466,6 @@ class Table
 			}
 		?>
 	</span>
-</div><br /><br />
 <?php
 		}
 	}

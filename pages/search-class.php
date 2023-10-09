@@ -77,34 +77,38 @@ For support and installation notes visit http://www.hlxcommunity.com
 			}
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Find a Player or Clan'); ?>
-	<div class="subblock">
-		<form method="get" action="<?php echo $g_options['scripturl']; ?>">
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+				<h6>Find a player or clan</h6>
+			</div>
+			<form method="get" action="<?php echo $g_options['scripturl']; ?>">
 			<?php
 				foreach ($getvars as $var=>$value)
 				{
 					echo '<input type="hidden" name="'.htmlspecialchars($var, ENT_QUOTES).'" value="'.htmlspecialchars($value, ENT_QUOTES)."\" />\n";
 				}
 			?>
-					<table class="data-table" style="width:30%;">
+					<table class="table mb-0 ms-4">
 						<tr style="vertical-align:middle;" class="bg1">
-							<td nowrap="nowrap" style="width:30%;">Search For:</td>
-							<td style="width:70%;">
+							<td>Search For:</td>
+							<td>
 								<input type="text" name="q" size="20" maxlength="128" value="<?php echo htmlspecialchars($this->query, ENT_QUOTES); ?>" style="width:300px;" />
 							</td>
 						</tr>
-						<tr style="vertical-align:middle;" class="bg1">
-							<td nowrap="nowrap" style="width:30%;">In:</td>
-							<td style="width:70%;">
+						<tr>
+							<td>In:</td>
+							<td>
 								<?php
 									echo getSelect('st', $searchtypes, $this->type);
 								?>
 							</td>
 						</tr>
-						<tr style="vertical-align:middle" class="bg1">
-							<td nowrap="nowrap" style="width:30%;">Game:</td>
-							<td style="width:70%;">
+						<tr>
+							<td>Game:</td>
+							<td>
 								<?php
 									$games = array ();
 									$games[''] = '(All)';
@@ -127,15 +131,16 @@ For support and installation notes visit http://www.hlxcommunity.com
 								?>
 							</td>
 						</tr>
-						<tr class="bg1">
-							<td colspan="3" style="text-align:center;">
+						<tr>
+							<td></td>
+							<td>
 								<input type="submit" value=" Find Now " class="submit" />
 							</td> 
 						</tr>
 					</table>
-		</form>
-	</div>
-</div><br /><br />
+			</form>
+		</div>
+	</div><br /><br />
 
 <?php
 		}
@@ -145,12 +150,11 @@ For support and installation notes visit http://www.hlxcommunity.com
 			if ($link_player == -1) $link_player = "mode=playerinfo&amp;player=%k";
 			if ($link_clan == -1) $link_clan = "mode=claninfo&amp;clan=%k";
 ?>
-
-<div class="block">
-	<a id="results"></a>
-	<?php printSectionTitle('Search Results'); ?>
-	<br /><br />
-
+		<div class="col-12">
+			<div class="card mb-4">
+				<div class="card-header pb-0">
+					<h6>Search Results</h6>
+				</div>
 <?php
 			$sr_query = preg_replace('/^STEAM_\d+?\:/i','',$this->query);
 			$sr_query = $db->escape($sr_query);
@@ -538,8 +542,9 @@ For support and installation notes visit http://www.hlxcommunity.com
 			}
 ?>
 	<br /><br />
-	<div class="subblock" style="text-align:center;">
+	<p style="text-align:center;">
 		Search results: <strong><?php echo $numitems; ?></strong> items matching
+	</p>
 	</div>
 </div>
 <?php

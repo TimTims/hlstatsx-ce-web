@@ -57,40 +57,6 @@ For support and installation notes visit http://www.hlxcommunity.com
      
 	global $game,$mode;
 
-	// see if they have a defined style or a new style they'd like
-	$selectedStyle = (isset($_COOKIE['style']) && $_COOKIE['style']) ? $_COOKIE['style'] : "";
-	$selectedStyle = isset($_POST['stylesheet']) ? $_POST['stylesheet'] : $selectedStyle; 
-
-	// if they do make sure it exists
-	if(!empty($selectedStyle))
-	{
-		// this assumes that styles is up a directory from page_path, this might be a bad assumption
-		$testfile=sprintf("%s/%s/%s", PAGE_PATH, '../styles', $selectedStyle);
-		if(!file_exists($testfile))
-		{
-			$selectedStyle = "";
-		}
-	}
-	
-	// if they don't have one defined or the defined was is invalid use the default	
-	if(empty($selectedStyle))
-	{
-		$selectedStyle=$g_options['style'];
-	}	
-
-	// if they had one, or tried to have one, set it to whatever we resolved it to
-	if (isset($_POST['stylesheet']) || isset($_COOKIE['style']))
-	{
-		setcookie('style', $selectedStyle, time()+60*60*24*30);
-	}
-
-// this code here assumes that styles end with .css (the selector box for users and for admin does NOT check), someone may want to change this -octo
-	// Determine if we have custom nav images available
-    if ($selectedStyle) {
-        $style = preg_replace('/\.css$/','',$selectedStyle);
-    } else {
-        $style = preg_replace('/\.css$/','',$g_options['style']);
-    }
 	$iconpath = IMAGE_PATH . "/icons";
 	if (file_exists($iconpath . "/" . $style)) {
 			$iconpath = $iconpath . "/" . $style;
@@ -98,234 +64,248 @@ For support and installation notes visit http://www.hlxcommunity.com
 	
 ?>
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<link rel="stylesheet" type="text/css" href="hlstats.css" />
-	<link rel="stylesheet" type="text/css" href="styles/<?php echo $selectedStyle; ?>" />
-	<link rel="stylesheet" type="text/css" href="css/SqueezeBox.css" />
-	<!-- U R A SMACKHEAD -->
-<?php
-	if ($mode == 'players')
-	{
-		echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/Autocompleter.css\" />\n";
-	}
-?>
-	<link rel="SHORTCUT ICON" href="favicon.ico" />
-	<script type="text/javascript" src="<?php echo INCLUDE_PATH; ?>/js/mootools.js"></script>
-	<script type="text/javascript" src="<?php echo INCLUDE_PATH; ?>/js/SqueezeBox.js"></script>
-	<script type="text/javascript" src="<?php echo INCLUDE_PATH; ?>/js/heatmap.js"></script>
-<?php
-	if ($g_options['playerinfo_tabs'] == '1') {
-?>
-	<script type="text/javascript" src="<?php echo INCLUDE_PATH; ?>/js/tabs.js"></script>
-<?php
-	}
-?>
-	<title>
-<?php
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+  <?php
 	echo $g_options['sitename']; 
 	foreach ($title as $t)
 	{
 		echo " - $t";
 	}
-?>
-	</title>
+  ?>
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
-<body> 
-<?php
-	//JS Check
 
-	if (isset($_POST['js']) && $_POST['js']) {
-		$_SESSION['nojs'] = 0;
-	} else {
-		if ((!isset($_SESSION['nojs'])) or ($_SESSION['nojs'] == 1)) {
-			// Send javascript form - if they have javascript enabled it will POST the JS variable, and the code above will update their session variable
-			echo '
-			<!-- Either this is your first visit in a while, or you don\'t have javascript enabled -->
-			<form name="jsform" id="jsform" action="" method="post" style="display:none">
-			<div>
-			<input name="js" type="text" value="true" />
-			<script type="text/javascript">
-			document.jsform.submit();
-			</script>
-			</div>
-			</form>'
-			;
-			$_SESSION['nojs'] = 1;
-			$g_options['playerinfo_tabs'] = 0;
-			$g_options['show_google_map'] = 0;
-		}
-	}
-	
-	// Determine if we should show SourceBans links/Forum links
-	if ($g_options['sourcebans_address'] && file_exists($iconpath . "/title-sourcebans.png")) {
-		$extratabs .= "<li><a href=\"". $g_options['sourcebans_address'] . "\" target=\"_blank\"><img src=\"" . $iconpath . "/title-sourcebans.png\" alt=\"SourceBans\" /></a></li>\n";
-	}
-	if ($g_options['forum_address'] && file_exists($iconpath . "/title-forum.png")) {
-		$extratabs .= "<li><a href=\"" . $g_options['forum_address'] . "\" target=\"_blank\"><img src=\"" . $iconpath . "/title-forum.png\" alt=\"Forum\" /></a></li>\n";
-	}
-?>
-<div class="block">
-	
-	<div class="headerblock">
-		<div class="title">
-			<a href="<?php echo $g_options['scripturl']; ?>"><img src="<?php echo $iconpath; ?>/title.png" alt="HLstatsX Community Edition" title="HLstatsX Community Edition" /></a>
-		</div>
+<body class="g-sidenav-show bg-gray-100">
+  <div class="min-height-300 themec position-absolute w-100 bg-primary"></div>
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href=" <?php echo $g_options['scripturl']; ?> " target="_self">
+        <img src="assets/images/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold">HLX: CE</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0">
+    <div class="navbar-collapse w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="<?php echo $g_options['scripturl'] ?>">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni bi-house text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="<?php echo $g_options['scripturl'] ?>?mode=search">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-search text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Search</span>
+          </a>
+        </li>
+        <?php
+        if ($g_options['sourcebans_address']){
+        echo '<li class="nav-item">
+          <a class="nav-link " href="' . $g_options['sourcebans_address'] . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-hammer text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Bans</span>
+          </a>
+        </li>';
+        }
+        if ($g_options['forum_address']){
+        echo '<li class="nav-item">
+          <a class="nav-link " href="' . $g_options['forum_address'] . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-chat-square-quote-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Forum</span>
+          </a>
+        </li>';
+        }
+        ?>
+        <li class="nav-item">
+          <a class="nav-link " href="<?php echo $g_options['scripturl'] ?>?mode=help">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-info-lg text-danger text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Help</span>
+          </a>
+        </li>
+        <?php
+        if ($game != '') {
+        echo '<li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Server Menu</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="' . $g_options['scripturl'] . '?game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-hdd-stack-fill text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Servers</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl']  . '?mode=chat&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-chat-dots-fill text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Chat</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=players&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Players</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=clans&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Clans</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=countryclans&amp;game=' . $game . '&amp;sort=nummembers">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Countries</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=awards&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-award-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Awards</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=actions&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-bullseye text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Actions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=weapons&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-rainbow text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Weapons</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=maps&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-map-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Maps</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=roles&amp;game=' . $game . '">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="bi bi-person-vcard-fill text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Roles</span>
+          </a>
+        </li>
+        '; }
+        ?>
+      </ul>
+    </div>
+  </aside>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <?php echo '<li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="http://' . preg_replace('/http:\/\//', '', $g_options['siteurl']) . '">'. $g_options['sitename'] .'</a></li>';
+            $i = 0;
+            foreach ($location as $l => $url) {
+              $url = preg_replace('/%s/', $g_options['scripturl'], $url);
+              $url = preg_replace('/&/', '&amp;', $url);
+              echo '<li class="breadcrumb-item text-sm text-white" aria-current="page">';
+              if ($url) {
+                echo '<a class="opacity-5 text-white" href="'. $url .'">'. $l .'</a></li>';
+              } else {
+                echo  $l .'</li>
+          </ol>
+          <h6 class="font-weight-bolder text-white mb-0">'. $l .'</h6>';
+              }
+              $i++;
+            } ?>
 
-<?php
-
-		// Grab count of active games -- if 1, we won't show the games list icons
-		$resultGames = $db->query("
-			SELECT
-				COUNT(code)
-			FROM
-				hlstats_Games
-			WHERE
-				hidden='0'
-		");
-		
-		list($num_games) = $db->fetch_row($resultGames);
-		
-		if ($num_games > 1 && $g_options['display_gamelist'] == 1) {
-?>
-		<div class="header_gameslist"><?php @include(PAGE_PATH .'/gameslist.php'); ?></div>
-<?php	
-		}
-?>
-		<div class="headertabs">
-			<ul>
-				<li><a href="<?php echo $g_options['scripturl'] ?>"><img src="<?php echo $iconpath; ?>/title-contents.png" alt="Contents" /></a></li>
-				<li><a href="<?php echo $g_options['scripturl'] ?>?mode=search"><img src="<?php echo $iconpath; ?>/title-search.png" alt="Search" /></a></li>
-				<?php if ($extratabs) { print $extratabs; } ?>				
-				<li><a href="<?php echo $g_options['scripturl'] ?>?mode=help"><img src="<?php echo $iconpath; ?>/title-help.png" alt="Help" /></a></li>
-			</ul>
-
-		</div>
-	</div>
-	<div class="location" style="clear:both;width:100%;">
-		<ul class="fNormal" style="float:left">
-<?php
-			if ($g_options['sitename'] && $g_options['siteurl'])
-			{
-				echo '<li><a href="http://' . preg_replace('/http:\/\//', '', $g_options['siteurl']) . '">'. $g_options['sitename'] . '</a> <span class="arrow">&raquo;</span></li>';
-			}
-			echo '<li><a href="http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '">HLstatsX</a>';
-
-
-			$i=0;
-			foreach ($location as $l=>$url)
-			{
-				$url = preg_replace('/%s/', $g_options['scripturl'], $url);
-				$url = preg_replace('/&/', '&amp;', $url);
-				echo ' <span class="arrow">&raquo;</span></li><li>';
-				if ($url) {
-					echo "<a href=\"$url\">$l</a>";
-				} else {
-					echo "<strong>$l</strong>";
-				}
-				$i++;
-		}
-?>			</li>
-		</ul>
-
-<?php 
-		if ($g_options['display_style_selector'] == 1) {
-?>
-		<div class="fNormal" style="float:right;"> 
-			<form name="style_selection" id="style_selection" action="" method="post"> Style: 
-				<select name="stylesheet" onchange="document.style_selection.submit()"> 
-				<?php 
-					$d = dir('styles'); 
-					while (false !== ($e = $d->read())) { 
-						if (is_file("styles/$e") && ($e != '.') && ($e != '..') && $e != $g_options['style']) { 
-							$ename = ucwords(strtolower(str_replace(array('_','.css'), array(' ',''), $e))); 
-							$styles[$e] = $ename; 
-						} 
-					}
-					$d->close(); 
-					asort($styles); 
-					$styles = array_merge(array($g_options['style'] => 'Default'),$styles);
-					foreach ($styles as $e => $ename) { 
-						$sel = ''; 
-						if ($e == $selectedStyle) $sel = ' selected="selected"'; 
-						echo "\t\t\t\t<option value=\"$e\"$sel>$ename</option>\n"; 
-					} ?> 
-				</select> 
-			</form> 
-		</div> 
-<?php
-		}
-?>
-	</div>
-	<div class="location_under" style="clear:both;width:100%;"></div>
-</div>
-
-<br />
-      
-<div class="content" style="clear:both;">
-<?php
-	global $mode;
-	if ($g_options['bannerdisplay'] != 0 && ($mode == 'contents' || $g_options['bannerdisplay']==1)) {
-?>    
-	<div class="block" style="text-align:center;">
-		<img src="<?php echo ((strncmp($g_options['bannerfile'], 'http:/', 6) == 0)?$g_options['bannerfile']:IMAGE_PATH.'/'.$g_options['bannerfile']); ?>" alt="Banner" />
-	</div>
-<?php
-	}
-?>        
-
-<?php
-
-	if ($game != '') {
-
-?>    
-		<nav>
-		<ul class="fancyNav">
-			<li><a href="<?php echo $g_options['scripturl']  . "?game=$game";  ?>" class="fHeading">Servers</a></li>
-
-<?php
-	if ($g_options['nav_globalchat']==1) {
-?>
-			<li><a href="<?php echo $g_options['scripturl']  . "?mode=chat&amp;game=$game";  ?>" class="fHeading">Chat</a></li>
-<?php
-	}
-?>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=players&amp;game=$game"; ?>" class="fHeading">Players</a></li>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=clans&amp;game=$game"; ?>" class="fHeading">Clans</a></li>
-
-<?php
-	if ($g_options["countrydata"]==1) {
-?>
-			<li><a href="<?php echo $g_options['scripturl']  . "?mode=countryclans&amp;game=$game&amp;sort=nummembers";  ?>" class="fHeading">Countries</a></li>
-<?php
-	}
-?>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=awards&amp;game=$game"; ?>" class="fHeading">Awards</a></li>
-<?php
-	// look for actions
-	$db->query("SELECT game FROM hlstats_Actions WHERE game='".$game."' LIMIT 1");
-	if ($db->num_rows()>0) {
-?> 
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=actions&amp;game=$game"; ?>" class="fHeading">Actions</a></li>
-<?php
-	}
-?>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=weapons&amp;game=$game"; ?>" class="fHeading">Weapons</a></li>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=maps&amp;game=$game"; ?>" class="fHeading">Maps</a></li>
-<?php
-	$result = $db->query("SELECT game from hlstats_Roles WHERE game='$game' AND hidden = '0'");
-	$numitems = $db->num_rows($result);
-	if ($numitems > 0) {
-?>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=roles&amp;game=$game"; ?>" class="fHeading">Roles</a></li>
-<?php
-	}
-	if ($g_options['nav_cheaters'] == 1) {
-?>
-			<li><a href="<?php echo $g_options['scripturl'] . "?mode=bans&amp;game=$game"; ?>" class="fHeading">Bans</a></li>
-<?php
-	} 
-?>
-	</ul></nav>
-<?php
-	}
-?>  
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+              <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" placeholder="Type here...">
+            </div>
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a href="<?php echo $g_options['scripturl']; ?>?mode=admin" class="nav-link text-white font-weight-bold px-0">
+                <i class="bi bi-door-open-fill me-sm-1"></i>
+                <span class="d-sm-inline d-none">Admin</span>
+              </a>
+            </li>
+            <?php
+            if (isset($_SESSION['loggedin'])) {
+              echo '<li class="nav-item d-flex align-items-center">
+              <a href="hlstats.php?logout=1" class="nav-link text-white font-weight-bold px-0">
+                <i class="bi bi-door-closed-fill me-sm-1"></i>
+                <span class="d-sm-inline d-none">Logout</span>
+              </a>
+            </li>';
+            }
+            ?>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-white"></i>
+                  <i class="sidenav-toggler-line bg-white"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->

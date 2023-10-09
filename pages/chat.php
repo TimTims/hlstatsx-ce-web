@@ -96,13 +96,15 @@ For support and installation notes visit http://www.hlxcommunity.com
 		$servername = "(" . $result['name'] . ")";
 	}
 ?>
-
-<div class="block">
-	<?php printSectionTitle("$gamename $servername Server Chat Log (Last ".$g_options['DeleteDays'].' Days)'); ?>
-	<div class="subblock">
-		<div style="float:left;">
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6><?php echo $gamename . " " . $servername . " " . "Server Chat Log (Last ".$g_options['DeleteDays']." Days)"; ?></h6>
+            	</div>
 			<span>
-			<form method="get" action="<?php echo $g_options['scripturl']; ?>" style="margin:0px;padding:0px;">
+			<form class="ms-4 mb-3" method="get" action="<?php echo $g_options['scripturl']; ?>" style="margin:0px;padding:0px;">
 				<input type="hidden" name="mode" value="chat" />
 				<input type="hidden" name="game" value="<?php echo $game; ?>" />
 				<strong>&#8226;</strong> Show Chat from
@@ -169,7 +171,9 @@ For support and installation notes visit http://www.hlxcommunity.com
 			</span>
 		</div>
 	</div>
-	<div style="clear:both;padding-top:20px;"></div>
+	<div class="col-12">
+		<div class="card mb-4">
+			<div class="mt-3 mb-3">
 		<?php
 			if ($showserver == 0)
 			{
@@ -180,7 +184,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 						(
 							'eventTime',
 							'Date',
-							'width=16'
+							'width=16&align=center'
 						),
 						new TableColumn
 						(
@@ -226,7 +230,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 						(
 							'eventTime',
 							'Date',
-							'width=16'
+							'width=16&align=center'
 						),
 						new TableColumn
 						(
@@ -327,10 +331,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 			$db->free_result();	
 
 			$table->draw($result, $numitems, 95);
-		?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options["scripturl"] . "?game=$game"; ?>"><?php echo $gamename; ?></a>
+		?>
+		</div>
 		</div>
 	</div>
 </div>

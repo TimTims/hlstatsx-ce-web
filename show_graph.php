@@ -50,7 +50,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 					(strrchr($entry, '/') !== '/index.php') &&
 					(strrchr($entry, '/') !== '/status.php') &&
 					(strrchr($entry, '/') !== '/top10.php') &&
-					(strrchr($entry, '/') !== '/config.php') &&
+					(strrchr($entry, '/') !== 'configs/config.php') &&
 					(strrchr($entry, '/') !== '/') &&
 					($entry !== '')) {
 					header('Location: http://'.$_SERVER['HTTP_HOST'].'/hlstats.php');    
@@ -64,7 +64,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 	define('IN_HLSTATS', true);
 
 	// Load database classes
-	require ('config.php');
+	require ('configs/config.php');
 	require (INCLUDE_PATH . '/class_db.php');
 	require (INCLUDE_PATH . '/functions.php');
 	require (INCLUDE_PATH . '/functions_graph.php');
