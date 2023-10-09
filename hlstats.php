@@ -37,7 +37,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 */
 
 define('IN_HLSTATS', true);
-require('config.php');
+require('configs/config.php');
 $historical_cache=0;
 if(defined('HISTORICAL_CACHE'))
 {
