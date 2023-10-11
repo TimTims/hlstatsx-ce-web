@@ -177,16 +177,14 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Weapon Statistics'); ?>
-	<div class="subblock">
-		From a total of <strong><?php echo number_format($realkills); ?></strong> kills with <strong><?php echo number_format($realheadshots); ?></strong> headshots
-	</div>
-	<br /><br />
-	<?php $tblWeapons->draw($result, $db->num_rows($result), 95); ?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options["scripturl"] . "?game=$game"; ?>"><?php echo $gamename; ?></a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Weapon Statistics (From a total of <strong><?php echo number_format($realkills); ?></strong> kills with <strong><?php echo number_format($realheadshots); ?></strong> headshots)</h6>
+				</div>
+				<?php $tblWeapons->draw($result, $db->num_rows($result), 95); ?>
+			</div>
 		</div>
 	</div>
-</div>

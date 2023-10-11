@@ -192,54 +192,58 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Clan Rankings');	?>
-	<div class="subblock">
-		<div style="float:left;">
-			<form method="get" action="<?php echo $g_options['scripturl']; ?>">
-				<input type="hidden" name="mode" value="search" />
-				<input type="hidden" name="game" value="<?php echo $game; ?>" />
-				<input type="hidden" name="st" value="clan" />
-				<strong>&#8226;</strong> Find a clan:
-				<input type="text" name="q" size="20" maxlength="64" class="textbox" />
-				<input type="submit" value="Search" class="smallsubmit" />
-			</form>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Clan Rankings</h6>
+				</div>
+				<div class="ms-4 mb-2">
+					<form method="get" action="<?php echo $g_options['scripturl']; ?>">
+						<input type="hidden" name="mode" value="search" />
+						<input type="hidden" name="game" value="<?php echo $game; ?>" />
+						<input type="hidden" name="st" value="clan" />
+						<strong>&#8226;</strong> Find a clan:
+						<input type="text" name="q" size="20" maxlength="64" class="textbox" />
+						<input type="submit" value="Search" class="smallsubmit" />
+					</form>
+				</div>
+			</div>
 		</div>
-		<div style="clear:both;"></div>
-	</div>
-	<br /><br />
-	<?php $table->draw($result, $db->num_rows($resultCount), 95); ?><br /><br />
-	<div class="subblock">
-		<div style="float:left;">
-			<form method="get" action="<?php echo $g_options['scripturl']; ?>">
-				<?php
-					$db->query
-					("
-						SELECT
-							COUNT(*) AS total_clans
-						FROM
-							hlstats_Clans
-						WHERE
-							hlstats_Clans.game = '$game'
-					");
+		<div class="col-12">
+            <div class="card mb-4">
+				<div class="mt-2 mb-2">
+					<?php $table->draw($result, $db->num_rows($resultCount), 95); ?>
+					<div class="ms-4">
+						<form method="get" action="<?php echo $g_options['scripturl']; ?>">
+							<?php
+								$db->query
+								("
+									SELECT
+										COUNT(*) AS total_clans
+									FROM
+										hlstats_Clans
+									WHERE
+										hlstats_Clans.game = '$game'
+								");
 
-                    list($total_clans) = $db->fetch_row();
-							
-					foreach ($_GET as $k=>$v) {
-						$v = valid_request($v, false);
+								list($total_clans) = $db->fetch_row();
+										
+								foreach ($_GET as $k=>$v) {
+									$v = valid_request($v, false);
 
-                        if ($k != "minmembers") {
-							echo "<input type=\"hidden\" name=\"" . htmlspecialchars($k) . "\" value=\"" . htmlspecialchars($v) . "\" />\n";
-						}
-					}
-				?>
-				<strong>&#8226;</strong> Show only clans with
-					<input type="text" name="minmembers" size="4" maxlength="2" value="<?php echo $minmembers; ?>" class="textbox" /> or more members from a total of <strong><?php echo number_format($total_clans); ?></strong> clans
-					<input type="submit" value="Apply" class="smallsubmit" />
-			</form>
-		</div>
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options["scripturl"] . "?mode=players&amp;game=$game"; ?>">Player Rankings</a>
+									if ($k != "minmembers") {
+										echo "<input type=\"hidden\" name=\"" . htmlspecialchars($k) . "\" value=\"" . htmlspecialchars($v) . "\" />\n";
+									}
+								}
+							?>
+							<strong>&#8226;</strong> Show only clans with
+								<input type="text" name="minmembers" size="4" maxlength="2" value="<?php echo $minmembers; ?>" class="textbox" /> or more members from a total of <strong><?php echo number_format($total_clans); ?></strong> clans
+								<input type="submit" value="Apply" class="smallsubmit" />
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>

@@ -85,66 +85,62 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Ranks'); ?>
-	<div class="subblock">
-		<table class="data-table">
-<?php
-	// draw the rank info table (5 columns)
-	$i = 0;
-
-	$cols = $g_options['awardrankscols'];
-	if ($cols < 1 || $cols > 10) $cols = 5;
-	{
-		$colwidth = round(100 / $cols);
-	}
-
-	while ($r = $db->fetch_array())
-	{
-		if ($i == $cols)
-		{
-			echo "</tr>";
+<div class="card-header pb-0">
+	<h6>Ranks</h6>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<?php
+			// draw the rank info table (5 columns)
 			$i = 0;
-		}
-		if ($i == 0)
-		{
-			echo "<tr class='bg1'>";
-		}
-   
-		$image = getImage('/ranks/'.$r['image'].'_small');
-		$link = '<a href="hlstats.php?mode=rankinfo&amp;rank='.$r['rankId']."&amp;game=$game\">";
-		if ($image)
-		{
-			$imagestring = '<img src="'.$image['url'].'" alt="'.$r['image'].'" />';
-		}
-		else
-		{
-			$imagestring = 'Player List';
-		}
-		$achvd = '';
-		if ($ranks[$r['rankId']] > 0)
-		{
-			$imagestring = "$link$imagestring</a>";
-			$achvd = 'Achieved by '.$ranks[$r['rankId']].' Players';
-		}    
-   
-		echo "<td style=\"text-align:center;vertical-align:top;width:$colwidth%;\">"
-			.'<strong>'.$r['rankName'].'</strong><br />'
-			.'<span class="fSmall">('.$r['minKills'].'-'.$r['maxKills'].'&nbsp;kills)'.'<br />'
-			."$achvd<br /></span>"
-			.$imagestring.'
-			</td>';
-		$i++;
-	}
-	if ($i != 0)
-	{
-		for ($i = $i; $i < $cols; $i++)
-		{
-			echo '<td class="bg1">&nbsp;</td>';
-		}
-		echo '</tr>';
-	}
-?>
-		</table>
-	</div>
+
+			$cols = 3;
+
+			while ($r = $db->fetch_array())
+			{
+				if ($i == $cols)
+				{
+					echo "</tr>";
+					$i = 0;
+				}
+				if ($i == 0)
+				{
+					echo "<tr>";
+				}
+		
+				$image = getImage('/ranks/'.$r['image'].'_small');
+				$link = '<a href="hlstats.php?mode=rankinfo&amp;rank='.$r['rankId']."&amp;game=$game\">";
+				if ($image)
+				{
+					$imagestring = '<img src="'.$image['url'].'" alt="'.$r['image'].'" />';
+				}
+				else
+				{
+					$imagestring = 'Player List';
+				}
+				$achvd = '';
+				if ($ranks[$r['rankId']] > 0)
+				{
+					$imagestring = "$link$imagestring</a>";
+					$achvd = 'Achieved by '.$ranks[$r['rankId']].' Players';
+				}    
+		
+				echo "<td class=\"align-top text-center\">"
+					.'<strong>'.$r['rankName'].'</strong><br />'
+					.'<span>('.$r['minKills'].'-'.$r['maxKills'].'&nbsp;kills)'.'<br />'
+					."$achvd<br /></span>"
+					.$imagestring.'
+					</td>';
+				$i++;
+			}
+			if ($i != 0)
+			{
+				for ($i = $i; $i < $cols; $i++)
+				{
+					echo '<td>&nbsp;</td>';
+				}
+				echo '</tr>';
+			}
+		?>
+	</table>
 </div>

@@ -85,7 +85,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'obj_bonus',
 				'Reward',
-				'width=25&align=right'
+				'width=25&align=center'
 			)
 		),
 		'code',
@@ -116,28 +116,27 @@ For support and installation notes visit http://www.hlxcommunity.com
 			$tblPlayerActions->sort2 $tblPlayerActions->sortorder
 	");
 ?>
-<div class="block">
-	<?php printSectionTitle('Action Statistics'); ?>
-	<div class="subblock">
-		<?php
-			$db->query
-			("
-				SELECT
-					SUM(count)
-				FROM
-					hlstats_Actions
-				WHERE
-					hlstats_Actions.game = '$game'
-			");
-			list($totalactions) = $db->fetch_row();
-			?>From a total of <strong><?php echo number_format($totalactions); ?></strong> earned actions
-	</div><br /><br />
-	<?php
-		$tblPlayerActions->draw($result, $db->num_rows($result), 95);
-	?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?game=$game"; ?>"><?php echo $gamename; ?></a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Action Statistics <?php
+						$db->query
+						("
+							SELECT
+								SUM(count)
+							FROM
+								hlstats_Actions
+							WHERE
+								hlstats_Actions.game = '$game'
+						");
+						list($totalactions) = $db->fetch_row();
+						?>(From a total of <strong><?php echo number_format($totalactions); ?></strong> earned actions)</h6>
+				</div>
+				<?php
+					$tblPlayerActions->draw($result, $db->num_rows($result), 95);
+				?>
+			</div>
 		</div>
 	</div>
-</div>

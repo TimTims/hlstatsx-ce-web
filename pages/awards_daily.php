@@ -90,77 +90,71 @@ For support and installation notes visit http://www.hlxcommunity.com
 	list($awards_d_date, $awards_s_date) = $db->fetch_row($result);
 
 ?>
-<div class="block">
-	<?php printSectionTitle((($awards_numdays == 1) ? 'Daily' : $awards_numdays.'Day')." Awards ($awards_d_date)"); ?>
-	<div class="subblock">
-		<table class="data-table">
-
-<?php
-	// draw the daily award info table (5 columns)
-	$i = 0;
-	$cols = $g_options['awarddailycols'];
-	if ($cols < 1 || $cols > 10)
-	{
-		$cols = 5;
-	}
-	$colwidth = round(100 / $cols);
-	while ($r = $db->fetch_array($resultAwards))
-	{
-		if ($i == $cols)
-		{
-			echo '</tr>';
+<div class="card-header pb-0">
+	<h6><?php if($awards_numdays == 1){ echo "Daily Awards (" . $awards_d_date . ")"; } else { echo $awards_numdays . "Day Awards (" . $awards_d_date . ")";} ?></h6>
+</div>	
+<div class="table-responsive">
+	<table class="table table-hover">
+		<?php
+			// draw the daily award info table (5 columns)
 			$i = 0;
-		}
-		if ($i==0)
-		{
-			echo '<tr class="bg1">';
-		}
+			$cols = 3;
+			$colwidth = round(100 / $cols);
+			while ($r = $db->fetch_array($resultAwards))
+			{
+				if ($i == $cols)
+				{
+					echo '</tr>';
+					$i = 0;
+				}
+				if ($i==0)
+				{
+					echo '<tr>';
+				}
 
-		if ($image = getImage("/games/$game/dawards/".strtolower($r['awardType'].'_'.$r['code'])))
-		{
-			$img = $image['url'];
-		}
-		elseif ($image = getImage("/games/$realgame/dawards/".strtolower($r['awardType'].'_'.$r['code'])))
-		{
-			$img = $image['url'];
-		}
-		else
-		{
-			$img = IMAGE_PATH.'/award.png';
-		}
-		$weapon = '<a href="hlstats.php?mode=dailyawardinfo&amp;award='.$r['awardId']."&amp;game=$game\"><img src=\"$img\" alt=\"".$r['code'].'" /></a>';
-		if ($r['d_winner_id'] > 0) {
-			if ($g_options['countrydata'] == 1)	{
-				$imagestring = '<img src="'.getFlag($r['flag']).'" alt="'.$r['flag'].'" />&nbsp;&nbsp;';
-			} else {
-				$imagestring = '';
+				if ($image = getImage("/games/$game/dawards/".strtolower($r['awardType'].'_'.$r['code'])))
+				{
+					$img = $image['url'];
+				}
+				elseif ($image = getImage("/games/$realgame/dawards/".strtolower($r['awardType'].'_'.$r['code'])))
+				{
+					$img = $image['url'];
+				}
+				else
+				{
+					$img = IMAGE_PATH.'/award.png';
+				}
+				$weapon = '<a href="hlstats.php?mode=dailyawardinfo&amp;award='.$r['awardId']."&amp;game=$game\"><img src=\"$img\" alt=\"".$r['code'].'" /></a>';
+				if ($r['d_winner_id'] > 0) {
+					if ($g_options['countrydata'] == 1)	{
+						$imagestring = '<img src="'.getFlag($r['flag']).'" alt="'.$r['flag'].'" />&nbsp;&nbsp;';
+					} else {
+						$imagestring = '';
+					}
+					$winnerstring = '<strong>'.htmlspecialchars($r['d_winner_name'], ENT_COMPAT).'</strong>';
+					$achvd = "{$imagestring} <a href=\"hlstats.php?mode=playerinfo&amp;player={$r['d_winner_id']}&amp;game={$game}\">{$winnerstring}</a>";
+					$wincount = $r['d_winner_count'];
+				} else {
+					$achvd = "<em>No Award Winner</em>";
+					$wincount= "0";
+				}
+					
+				echo "<td class=\"align-top text-center\">
+					<strong>".$r['name'].'</strong><br /><br />'
+					."$weapon<br /><br />"
+					."$achvd<br />"
+					.'<span>'.$wincount. ' ' . htmlspecialchars($r['verb']).'</span>
+					</td>';
+				$i++;
 			}
-			$winnerstring = '<strong>'.htmlspecialchars($r['d_winner_name'], ENT_COMPAT).'</strong>';
-			$achvd = "{$imagestring} <a href=\"hlstats.php?mode=playerinfo&amp;player={$r['d_winner_id']}&amp;game={$game}\">{$winnerstring}</a>";
-			$wincount = $r['d_winner_count'];
-		} else {
-			$achvd = "<em>No Award Winner</em>";
-			$wincount= "0";
-		}
-			
-		echo "<td style=\"text-align:center;vertical-align:top;width:$colwidth%;\">
-			<strong>".$r['name'].'</strong><br /><br />'
-			."$weapon<br /><br />"
-			."$achvd<br />"
-			.'<span class="fSmall">'.$wincount. ' ' . htmlspecialchars($r['verb']).'</span>
-			</td>';
-		$i++;
-	}
-	if ($i != 0)
-	{
-		for ($i = $i; $i < $cols; $i++)
-		{
-			echo '<td class="bg1">&nbsp;</td>';
-		}
-		echo '</tr>';
-	} 
-  
-?>
-		</table>
-	</div>
+			if ($i != 0)
+			{
+				for ($i = $i; $i < $cols; $i++)
+				{
+					echo '<td>&nbsp;</td>';
+				}
+				echo '</tr>';
+			} 
+		?>
+	</table>
 </div>

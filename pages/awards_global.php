@@ -62,75 +62,69 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Global Awards'); ?>
-	<div class="subblock">
-		<table class="data-table">
-<?php
-	$i = 0;
-	$cols = $g_options['awardglobalcols'];
-	if ($cols<1 || $cols>10)
-	{
-		$cols = 5;
-	}
-	$colwidth = round(100/$cols);
-	while ($r = $db->fetch_array($resultAwards))
-	{
-		if ($i==$cols)
-		{
-			echo '</tr>'; $i = 0;
-		}
-		if ($i==0)
-		{
-			echo '<tr class="bg1">';
-		}
-   
-		if ($image = getImage("/games/$game/gawards/".strtolower($r['awardType'].'_'.$r['code'])))
-		{
-			$img = $image['url'];
-		}
-		elseif ($image = getImage("/games/$realgame/gawards/".strtolower($r['awardType'].'_'.$r['code'])))
-		{
-			$img = $image['url'];
-		}
-		else
-		{
-			$img = IMAGE_PATH.'/award.png';
-		}
-		$weapon = "<img src=\"$img\" alt=\"".$r['code'].'" />';
-		if ($r['g_winner_id'] > 0)
-		{
-			if ($g_options['countrydata'] == 1) {
-				$imagestring = '<img src="'.getFlag($r['flag']).'" alt="'.$r['country'].'" />&nbsp;&nbsp;';
-			} else {
-				$imagestring = '';
+<div class="card-header pb-0">
+	<h6>Global Awards</h6>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<?php
+			$i = 0;
+			$cols = 3;
+			while ($r = $db->fetch_array($resultAwards))
+			{
+				if ($i==$cols)
+				{
+					echo '</tr>'; $i = 0;
+				}
+				if ($i==0)
+				{
+					echo '<tr class="bg1">';
+				}
+		
+				if ($image = getImage("/games/$game/gawards/".strtolower($r['awardType'].'_'.$r['code'])))
+				{
+					$img = $image['url'];
+				}
+				elseif ($image = getImage("/games/$realgame/gawards/".strtolower($r['awardType'].'_'.$r['code'])))
+				{
+					$img = $image['url'];
+				}
+				else
+				{
+					$img = IMAGE_PATH.'/award.png';
+				}
+				$weapon = "<img src=\"$img\" alt=\"".$r['code'].'" />';
+				if ($r['g_winner_id'] > 0)
+				{
+					if ($g_options['countrydata'] == 1) {
+						$imagestring = '<img src="'.getFlag($r['flag']).'" alt="'.$r['country'].'" />&nbsp;&nbsp;';
+					} else {
+						$imagestring = '';
+					}
+					$winnerstring = '<strong>'.htmlspecialchars($r['g_winner_name'], ENT_COMPAT).'</strong>';
+					$achvd = "{$imagestring} <a href=\"hlstats.php?mode=playerinfo&amp;player={$r['g_winner_id']}&amp;game={$game}\">{$winnerstring}</a>";
+					$wincount = $r['g_winner_count'];			
+				} else {
+					$achvd = "<em>No Award Winner</em>";
+					$wincount= "0";
+				}			
+		
+				echo "<td class=\"align-top text-center\">
+					<strong>".$r['name'].'</strong><br /><br />'
+					."$weapon<br /><br />"
+					."$achvd<br />"
+					.'<span class="fSmall">'. $wincount . ' ' . htmlspecialchars($r['verb']).'</span>
+					</td>';
+				$i++;
 			}
-			$winnerstring = '<strong>'.htmlspecialchars($r['g_winner_name'], ENT_COMPAT).'</strong>';
-			$achvd = "{$imagestring} <a href=\"hlstats.php?mode=playerinfo&amp;player={$r['g_winner_id']}&amp;game={$game}\">{$winnerstring}</a>";
-			$wincount = $r['g_winner_count'];			
-		} else {
-			$achvd = "<em>No Award Winner</em>";
-			$wincount= "0";
-		}			
-   
-		echo "<td style=\"text-align:center;vertical-align:top;width:$colwidth%;\">
-			<strong>".$r['name'].'</strong><br /><br />'
-			."$weapon<br /><br />"
-			."$achvd<br />"
-			.'<span class="fSmall">'. $wincount . ' ' . htmlspecialchars($r['verb']).'</span>
-			</td>';
-		$i++;
-	}
-	if ($i != 0)
-	{
-		for ($i = $i; $i < $cols; $i++)
-		{
-			echo '<td class="bg1">&nbsp;</td>';
-		}
-		echo '</tr>';
-	} 
-?>
-
-		</table>
-	</div>
+			if ($i != 0)
+			{
+				for ($i = $i; $i < $cols; $i++)
+				{
+					echo '<td>&nbsp;</td>';
+				}
+				echo '</tr>';
+			} 
+		?>
+	</table>
 </div>

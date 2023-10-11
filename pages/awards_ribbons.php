@@ -75,83 +75,78 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Ribbons'); ?>
-	<div class="subblock">
-		<table class="data-table">
-<?php
-	// draw the rank info table (5 columns)
-	$i = 0;
-	$i1 = 0;
-	$cnt = -1;
- 
-	$cols = $g_options['awardribbonscols'];
-	if ($cols < 1 || $cols > 10)
-	{
-		$cols = 5;
-	}
-	$colwidth = round(100 / $cols);
- 
-	while ($r = $db->fetch_array())
-	{
-		if ($cnt != $r['awardCount'])
-		{
-			$cnt = $r['awardCount'];
-			$i1++;
-			if ($i == $cols)
+<div class="card-header pb-0">
+	<h6>Ribbons</h6>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<?php
+			// draw the rank info table (5 columns)
+			$i = 0;
+			$i1 = 0;
+			$cnt = -1;
+		
+			$cols = 3;
+		
+			while ($r = $db->fetch_array())
 			{
+				if ($cnt != $r['awardCount'])
+				{
+					$cnt = $r['awardCount'];
+					$i1++;
+					if ($i == $cols)
+					{
+						echo '</tr>';
+					}
+					$i = 0;
+					echo "<tr class=\"head\"><td colspan=\"5\"><strong>Ribbon Class #$i1 ($cnt awards required)</strong></td></tr>";
+				}
+
+				if ($i == $cols)
+				{
+					echo '</tr>';
+					$i = 0;
+				}
+				if ($i == 0)
+				{
+					echo '<tr class="bg1">';
+				}
+		
+				$link = '<a href="hlstats.php?mode=ribboninfo&amp;ribbon='.$r['ribbonId']."&amp;game=$game\">";
+				if (file_exists(IMAGE_PATH."/games/$game/ribbons/".$r['image']))
+				{
+					$image = IMAGE_PATH."/games/$game/ribbons/".$r['image'];
+				}
+				elseif (file_exists(IMAGE_PATH."/games/$realgame/ribbons/".$r['image']))
+				{
+					$image = IMAGE_PATH."/games/$realgame/ribbons/".$r['image'];
+				}
+				else
+				{
+					$image = IMAGE_PATH."/award.png";
+				}
+				$image = '<img src="'.$image.'" alt="'.$r['ribbonName'].'" />';
+				$achvd = '';
+				if ($r['achievedcount'] > 0)
+				{
+					$image = "$link$image</a>";
+					$achvd = 'Achieved by '.$r['achievedcount'].' players';
+				}
+
+				echo "<td class=\"align-top text-center\">
+					<strong>".$r['ribbonName'].'</strong><br /><br /><span>'
+					."$achvd</span><br />$image
+					</td>";
+				$i++;
+			}
+			if ($i != 0)
+			{
+				for ($i = $i; $i < $cols; $i++)
+				{
+					echo '<td>&nbsp;</td>';
+				}
 				echo '</tr>';
 			}
-			$i = 0;
-			echo "<tr class=\"head\"><td colspan=\"5\"><strong>Ribbon Class #$i1 ($cnt awards required)</strong></td></tr>";
-		}
-
-		if ($i == $cols)
-		{
-			echo '</tr>';
-			$i = 0;
-		}
-		if ($i == 0)
-		{
-			echo '<tr class="bg1">';
-		}
-   
-		$link = '<a href="hlstats.php?mode=ribboninfo&amp;ribbon='.$r['ribbonId']."&amp;game=$game\">";
-		if (file_exists(IMAGE_PATH."/games/$game/ribbons/".$r['image']))
-		{
-			$image = IMAGE_PATH."/games/$game/ribbons/".$r['image'];
-		}
-		elseif (file_exists(IMAGE_PATH."/games/$realgame/ribbons/".$r['image']))
-		{
-			$image = IMAGE_PATH."/games/$realgame/ribbons/".$r['image'];
-		}
-		else
-		{
-			$image = IMAGE_PATH."/award.png";
-		}
-		$image = '<img src="'.$image.'" alt="'.$r['ribbonName'].'" />';
-		$achvd = '';
-		if ($r['achievedcount'] > 0)
-		{
-			$image = "$link$image</a>";
-			$achvd = 'Achieved by '.$r['achievedcount'].' players';
-		}
-
-		echo "<td style=\"text-align:center;vertical-align:top;width:$colwidth%;\">
-			<strong>".$r['ribbonName'].'</strong><br /><br /><span class="fSmall">'
-			."$achvd</span><br />$image
-			</td>";
-		$i++;
-	}
-	if ($i != 0)
-	{
-		for ($i = $i; $i < $cols; $i++)
-		{
-			echo '<td class="bg1">&nbsp;</td>';
-		}
-		echo '</tr>';
-	}
-?>
-		</table>
-	</div>
+		?>
+	</table>
 </div>
