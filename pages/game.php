@@ -471,7 +471,6 @@ For support and installation notes visit http://www.hlxcommunity.com
 ?>
         </div>
     </div>
-    <div class="row">
         <div class="col-12">
             <div class="card mb-4">
 				<div class="card-header pb-0">
