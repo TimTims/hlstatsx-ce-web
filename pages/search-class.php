@@ -175,13 +175,13 @@ For support and installation notes visit http://www.hlxcommunity.com
 						(
 							'name',
 							'Player',
-							'width=65&flag=1&link=' . urlencode($link_player)
+							'align=center&width=65&flag=1&link=' . urlencode($link_player)
 						),
 						new TableColumn
 						(
 							'gamename',
 							'Game',
-							'width=30'
+							'width=30&align=center'
 						)
 					),
 					'player_id',

@@ -115,6 +115,7 @@ For support and installation notes visit http://www.hlxcommunity.com
   <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="assets/js/plugins/chartjs.min.js"></script>
+  <!--  JS Scripts -->
   <script>
     if(document.getElementById("chart-line") !== null){
       var ctx1 = document.getElementById("chart-line").getContext("2d");
@@ -208,6 +209,25 @@ For support and installation notes visit http://www.hlxcommunity.com
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+  </script>
+  <script>
+    function search() {
+      // Get the user's input from the input field
+      var userInput = document.getElementById("general-search").value;
+
+      // Construct the URL based on the input
+      var searchURL = "<?php echo $g_options['scripturl']; ?>?mode=search&q=" + encodeURIComponent(userInput) + "&st=player&game=";
+
+      // Redirect to the constructed URL
+      window.location.href = searchURL;
+    }
+
+    document.getElementById("general-search").addEventListener("keypress", function(event) {
+      // Check if the pressed key is Enter (key code 13)
+      if (event.key === 'Enter') {
+        search();
+      }
+    });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
