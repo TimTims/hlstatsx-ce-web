@@ -247,30 +247,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 		LIMIT $tblPlayerKillStats->startitem,$tblPlayerKillStats->numperpage
 	");
 	if ($numitems > 0)
-	{
-		printSectionTitle('Player Kill Statistics *');
-		$tblPlayerKillStats->draw($result, $numitems, 95); ?>
-	<br /><br />
-	<div class="subblock">
-	<form method="get" action="<?php echo $g_options['scripturl']; ?>">
-		<strong>&#8226;</strong> Show only victims this person has killed
-		<select name="killLimit" onchange="Tabs.refreshTab({'killLimit': this.options[this.selectedIndex].value, 'playerkills_page': 1})">
-			<?php
-				for($j = 0; $j < 16; $j++)
-				{
-					echo "<option value=\"$j\"";
-					if ($killLimit == $j)
-					{
-						echo ' selected="selected"';
-					}
-					echo ">$j</option>";
-				}
-			?>
-		</select>
-		or more times
-	</form>
-	</div>
-	<br /><br />
+	{ ?>
+		<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Player Kill Statistics</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php $tblPlayerKillStats->draw($result, $numitems, 95); ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
 <?php
 	}
 ?>

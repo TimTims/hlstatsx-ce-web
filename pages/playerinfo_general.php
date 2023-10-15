@@ -39,775 +39,336 @@ For support and installation notes visit http://www.hlxcommunity.com
     if (!defined('IN_HLSTATS')) {
         die('Do not access this file directly.');
     }
-?>
 
-	<?php printSectionTitle('Player Information'); ?>
-	<div class="subblock">
-		<div style="float:left;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-			<tr class="data-table-head">
-					<td style="vertical-align:top;">Player Profile<br /><br /></td>
-					<td style="text-align:center; vertical-align:middle;" rowspan="7" id="player_avatar">
-						<?php
-							$db->query
-							("
-								SELECT
-									hlstats_PlayerUniqueIds.uniqueId,
-									CAST(LEFT(hlstats_PlayerUniqueIds.uniqueId,1) AS unsigned) + CAST('76561197960265728' AS unsigned) + CAST(MID(hlstats_PlayerUniqueIds.uniqueId, 3,10)*2 AS unsigned) AS communityId
-								FROM
-									hlstats_PlayerUniqueIds
-								WHERE
-									hlstats_PlayerUniqueIds.playerId = '$player'
-							");
-							list($uqid, $coid) = $db->fetch_row();
-						
-							$status = 'Unknown';
-							$avatar_full = IMAGE_PATH."/unknown.jpg";
-						
-							if ($coid !== '76561197960265728') {
-
-								$profileUrl = "https://steamcommunity.com/profiles/$coid?xml=1";
-		
-								$curl = curl_init();
-								curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1 );
-								curl_setopt($curl, CURLOPT_URL, $profileUrl);
-
-								$xml = curl_exec($curl);
-								curl_close($curl);
-							}
-							
-							$xmlDoc = null;
-							if ($xml) {
-								$xmlDoc = simplexml_load_string($xml);
-							}
-						
-							if ($xmlDoc) {
-								$status = ucwords($xmlDoc->onlineState);
-								$avatar_full = $xmlDoc->avatarFull;
-							}
-						
-							echo("<img src=\"$avatar_full\" style=\"height:158px;width:158px;\" alt=\"Steam Community Avatar\" />");
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>
-						<?php
-							echo '<img src="'.getFlag($playerdata['flag']).'" alt="'.$playerdata['country'].'" title="'.$playerdata['country'].'" />&nbsp;';
-							echo '<strong>' . htmlspecialchars($playerdata['lastName'], ENT_COMPAT) . ' </strong>';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>
-						<?php
-							if ($playerdata['country'])
-							{
-								echo 'Location: ';
-								if ($playerdata['city']) {
-									echo htmlspecialchars($playerdata['city'], ENT_COMPAT) . ', ';
-								}
-								echo '<a href="'.$g_options['scripturl'].'?mode=countryclansinfo&amp;flag='.$playerdata['flag']."&amp;game=$game\">" . $playerdata['country'] . '</a>';
-							}
-							else
-							{
-								echo 'Location: (Unknown)';
-							}
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>
-						<?php 
-							$prefix = ((!preg_match('/^BOT/i',$uqid)) && $g_options['Mode'] == 'Normal') ? 'STEAM_0:' : '';
-							echo "Steam: <a href=\"http://steamcommunity.com/profiles/$coid\" target=\"_blank\">$prefix" . "$uqid</a>";
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>Status: <strong><?php echo $status; ?></strong></td>
-				</tr>
-				<tr class="bg2">
-					<td>
-						<a href="steam://friends/add/<?php echo($coid); ?>" target="_blank">Click here to add as friend</a>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td><?php echo "Karma: $statusmsg"; ?></td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:50%;">Member of Clan:</td>
-					<td style="width:50%;">
-						<?php
-							if ($playerdata['clan'])
-							{
-								echo '&nbsp;<a href="' . $g_options['scripturl'] . '?mode=claninfo&amp;clan=' . $playerdata['clan'] . '">' . htmlspecialchars($playerdata['clan_name'], ENT_COMPAT) . '</a>';
-							}
-							else
-								echo '(None)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>Real Name:</td>
-					<td>
-						<?php
-							if ($playerdata['fullName'])
-							{
-								echo '<b>' . htmlspecialchars($playerdata['fullName'], ENT_COMPAT) . '</b>';
-							}
-							else
-								echo "(<a href=\"" . $g_options['scripturl'] . '?mode=help#set"><em>Not Specified</em></a>)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>E-mail Address:</td>
-					<td>
-						<?php
-							if ($email = getEmailLink($playerdata['email']))
-							{
-								echo $email;
-							}
-							else
-								echo "(<a href=\"" . $g_options['scripturl'] . '?mode=help#set"><em>Not Specified</em></a>)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>Home Page:</td>
-					<td>
-						<?php
-							if ($playerdata['homepage'])
-							{
-								echo getLink($playerdata['homepage']);
-							}
-							else
-								echo "(<a href=\"" . $g_options['scripturl'] . '?mode=help#set"><em>Not Specified</em></a>)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-                                        <td>MM Rank:</td>
-                                        <td>
-                                                <?php
-                                                        if ($playerdata['mmrank'])
-                                                        {
-                                                                echo '<img src=hlstatsimg/mmranks/' . $playerdata['mmrank'] . '.png alt="rank" style=\"height:20px;width:50px; />';
-                                                        }
-                                                        else
-								echo '<img src=hlstatsimg/mmranks/0.png alt="rank" style=\"height:20px;width:50px; />';
-                                                ?>
-                                        </td>
-                                </tr>
-				<tr class="bg1">
-					<td>Last Connect:*</td>
-					<td>
-						<?php
-							$db->query
-							("
-								SELECT
-									DATE_FORMAT(eventTime, '%a. %b. %D, %Y @ %T')
-								FROM
-									hlstats_Events_Connects
-								WHERE
-									hlstats_Events_Connects.playerId = '$player'
-								ORDER BY
-									id desc
-								LIMIT
-									1
-							");
-							list($lastevent) = $db->fetch_row();
-							if ($lastevent)
-								echo $lastevent;
-							else
-								echo '(Unknown)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>Total Connection Time:</td>
-					<td>
-						<?php echo timestamp_to_str($playerdata['connection_time']); ?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>Average Ping:*</td>
-					<td>
-						<?php
-							$db->query
-							("
-								SELECT
-									ROUND(SUM(hlstats_Events_Latency.ping) / COUNT(hlstats_Events_Latency.ping), 0) AS av_ping,
-									ROUND(ROUND(SUM(hlstats_Events_Latency.ping) / COUNT(ping), 0) / 2, 0) AS av_latency
-								FROM
-									hlstats_Events_Latency
-								WHERE 
-									hlstats_Events_Latency.playerId = '$player'
-							");
-							list($av_ping, $av_latency) = $db->fetch_row();
-							if ($av_ping)
-								echo $av_ping." ms (Latency: $av_latency ms)";
-							else
-								echo '-';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>Favorite Server:*</td>
-					<td>
-						<?php
-							// leave this one
-							$db->query
-							("
-								SELECT
-									hlstats_Events_Entries.serverId,
-									hlstats_Servers.name,
-									COUNT(hlstats_Events_Entries.serverId) AS cnt
-								FROM
-									hlstats_Events_Entries
-								INNER JOIN
-									hlstats_Servers
-								ON
-									hlstats_Servers.serverId = hlstats_Events_Entries.serverId
-								WHERE 
-									hlstats_Events_Entries.playerId = '$player'
-								GROUP BY
-									hlstats_Events_Entries.serverId
-								ORDER BY
-									cnt DESC
-								LIMIT
-									1
-							");
-							list($favServerId, $favServerName) = $db->fetch_row();
-							echo "<a href='hlstats.php?game=$game&amp;mode=servers&amp;server_id=$favServerId'> $favServerName </a>";
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td>Favorite Map:*</td>
-					<td>
-						<?php
-							$db->query
-							("
-								SELECT
-									hlstats_Events_Entries.map,
-									COUNT(map) AS cnt
-								FROM
-									hlstats_Events_Entries
-								WHERE
-									hlstats_Events_Entries.playerId = '$player'
-								GROUP BY
-									hlstats_Events_Entries.map
-								ORDER BY
-									cnt DESC
-								LIMIT
-									1
-							");
-							list($favMap) = $db->fetch_row();
-							echo "<a href=\"hlstats.php?game=$game&amp;mode=mapinfo&amp;map=$favMap\"> $favMap </a>";
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td>Favorite Weapon:*</td>
-						<?php
-							$result = $db->query("
-								SELECT
-									hlstats_Events_Frags.weapon,
-									hlstats_Weapons.name,
-									COUNT(hlstats_Events_Frags.weapon) AS kills,
-									SUM(hlstats_Events_Frags.headshot=1) as headshots
-								FROM
-									hlstats_Events_Frags
-								LEFT JOIN
-									hlstats_Weapons
-								ON
-									hlstats_Weapons.code = hlstats_Events_Frags.weapon
-								WHERE
-									hlstats_Events_Frags.killerId=$player
-								GROUP BY
-									hlstats_Events_Frags.weapon,
-									hlstats_Weapons.name
-								ORDER BY
-									kills desc, headshots desc
-								LIMIT
-									1
-							");
-
-						    $fav_weapon = '';
-						    $weap_name = '';
-
-							while ($rowdata = $db->fetch_row($result)) {
-								$fav_weapon = $rowdata[0];
-								$weap_name = htmlspecialchars($rowdata[1]);
-							}
-
-							if ($fav_weapon == '') {
-								$fav_weapon = 'Unknown';
-                            }
-
-							$image = getImage("/games/$game/weapons/$fav_weapon");
-						// Check if image exists
-							$weaponlink = "<a href=\"hlstats.php?mode=weaponinfo&amp;weapon=$fav_weapon&amp;game=$game\">";
-							if ($image)
-							{
-								$cellbody = "\t\t\t\t\t<td style=\"text-align: center\">$weaponlink<img src=\"" . $image['url'] . "\" alt=\"$weap_name\" title=\"$weap_name\" />";
-							}
-							else
-							{
-								$cellbody = "\t\t\t\t\t<td><strong> $weaponlink$weap_name</strong>";
-							}
-							$cellbody .= "</a>";
-							echo $cellbody;
-						?>
-					</td>
-				</tr>
-			</table><br />
-		</div>
-
-		<div style="float:right;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td style="vertical-align:top;" colspan="3">Statistics Summary<br /><br /></td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:50%;">Activity:</td>
-					<td style="width:35%;">
-	                                <meter min="0" max="100" low="25" high="50" optimum="75" value="<?php
-                                        echo $playerdata['activity'] ?>"></meter>
-					</td>
-					<td style="width:15%;"><?php echo $playerdata['activity'].'%'; ?></td>
-				</tr>
-				<tr class="bg2">
-					<td>Points:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							echo '<b>' . number_format($playerdata['skill']) . '</b>';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Rank:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							if (($playerdata['activity'] > 0) && ($playerdata['hideranking'] == 0))
-							{
-								$rank = get_player_rank($playerdata);
-							}
-							else
-							{
-								if ($playerdata['hideranking'] == 1)
-								{
-									$rank = "Hidden";
-								}
-								elseif ($playerdata['hideranking'] == 2)
-								{
-									$rank = "<span style=\"color:red;\">Banned</span>";
-								}
-								else
-								{
-									$rank = 'Not active';
-								}
-							} 
-							if (is_numeric($rank))
-							{
-								echo '<b>' . number_format($rank) . '</b>';
-							}
-							else
-							{
-								echo "<b> $rank</b>";
-							}
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Kills per Minute:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							if ($playerdata['connection_time'] > 0)
-							{
-								echo sprintf('%.2f', ($playerdata['kills'] / ($playerdata['connection_time'] / 60)));
-							}
-							else
-							{
-								echo '-'; 
-							} 
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Kills per Death:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							$db->query
-							("
-								SELECT
-									IFNULL(ROUND(SUM(hlstats_Events_Frags.killerId = '$player') / IF(SUM(hlstats_Events_Frags.victimId = '$player') = 0, 1, SUM(hlstats_Events_Frags.victimId = '$player')), 2), '-')
-								FROM
-									hlstats_Events_Frags
-								WHERE
-									(
-										hlstats_Events_Frags.killerId = '$player'
-										OR hlstats_Events_Frags.victimId = '$player'
-									)
-							");
-							list($realkpd) = $db->fetch_row();
-							echo $playerdata['kpd'];
-							echo " ($realkpd*)";
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Headshots per Kill:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							$db->query
-							("
-								SELECT
-									IFNULL(SUM(hlstats_Events_Frags.headshot=1) / COUNT(*), '-')
-								FROM
-									hlstats_Events_Frags
-								WHERE
-									hlstats_Events_Frags.killerId = '$player'
-							");
-							list($realhpk) = $db->fetch_row();
-							echo $playerdata['hpk'];
-							echo " ($realhpk*)";
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Shots per Kill:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							$db->query
-							("
-								SELECT
-									IFNULL(ROUND((SUM(hlstats_Events_Statsme.hits) / SUM(hlstats_Events_Statsme.shots) * 100), 2), 0.0) AS accuracy,
-									SUM(hlstats_Events_Statsme.shots) AS shots,
-									SUM(hlstats_Events_Statsme.hits) AS hits,
-									SUM(hlstats_Events_Statsme.kills) AS kills
-								FROM
-									hlstats_Events_Statsme
-								WHERE
-									hlstats_Events_Statsme.playerId='$player'
-							");
-							list($playerdata['accuracy'], $sm_shots, $sm_hits, $sm_kills) = $db->fetch_row();
-							if ($sm_kills > 0)
-							{
-								echo sprintf('%.2f', ($sm_shots / $sm_kills));
-							}
-							else
-							{
-								echo '-';
-							}
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Weapon Accuracy:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							echo $playerdata['acc'] . '%';
-							echo " (".sprintf('%.0f', $playerdata['accuracy']).'%*)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Headshots:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							if ($playerdata['headshots']==0) 
-								echo number_format($realheadshots);
-							else
-								echo number_format($playerdata['headshots']);
-								echo ' ('.number_format($realheadshots).'*)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Kills:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							echo number_format($playerdata['kills']);
-							echo ' ('.number_format($realkills).'*)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Deaths:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							echo number_format($playerdata['deaths']);
-							echo ' ('.number_format($realdeaths).'*)';
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Longest Kill Streak:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							$db->query
-							("
-								SELECT
-									hlstats_Players.kill_streak
-								FROM
-									hlstats_Players
-								WHERE
-									hlstats_Players.playerId = '$player'
-							");
-							list($kill_streak) = $db->fetch_row();
-							echo number_format($kill_streak);
-						?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Longest Death Streak:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							$db->query
-							("
-								SELECT
-									hlstats_Players.death_streak
-								FROM
-									hlstats_Players
-								WHERE
-									hlstats_Players.playerId = '$player'
-							");
-							list($death_streak) = $db->fetch_row();
-							echo number_format($death_streak);
-						?>
-					</td>
-				</tr>
-				<tr class="bg2">
-					<td style="width:45%;">Suicides:</td>
-					<td style="width:55%;" colspan="2">
-						<?php echo number_format($playerdata['suicides']); ?>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="width:45%;">Teammate Kills:</td>
-					<td style="width:55%;" colspan="2">
-						<?php
-							echo number_format($playerdata['teamkills']);
-							echo ' ('.number_format($realteamkills).'*)';
-						?>
-					</td>
-				</tr>
-			</table><br />
-			<?php
-				echo '&nbsp;&nbsp;<img src="' . IMAGE_PATH . '/history.gif" style="padding-left:3px;padding-right:3px;" alt="History" />&nbsp;<b>'
-					. htmlspecialchars($playerdata['lastName'], ENT_COMPAT) . '</b>\'s History:<br />';
-				echo '&nbsp;&nbsp;<a href="' . $g_options['scripturl'] . "?mode=playerhistory&amp;player=$player\">Events</a>&nbsp;|&nbsp;";
-				echo '<a href="' . $g_options['scripturl'] . "?mode=playersessions&amp;player=$player\">Sessions</a>&nbsp;|&nbsp;";
-				$resultCount = $db->query
-				("
-					SELECT
-						COUNT(*)
-					FROM
-						hlstats_Players_Awards
-					WHERE
-						hlstats_Players_Awards.playerId = $player
-				");
-				list($numawards) = $db->fetch_row($resultCount);
-				echo "<a href=\"" . $g_options['scripturl'] . "?mode=playerawards&amp;player=$player\">Awards&nbsp;($numawards)</a>&nbsp;|&nbsp;";
-				if ($g_options["nav_globalchat"] == 1)
-				{
-					echo "<a href=\"" . $g_options['scripturl'] . "?mode=chathistory&amp;player=$player\">Chat</a>";
-				}
-			?>
-			<br />&nbsp;&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=search&amp;st=player&amp;q=<?php echo $pl_urlname; ?>"><img src="<?php echo IMAGE_PATH; ?>/search.gif" style="margin-left:3px;margin-right:3px;" alt="Search" />&nbsp;Find other players with the same name</a>
-		</div>
-	</div>
-	<br /><br />
-	<div style="clear:both;padding-top:24px;"></div>
-	<?php printSectionTitle('Miscellaneous Statistics'); ?>
-	<div class="subblock">
-		<div style="float:left;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td>Player Trend</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;">
-						<?php echo "<img src=\"trend_graph.php?bgcolor=".$g_options['graphbg_trend'].'&amp;color='.$g_options['graphtxt_trend']."&amp;player=$player\" alt=\"Player Trend Graph\" />"; ?>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div style="float:right;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td colspan="2">Forum Signature</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;">
-						<br /><br />
-						<?php
-							if ($g_options['modrewrite'] == 0)
-							{
-								$imglink = $siteurlneo.'sig.php?player_id='.$player.'&amp;background='.$g_options['sigbackground'];
-								$jimglink = $siteurlneo.'sig.php?player_id='.$player.'&background='.$g_options['sigbackground'];
-							}
-							else
-							{
-								$imglink = $siteurlneo.'sig-'.$player.'-'.$g_options['sigbackground'].'.png';
-								$jimglink = $imglink;
-							}
-							
-							echo "<img src=\"$imglink\" title=\"Copy &amp; Paste the whole URL below in your forum signature\" alt=\"forum sig image\"/>";
-							$script_path = (isset($_SERVER['SSL']) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")) ? 'https://' : 'http://';
-							$script_path .= $_SERVER['HTTP_HOST'];
-							$script_path .= str_replace('\\','/',dirname($_SERVER['PHP_SELF']));
-							$script_path = preg_replace('/\/$/','',$script_path);
-						?>
-						<br /><br />
-						<script type="text/javascript">
-							/* <![CDATA[ */
-							function setForumText(val)
-							{
-								var txtArea = document.getElementById('siglink');
-								switch(val)
-								{
-									case 0:
-										<?php echo "txtArea.value = '$jimglink'\n"; ?>
-										break;	
-									case 1:
-										<?php echo "txtArea.value = '[url=$script_path/hlstats.php?mode=playerinfo&player=$player"."][img]$jimglink"."[/img][/url]'\n"; ?>
-										break;
-									case 2:
-										<?php echo "txtArea.value = '[url=\"$script_path/hlstats.php?mode=playerinfo&player=$player\"][img]$jimglink"."[/img][/url]'\n"; ?>
-										break;
-								}
-							}
-							/* ]]> */
-						</script>
-						<a href="" onclick="setForumText(1);return false">
-							bbCode 1 (phpBB, SMF)</a>&nbsp;|&nbsp;<a href="" onclick="setForumText(2);return false">bbCode 2 (IPB)</a>&nbsp;|&nbsp;<a href="" onclick="setForumText(0);return false">Direct Image
-						</a>
-						<?php echo '<textarea style="width: 95%; height: 50px;" rows="2" cols="70" id="siglink" readonly="readonly" onclick="document.getElementById(\'siglink\').select();">[url='."$script_path/hlstats.php?mode=playerinfo&amp;player=$player"."][img]$imglink".'[/img][/url]</textarea>'; ?>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br /><br />
-<?php
-// Current rank & rank history
+	// Check for Steam Avatar
 	$db->query
 	("
 		SELECT
-			hlstats_Ranks.rankName,
-			hlstats_Ranks.image,
-			hlstats_Ranks.minKills
+			hlstats_PlayerUniqueIds.uniqueId,
+			CAST(LEFT(hlstats_PlayerUniqueIds.uniqueId,1) AS unsigned) + CAST('76561197960265728' AS unsigned) + CAST(MID(hlstats_PlayerUniqueIds.uniqueId, 3,10)*2 AS unsigned) AS communityId
 		FROM
-			hlstats_Ranks
+			hlstats_PlayerUniqueIds
 		WHERE
-			hlstats_Ranks.minKills <= ".$playerdata['kills']."
-			AND hlstats_Ranks.game = '$game'
-		ORDER BY
-			hlstats_Ranks.minKills DESC
-		LIMIT
-			1
+			hlstats_PlayerUniqueIds.playerId = '$player'
 	");
-	$result = $db->fetch_array();
-	$rankimage = getImage('/ranks/'.$result['image']);
-	$rankName = $result['rankName'];
-	$rankCurMinKills = $result['minKills']; 
+	list($uqid, $coid) = $db->fetch_row();
+
+	$status = 'Unknown';
+	$avatar_full = IMAGE_PATH."/unknown.jpg";
+
+	if ($coid !== '76561197960265728') {
+
+		$profileUrl = "https://steamcommunity.com/profiles/$coid?xml=1";
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt($curl, CURLOPT_URL, $profileUrl);
+
+		$xml = curl_exec($curl);
+		curl_close($curl);
+	}
+	
+	$xmlDoc = null;
+	if ($xml) {
+		$xmlDoc = simplexml_load_string($xml);
+	}
+
+	if ($xmlDoc) {
+		$status = ucwords($xmlDoc->onlineState);
+		$avatar_full = $xmlDoc->avatarFull;
+	}
+
 	$db->query
-	("
-		SELECT
-			hlstats_Ranks.rankName,
-			hlstats_Ranks.minKills
-		FROM
-			hlstats_Ranks
-		WHERE
-			hlstats_Ranks.minKills > ".$playerdata['kills']."
-			AND hlstats_Ranks.game = '$game'
-		ORDER BY
-			hlstats_Ranks.minKills
-		LIMIT
-			1
+		("
+			SELECT
+				DATE_FORMAT(eventTime, '%a. %b. %D, %Y @ %T')
+			FROM
+				hlstats_Events_Connects
+			WHERE
+				hlstats_Events_Connects.playerId = '$player'
+			ORDER BY
+				id desc
+			LIMIT
+				1
+		");
+		list($lastevent) = $db->fetch_row();
+		if ($lastevent)
+			$last_connect = $lastevent;
+		else
+			$last_connect = "Unknown";
+	
+	$db->query
+		("
+			SELECT
+				ROUND(SUM(hlstats_Events_Latency.ping) / COUNT(hlstats_Events_Latency.ping), 0) AS av_ping,
+				ROUND(ROUND(SUM(hlstats_Events_Latency.ping) / COUNT(ping), 0) / 2, 0) AS av_latency
+			FROM
+				hlstats_Events_Latency
+			WHERE 
+				hlstats_Events_Latency.playerId = '$player'
+		");
+		list($av_ping, $av_latency) = $db->fetch_row();
+		if ($av_ping)
+			$average_ping = $av_ping." ms (Latency: $av_latency ms)";
+		else
+			$average_ping = '-';
+	$db->query
+		("
+			SELECT
+				hlstats_Events_Entries.serverId,
+				hlstats_Servers.name,
+				COUNT(hlstats_Events_Entries.serverId) AS cnt
+			FROM
+				hlstats_Events_Entries
+			INNER JOIN
+				hlstats_Servers
+			ON
+				hlstats_Servers.serverId = hlstats_Events_Entries.serverId
+			WHERE 
+				hlstats_Events_Entries.playerId = '$player'
+			GROUP BY
+				hlstats_Events_Entries.serverId
+			ORDER BY
+				cnt DESC
+			LIMIT
+				1
+		");
+		list($favServerId, $favServerName) = $db->fetch_row();
+		$fav_server = "<a href='hlstats.php?game=$game&amp;mode=servers&amp;server_id=$favServerId'> $favServerName </a>";
+
+	$db->query
+		("
+			SELECT
+				hlstats_Events_Entries.map,
+				COUNT(map) AS cnt
+			FROM
+				hlstats_Events_Entries
+			WHERE
+				hlstats_Events_Entries.playerId = '$player'
+			GROUP BY
+				hlstats_Events_Entries.map
+			ORDER BY
+				cnt DESC
+			LIMIT
+				1
+		");
+		list($favMap) = $db->fetch_row();
+		$fav_map = "<a href=\"hlstats.php?game=$game&amp;mode=mapinfo&amp;map=$favMap\"> $favMap </a>";
+
+	$result = $db->query("
+	SELECT
+		hlstats_Events_Frags.weapon,
+		hlstats_Weapons.name,
+		COUNT(hlstats_Events_Frags.weapon) AS kills,
+		SUM(hlstats_Events_Frags.headshot=1) as headshots
+	FROM
+		hlstats_Events_Frags
+	LEFT JOIN
+		hlstats_Weapons
+	ON
+		hlstats_Weapons.code = hlstats_Events_Frags.weapon
+	WHERE
+		hlstats_Events_Frags.killerId=$player
+	GROUP BY
+		hlstats_Events_Frags.weapon,
+		hlstats_Weapons.name
+	ORDER BY
+		kills desc, headshots desc
+	LIMIT
+		1
 	");
-	if ($db->num_rows() == 0)
+
+	$fav_weapon = '';
+	$weap_name = '';
+
+	while ($rowdata = $db->fetch_row($result)) {
+		$fav_weapon = $rowdata[0];
+		$weap_name = htmlspecialchars($rowdata[1]);
+	}
+
+	if ($fav_weapon == '') {
+		$fav_weapon = 'Unknown';
+	}
+
+	$image = getImage("/games/$game/weapons/$fav_weapon");
+// Check if image exists
+	$weaponlink = "<a href=\"hlstats.php?mode=weaponinfo&amp;weapon=$fav_weapon&amp;game=$game\">";
+	if ($image)
 	{
-		$rankKillsNeeded = 0;
-		$rankPercent = 0;
+		$cellbody = "$weaponlink<img src=\"" . $image['url'] . "\" alt=\"$weap_name\" title=\"$weap_name\" />";
 	}
 	else
 	{
-		$result = $db->fetch_array();
-		$rankKillsNeeded = $result['minKills'] - $playerdata['kills'];
-		$rankPercent = ($playerdata['kills'] - $rankCurMinKills) * 100 / ($result['minKills'] - $rankCurMinKills);
+		$cellbody = "$weaponlink$weap_name";
+	}
+	$cellbody .= "</a>";
+	$favourite_weapon = $cellbody;
+
+	if (($playerdata['activity'] > 0) && ($playerdata['hideranking'] == 0))
+	{
+		$rank = get_player_rank($playerdata);
+	}
+	else
+	{
+		if ($playerdata['hideranking'] == 1)
+		{
+			$rank = "Hidden";
+		}
+		elseif ($playerdata['hideranking'] == 2)
+		{
+			$rank = "<span class=\"text-danger\">Banned</span>";
+		}
+		else
+		{
+			$rank = 'Not active';
+		}
+	} 
+	if (is_numeric($rank))
+	{
+		$ps_rank = number_format($rank);
+	}
+	else
+	{
+		$ps_rank = $rank;
 	}
 	$db->query
-	("
-		SELECT
-			hlstats_Ranks.rankName,
-			hlstats_Ranks.image
-		FROM
-			hlstats_Ranks
-		WHERE
-			hlstats_Ranks.minKills <= ".$playerdata['kills']."
-			AND hlstats_Ranks.game = '$game'
-		ORDER BY
-			hlstats_Ranks.minKills
-	");
-
-    $rankHistory = "";
-    $db_num_rows = $db->num_rows();
-
-	for ($i = 1; $i < $db_num_rows; $i++) {
+		("
+			SELECT
+				IFNULL(ROUND(SUM(hlstats_Events_Frags.killerId = '$player') / IF(SUM(hlstats_Events_Frags.victimId = '$player') = 0, 1, SUM(hlstats_Events_Frags.victimId = '$player')), 2), '-')
+			FROM
+				hlstats_Events_Frags
+			WHERE
+				(
+					hlstats_Events_Frags.killerId = '$player'
+					OR hlstats_Events_Frags.victimId = '$player'
+				)
+		");
+		list($realkpd) = $db->fetch_row();
+		$stats_kpd = $playerdata['kpd'] . " ($realkpd*)";
+	$db->query
+		("
+			SELECT
+				IFNULL(ROUND((SUM(hlstats_Events_Statsme.hits) / SUM(hlstats_Events_Statsme.shots) * 100), 2), 0.0) AS accuracy,
+				SUM(hlstats_Events_Statsme.shots) AS shots,
+				SUM(hlstats_Events_Statsme.hits) AS hits,
+				SUM(hlstats_Events_Statsme.kills) AS kills
+			FROM
+				hlstats_Events_Statsme
+			WHERE
+				hlstats_Events_Statsme.playerId='$player'
+		");
+		list($playerdata['accuracy'], $sm_shots, $sm_hits, $sm_kills) = $db->fetch_row();
+		if ($sm_kills > 0)
+		{
+			$stats_spk = sprintf('%.2f', ($sm_shots / $sm_kills));
+		}
+		else
+		{
+			$stats_spk = '-';
+		}
+	$db->query
+		("
+			SELECT
+				IFNULL(SUM(hlstats_Events_Frags.headshot=1) / COUNT(*), '-')
+			FROM
+				hlstats_Events_Frags
+			WHERE
+				hlstats_Events_Frags.killerId = '$player'
+		");
+		list($realhpk) = $db->fetch_row();
+		$stats_hpk = $playerdata['hpk'] . " ($realhpk*)";
+		$db->query
+		("
+			SELECT
+				hlstats_Players.kill_streak
+			FROM
+				hlstats_Players
+			WHERE
+				hlstats_Players.playerId = '$player'
+		");
+		list($kill_streak) = $db->fetch_row();
+		$stats_ks = number_format($kill_streak);
+	$db->query
+		("
+			SELECT
+				hlstats_Players.death_streak
+			FROM
+				hlstats_Players
+			WHERE
+				hlstats_Players.playerId = '$player'
+		");
+		list($death_streak) = $db->fetch_row();
+		$stats_ds = number_format($death_streak);
+	$db->query
+		("
+			SELECT
+				hlstats_Ranks.rankName,
+				hlstats_Ranks.image,
+				hlstats_Ranks.minKills
+			FROM
+				hlstats_Ranks
+			WHERE
+				hlstats_Ranks.minKills <= ".$playerdata['kills']."
+				AND hlstats_Ranks.game = '$game'
+			ORDER BY
+				hlstats_Ranks.minKills DESC
+			LIMIT
+				1
+		");
 		$result = $db->fetch_array();
+		$rankimage = getImage('/ranks/'.$result['image']);
+		$rankName = $result['rankName'];
+		$rankCurMinKills = $result['minKills']; 
+		$db->query
+		("
+			SELECT
+				hlstats_Ranks.rankName,
+				hlstats_Ranks.minKills
+			FROM
+				hlstats_Ranks
+			WHERE
+				hlstats_Ranks.minKills > ".$playerdata['kills']."
+				AND hlstats_Ranks.game = '$game'
+			ORDER BY
+				hlstats_Ranks.minKills
+			LIMIT
+				1
+		");
+		if ($db->num_rows() == 0)
+		{
+			$rankKillsNeeded = 0;
+			$rankPercent = 0;
+		}
+		else
+		{
+			$result = $db->fetch_array();
+			$rankKillsNeeded = $result['minKills'] - $playerdata['kills'];
+			$rankPercent = ($playerdata['kills'] - $rankCurMinKills) * 100 / ($result['minKills'] - $rankCurMinKills);
+		}
+		$db->query
+		("
+			SELECT
+				hlstats_Ranks.rankName,
+				hlstats_Ranks.image
+			FROM
+				hlstats_Ranks
+			WHERE
+				hlstats_Ranks.minKills <= ".$playerdata['kills']."
+				AND hlstats_Ranks.game = '$game'
+			ORDER BY
+				hlstats_Ranks.minKills
+		");
 
-		$histimage = getImage('/ranks/' . $result['image'] . '_small');
-		$rankHistory .= '<img src="' . $histimage['url'] . '" title="' . $result['rankName'] . '" alt="' . $result['rankName'] . '" /> ';
-	} 
-?>
+		$rankHistory = "";
+		$db_num_rows = $db->num_rows();
 
-	<div style="clear:both;padding-top:24px;"></div>
-	<?php printSectionTitle('Ranks'); ?>
-	<div class="subblock">
-		<div style="float:left;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td colspan="2">
-						Current rank: <b><?php echo htmlspecialchars($rankName, ENT_COMPAT); ?></b>
-					</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;" colspan="2">
-						<?php echo '<img src="'.$rankimage['url']."\" alt=\"$rankName\" title=\"$rankName\" />"; ?>
-					</td>
-				</tr>
-				<tr class="data-table-head">
-					<td style="width:60%;">
-						<meter min="0" max="100" low="25" high="50" optimum="75" value="<?php
-                                        echo $rankPercent ?>"></meter>
-					
-					</td>
-					<td style="width:40%;">
-						Kills needed: <b><?php echo "$rankKillsNeeded (".number_format($rankPercent, 0, '.', '');?>%)</b>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div style="float:right;vertical-align:top;width:48.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td>Rank history</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;"><?php echo $rankHistory; ?></td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br /><br />
+		for ($i = 1; $i < $db_num_rows; $i++) {
+			$result = $db->fetch_array();
 
-<?php
-// Awards
+			$histimage = getImage('/ranks/' . $result['image'] . '_small');
+			$rankHistory .= '<img src="' . $histimage['url'] . '" title="' . $result['rankName'] . '" alt="' . $result['rankName'] . '" /> ';
+		}
+	// Awards
 	$numawards = $db->query
 	("
 		SELECT
@@ -950,35 +511,242 @@ For support and installation notes visit http://www.hlxcommunity.com
 		}		
 		$GlobalAwardsList .= "<img src=\"$image\" alt=\"$a->ribbonName\" title=\"$a->ribbonName\" /> ";
 	}
-	if ($ribbonList != '' || $GlobalAwardsList != '')
-	{
 ?>
-
-	<div style="clear:both;padding-top:24px;"></div>
-	<?php printSectionTitle('Awards (hover over image to see name)'); ?>
-	<div class="subblock">
-		<div style="float:left;vertical-align:top;width:68.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td>Ribbons</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;"><?php echo $ribbonList; ?></td>
-				</tr>
-			</table>
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+      <div class="card-body p-3">
+        <div class="row gx-4">
+          <div class="col-auto">
+            <div class="avatar avatar-xl position-relative">
+              <img src="<? echo $avatar_full; ?>" alt="Steam Profile Picture" class="w-100 border-radius-lg shadow-sm">
+            </div>
+          </div>
+          <div class="col-auto my-auto">
+            <div class="h-100">
+            	<h5 class="mb-1">
+                	<?php echo htmlspecialchars($playerdata['lastName'], ENT_COMPAT); ?>
+              	</h5>
+              	<p class="mb-0 font-weight-bold text-sm">
+				<?php 
+					$prefix = ((!preg_match('/^BOT/i',$uqid)) && $g_options['Mode'] == 'Normal') ? 'STEAM_0:' : '';
+					echo "<a href=\"http://steamcommunity.com/profiles/$coid\" target=\"_blank\">$prefix" . "$uqid</a>";
+				?>              
+				</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="nav-wrapper position-relative end-0">
+              <ul class="nav nav-pills nav-fill p-1">
+                <li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="<?php echo $g_options['scripturl']; ?>?mode=playerhistory&amp;player=<?php echo $player; ?>">
+                    <i class="bi bi-calendar-event-fill"></i>
+                    <span class="ms-2">Events</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="<?php echo $g_options['scripturl']; ?>?mode=playersessions&amp;player=<?php echo $player; ?>">
+                    <i class="bi bi-dpad-fill"></i>
+                    <span class="ms-2">Sessions</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " href="<?php echo $g_options['scripturl']; ?>?mode=playerawards&amp;player=<?php echo $player; ?>">
+                    <i class="bi bi-award-fill"></i>
+                    <span class="ms-2">Awards</span>
+                  </a>
+                </li>
+				<?php
+				if ($g_options["nav_globalchat"] == 1){
+				echo '<li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center" href="' . $g_options['scripturl'] . '?mode=chathistory&amp;player=' . $player .'">
+                    <i class="bi bi-chat-fill"></i>
+                    <span class="ms-2">Chat</span>
+                  </a>
+                </li>';
+				}
+				?>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Player Info</p>
+              <div class="row">
+                <div class="col-md-6">
+                    <label>Country</label>
+                    <p class="ms-1"><?php if ($playerdata['country']){ if ($playerdata['city']){ echo htmlspecialchars($playerdata['city'], ENT_COMPAT) . ', '; } echo '<a href="'.$g_options['scripturl'].'?mode=countryclansinfo&amp;flag='.$playerdata['flag']."&amp;game=$game\">" . $playerdata['country'] . '</a>'; } else{ echo 'Unknown'; }?> <img src="<?php echo getFlag($playerdata['flag']); ?>" alt="<?php echo $playerdata['country']; ?>" title="<?php echo $playerdata['country']; ?>" /></p>
+                </div>
+                <div class="col-md-6">
+                    <label>Status</label>
+                    <p class="ms-1"><?php echo $status; ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label>Real Name</label>
+                    <p class="ms-1"><?php if ($playerdata['fullName']){ echo htmlspecialchars($playerdata['fullName'], ENT_COMPAT); } else echo "<a href=\"" . $g_options['scripturl'] . '?mode=help#set">Not Specified</a>'; ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label>Email Address</label>
+					<p class="ms-1"><?php if ($email = getEmailLink($playerdata['email'])){ echo $email; } else echo "<a href=\"" . $g_options['scripturl'] . '?mode=help#set">Not Specified</a>'; ?></p>
+                </div>
+				<div class="col-md-6">
+                    <label>Home Page</label>
+					<p class="ms-1"><?php if ($playerdata['homepage']){ echo getLink($playerdata['homepage']); } else echo "<a href=\"" . $g_options['scripturl'] . '?mode=help#set">Not Specified</a>'; ?></p>
+                </div>
+				<div class="col-md-6">
+					<label>Clan</label>
+					<p class="ms-1"><?php if ($playerdata['clan']){ echo '&nbsp;<a href="' . $g_options['scripturl'] . '?mode=claninfo&amp;clan=' . $playerdata['clan'] . '">' . htmlspecialchars($playerdata['clan_name'], ENT_COMPAT) . '</a>'; } else echo 'None'; ?></p>
+				</div>
+              </div>
+              <hr class="horizontal dark">
+              <p class="text-uppercase text-sm">In-game Info</p>
+              <div class="row">
+                <div class="col-md-6">
+					<label>Last Connect</label>
+					<p class="ms-1"><?php echo $last_connect; ?></p>
+                </div>
+				<div class="col-md-6">
+					<label>Total Connect Time</label>
+					<p class="ms-1"><?php echo timestamp_to_str($playerdata['connection_time']); ?></p>
+                </div>
+				<div class="col-md-6">
+					<label>Average Ping</label>
+					<p class="ms-1"><?php echo $average_ping; ?></p>
+                </div>
+				<div class="col-md-12">
+					<label>Favourite Server</label>
+					<p class="ms-1"><?php echo $fav_server; ?></p>
+                </div>
+				<div class="col-md-6">
+					<label>Favourite Map</label>
+					<p class="ms-1"><?php echo $fav_map; ?></p>
+                </div>
+				<div class="col-md-6">
+					<label>Favourite Weapon</label>
+					<p class="ms-1"><?php echo $favourite_weapon; ?></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+			<p class="text-uppercase text-sm">Player Statistics</p>
+              <div class="row">
+				<div class="col-md-12">
+					<label>Activity</label>
+					<div class="progress ms-1" role="progressbar" aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
+						<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: <?php echo $playerdata['activity']; ?>%"><?php echo $playerdata['activity'].'%'; ?></div>
+					</div>
+					<p></p>
+				</div>
+				<div class="col-md-6">
+					<label>Points</label>
+					<p class="ms-1"><?php echo number_format($playerdata['skill']); ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Rank</label>
+					<p class="ms-1"># <?php echo $ps_rank; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Kills</label>
+					<p class="ms-1"><?php echo number_format($playerdata['kills']) . ' ('.number_format($realkills).'*)'; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Deaths</label>
+					<p class="ms-1"><?php echo number_format($playerdata['deaths']) . ' ('.number_format($realdeaths).'*)'; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Headshots</label>
+					<p class="ms-1"><?php echo number_format($playerdata['headshots']) . ' ('.number_format($realheadshots).'*)'; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Accuracy</label>
+					<p class="ms-1"><?php echo $playerdata['acc'] . '%' . " (".sprintf('%.0f', $playerdata['accuracy']).'%*)'; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Kills per Minute</label>
+					<p class="ms-1"><?php if ($playerdata['connection_time'] > 0){ echo sprintf('%.2f', ($playerdata['kills'] / ($playerdata['connection_time'] / 60))); } else{ echo '-'; } ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Kills per Death</label>
+					<p class="ms-1"><?php echo $stats_kpd; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Shots per Kill</label>
+					<p class="ms-1"><?php echo $stats_spk; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Shots per Kill</label>
+					<p class="ms-1"><?php echo $stats_hpk; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Longest Killstreak</label>
+					<p class="ms-1"><?php echo $stats_ks; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Longest Deathstreak</label>
+					<p class="ms-1"><?php echo $stats_ds; ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Suicides</label>
+					<p class="ms-1"><?php echo number_format($playerdata['suicides']); ?></p>
+				</div>
+				<div class="col-md-6">
+					<label>Teammate Kills</label>
+					<p class="ms-1"><?php echo number_format($playerdata['teamkills']) . ' ('.number_format($realteamkills).'*)'; ?></p>
+				</div>
+              </div>
+            </div>
+          </div>
+        </div>
+		<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Rank Info</p>
+              <div class="row">
+				<div class="col-md-6">
+					<label>Rank</label>
+					<p class="ms-1"><?php echo htmlspecialchars($rankName, ENT_COMPAT); ?></p>
+					<?php echo '<img src="'.$rankimage['url']."\" alt=\"$rankName\" title=\"$rankName\" />"; ?>
+				</div>
+				<div class="col-md-6">
+					<label>Rank History</label>
+					<p><?php echo $rankHistory; ?></p>
+				</div>
+              </div>
+            </div>
+          </div>
 		</div>
-		<div style="float:right;vertical-align:top;width:28.5%;">
-			<table class="data-table">
-				<tr class="data-table-head">
-					<td colspan="2">Global Awards</td>
-				</tr>
-				<tr class="bg1">
-					<td style="text-align:center;"><?php echo $GlobalAwardsList; ?></td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br /><br />
-<?php
-	}
-?> 
+		<?php
+		if ($ribbonList != '' || $GlobalAwardsList != ''){ ?>
+		<div class="col-md-8 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Ribbons</p>
+              <div class="row">
+				<div class="col-md-12">
+					<p class="ms-1"><?php echo $ribbonList; ?></p>
+				</div>
+              </div>
+            </div>
+          </div>
+        </div>
+		<div class="col-md-4 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Global Awards</p>
+              <div class="row">
+				<div class="col-md-12">
+					<p class="ms-1"><?php echo $GlobalAwardsList; ?></p>
+				</div>
+              </div>
+            </div>
+          </div>
+        </div>
+	</div> <?php } ?>

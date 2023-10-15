@@ -156,13 +156,18 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($numitems > 0)
 	{
 ?>
-<div style="clear:both;padding-top:20px;"></div>
-<?php
-		printSectionTitle('Map Performance *');
-		$tblMaps->draw($result, $numitems, 95);
-?>
-<br /><br />
-
+	<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Map Performance</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php $tblMaps->draw($result, $numitems, 95); ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
 <?php
 	}
 ?>

@@ -145,11 +145,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 	");
 	$numitems = $db->num_rows($result);
 	if ($numitems > 0)
-	{
-		printSectionTitle('Server Activity *');
-		$tblServers->draw($result, $numitems, 95);
-?>
-	<br /><br />
+	{ ?>
+		<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Server Activity</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php $tblServers->draw($result, $numitems, 95); ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
 <?php
 	}
 ?>

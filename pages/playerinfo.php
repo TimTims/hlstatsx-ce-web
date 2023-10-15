@@ -236,83 +236,13 @@ $db->query("
 		$pl_name
 	);
 ?>
-<div class="block" id="main">
 <?php	
-	if ($g_options['playerinfo_tabs']=='1')
-	{
-?>
-	<ul class="subsection_tabs" id="tabs_playerinfo">
-		<li>
-			<a href="#" id="tab_general_aliases">General</a>
-		</li>
-		<li>
-			<a href="#" id="tab_playeractions_teams">Teams &amp; Actions</a>
-		</li>
-		<li>
-			<a href="#" id="tab_weapons">Weapons</a>
-		</li>
-		<li>
-			<a href="#" id="tab_mapperformance_servers">Maps &amp; Servers</a>
-		</li>
-		<li>
-			<a href="#" id="tab_killstats">Killstats</a>
-		</li>
-	</ul><br />
-	<div id="main_content"></div>
-	<script type="text/javascript">
-		var Tabs = new Tabs
-		(
-			$('main_content'), $$('#main ul.subsection_tabs a'),
-			{
-				'mode': 'playerinfo',
-				'game': '<?php echo $game; ?>',
-				'loadingImage': '<?php echo IMAGE_PATH; ?>/ajax.gif',
-				'defaultTab': 'general_aliases',
-				'extra':
-				{
-					'player': '<?php echo $player; ?>', 'killLimit': '<?php echo $killLimit; ?>'
-				}
-			}
-		);
-	</script>
-<?php
-	}
-	else
-	{
-		echo "\n<div id=\"tabgeneral\" class=\"tab\">\n";
 			require_once PAGE_PATH.'/playerinfo_general.php';
 			require_once PAGE_PATH.'/playerinfo_aliases.php';
-		echo '</div>';
-		echo "\n<div id=\"tabteams\" class=\"tab\">\n";
 			require_once PAGE_PATH.'/playerinfo_playeractions.php';
 			require_once PAGE_PATH.'/playerinfo_teams.php';
-		echo '</div>';
-		echo "\n<div id=\"tabweapons\" class=\"tab\">\n";
 			require_once PAGE_PATH.'/playerinfo_weapons.php';
-		echo '</div>';
-		echo "\n<div id=\"tabmaps\" class=\"tab\">\n";
 			require_once PAGE_PATH.'/playerinfo_mapperformance.php';
 			require_once PAGE_PATH.'/playerinfo_servers.php';
-		echo '</div>';
-		echo "\n<div id=\"tabkills\" class=\"tab\">\n";
 			require_once PAGE_PATH.'/playerinfo_killstats.php';
-		echo '</div>';
-	}
 ?>
-</div>
-<div class="block" style="clear:both;padding-top:12px;">
-	<div class="subblock">
-		<div style="float:left;">
-			Items marked "*" above are generated from the last <?php echo $g_options['DeleteDays']; ?> days.
-		</div>
-		<div style="float:right;">
-			<?php
-				if (isset($_SESSION['loggedin']))
-				{
-					echo 'Admin Options: <a href="'.$g_options['scripturl']."?mode=admin&amp;task=tools_editdetails_player&amp;id=$player\">Edit Player Details</a><br />";
-				}
-			?>
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?mode=players&amp;game=$game"; ?>">Player Rankings</a>
-		</div>
-	</div>
-</div>

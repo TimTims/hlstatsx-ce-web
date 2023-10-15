@@ -120,12 +120,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($numitems > 0)
 	{
 ?>
-		<div style="clear:both;padding-top:20px;"></div>
-<?php
-		printSectionTitle('Player Actions *');
-		$tblPlayerActions->draw($result, $numitems, 95);
-?>
-		<br /><br />
+		<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Player Actions</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php $tblPlayerActions->draw($result, $numitems, 95); ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
+
 <?php
 	}
 	$tblPlayerPlayerActionsV = new Table
@@ -190,14 +197,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 		if ($numitems == 0)
 		{
 ?>
-		<div style="clear:both;padding-top:20px;"></div>
+		<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Player Actions</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php $tblPlayerPlayerActionsV->draw($result, $numitems, 95); ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
 <?php
 		}
-		
-		printSectionTitle('Victims of Player-Player Actions *');
-		$tblPlayerPlayerActionsV->draw($result, $numitems, 95);
-?>
-		<br /><br />
-<?php
 	}
 ?>

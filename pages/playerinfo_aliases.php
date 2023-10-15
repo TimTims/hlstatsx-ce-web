@@ -156,16 +156,18 @@ For support and installation notes visit http://www.hlxcommunity.com
 	{
 ?>
 
-<div style="clear:both;padding-top:24px;"></div>
-<?php
-		printSectionTitle('Aliases');
-		if ($numitems > 0)
-		{
-			$tblAliases->draw($result, $numitems, 95);
-		}
-?>
-<br /><br />
-
+<div class="col-md-12 mt-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="text-uppercase text-sm">Player Aliases</p>
+              <div class="row">
+				<div class="col-md-12">
+					<?php if ($numitems > 0){ $tblAliases->draw($result, $numitems, 95); } ?>
+				</div>
+              </div>
+            </div>
+          </div>
+		</div>
 <?php
 	}
 ?>
