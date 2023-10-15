@@ -246,3 +246,4 @@ $db->query("
 			require_once PAGE_PATH.'/playerinfo_servers.php';
 			require_once PAGE_PATH.'/playerinfo_killstats.php';
 ?>
+</div>

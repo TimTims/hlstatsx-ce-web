@@ -533,7 +533,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 				</p>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+          <div class="col-lg-5 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
             <div class="nav-wrapper position-relative end-0">
               <ul class="nav nav-pills nav-fill p-1">
                 <li class="nav-item">
@@ -563,6 +563,14 @@ For support and installation notes visit http://www.hlxcommunity.com
                   </a>
                 </li>';
 				}
+				if (isset($_SESSION['loggedin'])){
+				echo '<li class="nav-item">
+				<a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center" href="'.$g_options['scripturl'].'?mode=admin&amp;task=tools_editdetails_player&amp;id='.$player.'">
+				<i class="bi bi-chat-fill"></i>
+				<span class="ms-2">Edit Profile (Admin)</span>
+				</a>
+				</li>';
+				}
 				?>
               </ul>
             </div>
@@ -575,6 +583,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <div class="col-md-8">
           <div class="card">
             <div class="card-body">
+			  <?php if (isset($_SESSION['loggedin'])){ echo '<a class="btn btn-primary btn-sm ms-auto float-end" href="'.$g_options['scripturl'].'?mode=admin&amp;task=tools_editdetails_player&amp;id='.$player.'">Edit Player Details</a>'; } ?>
               <p class="text-uppercase text-sm">Player Info</p>
               <div class="row">
                 <div class="col-md-6">
@@ -749,4 +758,4 @@ For support and installation notes visit http://www.hlxcommunity.com
             </div>
           </div>
         </div>
-	</div> <?php } ?>
+ <?php } ?>
