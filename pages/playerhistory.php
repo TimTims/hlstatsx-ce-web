@@ -106,7 +106,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'eventTime',
 				'Date',
-				'width=20'
+				'width=20&align=center'
 			),
 			new TableColumn
 			(
@@ -118,19 +118,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'eventDesc',
 				'Description',
-				'width=40&sort=no&append=.&embedlink=yes'
+				'width=40&sort=no&append=.&embedlink=yes&align=center'
 			),
 			new TableColumn
 			(
 				'serverName',
 				'Server',
-				'width=20'
+				'width=20&align=center'
 			),
 			new TableColumn
 			(
 				'map',
 				'Map',
-				'width=10'
+				'width=10&align=center'
 			)
 		),
 		'eventTime',
@@ -543,17 +543,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 	list($numitems) = $db->fetch_row($resultCount);
 ?>
 
-<div class="block">
-<?php
-	printSectionTitle('Player Event History (Last '.$g_options['DeleteDays'].' Days)');
-	if ($numitems > 0)
-	{
-		$table->draw($result, $numitems, 95);
-	}
-?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?mode=playerinfo&amp;player=$player"; ?>"><?php echo $pl_name; ?>'s Statistics</a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Player Event History (Last <?php echo $g_options['DeleteDays']; ?> Days)</h6>
+				</div>
+				<?php
+					if ($numitems > 0)
+					{
+						$table->draw($result, $numitems, 95);
+					}
+				?>
+			</div>
 		</div>
 	</div>
-</div>

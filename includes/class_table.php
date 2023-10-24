@@ -239,9 +239,17 @@ class Table
 				$colval = $rowdata[$col->name];
                 $colval_lower = (!empty($rowdata[$col->name])) ? strtolower($rowdata[$col->name]) : null;
 
-				if ($col->align != 'left')
+				if ($col->align != 'left' && $col->align != 'middle')
 				{
 					$colalign = " style=\"text-align:$col->align;\"";
+				}
+				if ($col->align == 'middlecenter')
+				{
+					$colalign = " style=\"vertical-align:middle !important;\"";
+				}
+				if ($col->align == 'middle')
+				{
+					$colalign = " style=\"vertical-align:middle !important;\"";
 				}
 				else
 				{
@@ -350,7 +358,9 @@ class Table
 						break;
 
 					case 'bargraph':
-						$cellbody .= '<meter min="0" max="100" low="25" high="50" optimum="75" value="'.$colval.'"></meter>';
+						$cellbody .= '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:'.$colval.'%;"></div>
+									  </div>';
 						break;
 					case 'heatmap':
 						$heatmap = getImage("/games/$game/heatmaps/$colval-kill");

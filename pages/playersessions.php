@@ -106,73 +106,73 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'eventTime',
 				'Date',
-				'width=11'
+				'width=11&align=center'
 			),
 			new TableColumn
 			(
 				'skill_change',
 				'Skill Change',
-				'width=10&align=right&skill_change=1'
+				'width=10&align=center&skill_change=1'
 			),
 			new TableColumn
 			(
 				'skill',
 				'Points',
-				'width=10&align=right'
+				'width=10&align=center'
 			),
 			new TableColumn
 			(
 				'connection_time',
 				'Time',
-				'width=13&align=right&type=timestamp'
+				'width=13&align=center&type=timestamp'
 			),
 			new TableColumn
 			(
 				'kills',
 				'Kills',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'deaths',
 				'Deaths',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'kpd',
 				'K:D',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'headshots',
 				'HS',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'hpk',
 				'HS:K',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'suicides',
 				'Suicides',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'teamkills',
 				'TKs',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'kill_streak',
 				'Kill Strk',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 		),
 		'eventTime',
@@ -225,32 +225,32 @@ For support and installation notes visit http://www.hlxcommunity.com
 	list($numitems) = $db->fetch_row($resultCount);
 ?>
 
-<div class="block">
-<?php
-	printSectionTitle('Player Session History');
-	if ($numitems > 0)
-	{
-		$table->draw($result, $numitems, 95);
-	}
-?><br /><br />
-	<div class="subblock">
-		<div style="float:left;">
-			Items above are generated from the last <?php echo $g_options['DeleteDays']; ?> days.
-		</div>
-		<div style="float:right;">
-<?php 
-	$db->query
-	("
-		SELECT
-			hlstats_Players.lastName
-		FROM
-			hlstats_Players
-		WHERE
-			hlstats_Players.playerId = '$player'
-	");
-	list($lastName) = $db->fetch_row();
-?>
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?mode=playerinfo&amp;player=$player"; ?>"><?php echo $lastName; ?>'s Statistics</a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Player Session History</h6>
+				</div>
+				<?php
+					if ($numitems > 0)
+					{
+						$table->draw($result, $numitems, 95);
+					}
+				?>
+				<p class="ms-1">Items above are generated from the last <?php echo $g_options['DeleteDays']; ?> days.</p>
+				<?php 
+					$db->query
+					("
+						SELECT
+							hlstats_Players.lastName
+						FROM
+							hlstats_Players
+						WHERE
+							hlstats_Players.playerId = '$player'
+					");
+					list($lastName) = $db->fetch_row();
+				?>
+			</div>
 		</div>
 	</div>
-</div>

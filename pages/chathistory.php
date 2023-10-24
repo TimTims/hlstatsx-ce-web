@@ -109,26 +109,26 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'eventTime',
 				'Date',
-				'width=16'
+				'width=16&align=center'
 			),
 
 			new TableColumn
 			(
 				'message',
 				'Message',
-				'width=44&sort=no&append=.&embedlink=yes'
+				'width=44&sort=no&append=.&embedlink=yes&align=center'
 			),
 			new TableColumn
 			(
 				'serverName',
 				'Server',
-				'width=24'
+				'width=24&align=center'
 			),
 			new TableColumn
 			(
 				'map',
 				'Map',
-				'width=16'
+				'width=16&align=center'
 			)
 		),
 		'eventTime',
@@ -189,33 +189,28 @@ For support and installation notes visit http://www.hlxcommunity.com
 	list($numitems) = $db->fetch_row($resultCount);
 	
 ?>
-<div class="block">
-<?php
-	printSectionTitle('Player Chat History (Last '.$g_options['DeleteDays'].' Days)');
-?>
-	<div class="subblock">
-		<div style="float:left;">
-			<span>
-			<form method="get" action="<?php echo $g_options['scripturl']; ?>" style="margin:0px;padding:0px;">
-				<input type="hidden" name="mode" value="chathistory" />
-				<input type="hidden" name="player" value="<?php echo $player; ?>" />
-				<strong>&#8226;</strong>
-				Filter: <input type="text" name="filter" value="<?php echo htmlentities($filter); ?>" /> 
-				<input type="submit" value="View" class="smallsubmit" />
-			</form>
-			</span>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Player Chat History (Last <?php echo $g_options['DeleteDays']; ?> Days)</h6>
+				</div>
+				<span>
+				<form method="get" action="<?php echo $g_options['scripturl']; ?>" style="margin:0px;padding:0px;">
+					<input type="hidden" name="mode" value="chathistory" />
+					<input type="hidden" name="player" value="<?php echo $player; ?>" />
+					<strong>&#8226;</strong>
+					Filter: <input type="text" name="filter" value="<?php echo htmlentities($filter); ?>" /> 
+					<input type="submit" value="View" class="smallsubmit" />
+				</form>
+				</span>
+				<?php
+					if ($numitems > 0)
+					{
+						$table->draw($result, $numitems, 95);
+					}
+				?>
+			</div>
 		</div>
 	</div>
-	<div style="clear: both; padding-top: 20px;"></div>
-<?php
-	if ($numitems > 0)
-	{
-		$table->draw($result, $numitems, 95);
-	}
-?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?mode=playerinfo&amp;player=$player"; ?>"><?php echo $pl_name; ?>'s Statistics</a>
-		</div>
-	</div>
-</div>

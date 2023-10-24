@@ -165,26 +165,26 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'code',
 				'Role',
-				'width=25&type=roleimg&align=left&link=' . urlencode("mode=rolesinfo&amp;role=%k&amp;game=$game"),
+				'width=25&type=roleimg&align=center&link=' . urlencode("mode=rolesinfo&amp;role=%k&amp;game=$game"),
 				$fname
 			),
 			new TableColumn
 			(
 				'rolecount',
 				'Joined',
-				'width=10&align=right&append=+times'
+				'width=10&align=center&append=+times'
 			),
 			new TableColumn
 			(
 				'percent',
 				'%',
-				'width=10&sort=no&align=right&append=' . urlencode('%')
+				'width=10&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'percent',
 				'Ratio',
-				'width=20&sort=no&type=bargraph'
+				'width=20&align=middle&sort=no&type=bargraph'
 			),
 			new TableColumn
 			(

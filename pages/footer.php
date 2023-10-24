@@ -65,11 +65,14 @@ For support and installation notes visit http://www.hlxcommunity.com
         </div>
       </footer>
     </div>
+    <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
   </main>
   <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+    <button class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
-    </a>
+    </button> 
     <div class="card shadow-lg">
       <div class="card-header pb-0 pt-3 ">
         <div class="float-start">
@@ -210,6 +213,7 @@ For support and installation notes visit http://www.hlxcommunity.com
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
+  <!-- Search Bar -->
   <script>
     function search() {
       // Get the user's input from the input field
@@ -227,6 +231,15 @@ For support and installation notes visit http://www.hlxcommunity.com
       if (event.key === 'Enter') {
         search();
       }
+    });
+  </script>
+  <!-- Enable Popovers -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        var popoverList = popoverTriggerList.map(function(element){
+            return new bootstrap.Popover(element);
+        });
     });
   </script>
   <!-- Github buttons -->

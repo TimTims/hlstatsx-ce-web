@@ -42,41 +42,34 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 	pageHeader(array('Admin'), array('Admin' => ''));
 ?>
-<div class="block">
-	<?php printSectionTitle('Authorization Required'); ?>
-	<div class="subblock">
-	<?php
-	if ($this->error)
-	{
-?>
-	<img src="<?php echo IMAGE_PATH; ?>/warning.gif" style="padding-right:5px;">
-	<?php
-		echo "<span class=\"fTitle\" style=\"font-weight:bold;\">$this->error</span><br /><br />";
-	}
-?>
-		<div style="float:left;margin-left:40px;">
-		<form method="post" name="auth">
-	
-			<table class="data-table">
-				<tr style="vertical-align:middle;">
-					<td class="bg1" style="width:45%;border:0;">Username:</td>
-					<td class="bg1" style="width:55%;border:0;"><input type="text" name="authusername" size="20" maxlength="16" value="<?php echo $this->username; ?>" class="textbox"></td>
-				</tr>
-				<tr style="vertical-align:middle;">
-					<td class="bg1" style="width:45%;border:0;">Password:</td>
-					<td class="bg1" style="width:55%;border:0;"><input type="password" name="authpassword" size="20" maxlength="16" value="<?php echo $this->password; ?>" class="textbox"></td>
-				</tr>
-				<tr>
-					<td class="bg1" style="border:0;">&nbsp;</td>
-					<td class="bg1" style="border:0;"><input type="submit" value=" Login " id="authsubmit" class="submit"></td>
-				</tr>
-			
-			</table><br />
-				
-			Please ensure cookies are enabled in your browser security options.<br />
-			<!-- <strong>Note</strong> Do not select "Save my password" if other people will use this computer.</span>	<br /><br /> -->
-		</form>
+<div class="container-fluid py-4">
+	<div class="row justify-content-center">
+		<div class="col-sm-6">
+			<div class="card mb-4">
+				<div class="card-header pb-0 text-center">
+					<h6>Login Required</h6>
+				</div>
+				<form method="post" name="auth">
+					<div class="form-group col-6 mx-auto">
+						<label class="mb-2" for="authusername">Username</label>
+						<input type="text" name="authusername" size="20" maxlength="16" value="<?php echo $this->username; ?>" class="form-control">
+					</div>
+					<div class="form-group col-6 mx-auto">
+						<label class="mb-2" for="authpassword">Password</label>
+						<input type="password" name="authpassword" size="20" maxlength="16" value="<?php echo $this->password; ?>" class="form-control">
+					</div>
+					<div class="form-group text-center">
+						<span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Remember to enable cookies">
+							<button type="submit" id="authsubmit" class="btn btn-primary">Login</button>
+						</span>
+					</div>
+				</form>		
+				<?php
+					if ($this->error)
+					{
+						echo '<div class="alert alert-danger col-8 mx-auto text-center" role="alert"><strong>'.$this->error.'</strong></div>';
+					}
+				?>		
+			</div>
 		</div>
 	</div>
-</div>
-

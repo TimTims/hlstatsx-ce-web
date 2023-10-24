@@ -91,7 +91,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 					echo '<input type="hidden" name="'.htmlspecialchars($var, ENT_QUOTES).'" value="'.htmlspecialchars($value, ENT_QUOTES)."\" />\n";
 				}
 			?>
-					<table class="table mb-0 ms-4">
+				<div class="table-responsible ms-4">
+					<table class="table mb-0">
 						<tr style="vertical-align:middle;" class="bg1">
 							<td>Search For:</td>
 							<td>
@@ -138,6 +139,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 							</td> 
 						</tr>
 					</table>
+				</div>
 			</form>
 		</div>
 	</div><br /><br />

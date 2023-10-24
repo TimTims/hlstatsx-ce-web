@@ -10583,6 +10583,26 @@ fieldset:disabled .btn {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
+.text-purple {
+  color: var(--bs-purple) !important;
+}
+
+.text-pink {
+  color: var(--bs-pink) !important;
+}
+
+.text-yellow {
+  color: var(--bs-yellow) !important;
+}
+
+.text-teal {
+  color: var(--bs-teal) !important;
+}
+
+.text-indigo  {
+  color: var(--bs-indigo) !important;
+}
+
 .text-reset {
   color: inherit !important;
 }
@@ -26957,4 +26977,10 @@ pre[class*="language-"] {
   }
 }
 
+#btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: none;
+}
 /*# sourceMappingURL=dashboard-free.css.map */

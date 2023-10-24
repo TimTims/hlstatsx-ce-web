@@ -580,7 +580,7 @@ For support and installation notes visit http://www.hlxcommunity.com
     </div>
 	<div class="container-fluid py-4">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 mt-2">
           <div class="card">
             <div class="card-body">
 			  <?php if (isset($_SESSION['loggedin'])){ echo '<a class="btn btn-primary btn-sm ms-auto float-end" href="'.$g_options['scripturl'].'?mode=admin&amp;task=tools_editdetails_player&amp;id='.$player.'">Edit Player Details</a>'; } ?>
@@ -642,7 +642,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mt-2">
           <div class="card">
             <div class="card-body">
 			<p class="text-uppercase text-sm">Player Statistics</p>

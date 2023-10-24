@@ -116,22 +116,22 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'awardTime',
 				(isset($awardId))?'Date':'Date Last Earned',
-				'width=17'
+				'width=17&align=center'
 			),
 			new TableColumn(
 				'name',
 				'Name',
-				'width=23'
+				'width=23&align=center'
 			),
 			new TableColumn(
 				'verb',
 				'Description',
-				'width=50'.$lnktext
+				'width=50&align=center'.$lnktext
 			),
 			new TableColumn(
 				'count',
 				$cnttext,
-				'width=10&align=right'
+				'width=10&align=center'
 			)
 		),
 		'awardId',
@@ -223,29 +223,31 @@ For support and installation notes visit http://www.hlxcommunity.com
 	list($numitems) = $db->fetch_row($resultCount);
 ?>
 
-<div class="block">
-<?php
-	printSectionTitle('Player Awards History');
-	if ($numitems > 0)
-	{
-		$table->draw($result, $numitems, 95);
-	}
-?><br /><br />
-	<div class="subblock">
-		<div style="float:right;">
-			<?php 
-				$db->query
-				("
-					SELECT
-						hlstats_Players.lastName
-					FROM
-						hlstats_Players
-					WHERE
-						hlstats_Players.playerId = $player
-				");
-				list($lastName) = $db->fetch_row();
-			?>
-			Go to: <a href="<?php echo $g_options['scripturl'] . "?mode=playerinfo&amp;player=$player"; ?>"><?php echo $lastName; ?>'s Statistics</a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Player Awards History</h6>
+				</div>
+				<?php
+					if ($numitems > 0)
+					{
+						$table->draw($result, $numitems, 95);
+					}
+				?>
+				<?php 
+					$db->query
+					("
+						SELECT
+							hlstats_Players.lastName
+						FROM
+							hlstats_Players
+						WHERE
+							hlstats_Players.playerId = $player
+					");
+					list($lastName) = $db->fetch_row();
+				?>
+			</div>
 		</div>
 	</div>
-</div>

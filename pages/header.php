@@ -108,9 +108,9 @@ For support and installation notes visit http://www.hlxcommunity.com
     <div class="navbar-collapse w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="<?php echo $g_options['scripturl'] ?>">
+          <a class="nav-link" href="<?php echo $g_options['scripturl'] ?>">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni bi-house text-primary text-sm opacity-10"></i>
+              <i class="bi bi-house text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Home</span>
           </a>
@@ -128,7 +128,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         echo '<li class="nav-item">
           <a class="nav-link " href="' . $g_options['sourcebans_address'] . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-hammer text-success text-sm opacity-10"></i>
+              <i class="bi bi-hammer text-danger text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Bans</span>
           </a>
@@ -148,7 +148,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="<?php echo $g_options['scripturl'] ?>?mode=help">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-info-lg text-danger text-sm opacity-10"></i>
+              <i class="bi bi-info-lg text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Help</span>
           </a>
@@ -177,7 +177,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=players&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-person-fill text-purple text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Players</span>
           </a>
@@ -185,7 +185,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=clans&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-people-fill text-teal text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Clans</span>
           </a>
@@ -193,7 +193,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=countryclans&amp;game=' . $game . '&amp;sort=nummembers">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-people-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-globe2 text-info text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Countries</span>
           </a>
@@ -201,7 +201,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=awards&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-award-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-award-fill text-yellow text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Awards</span>
           </a>
@@ -209,7 +209,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=actions&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-bullseye text-info text-sm opacity-10"></i>
+              <i class="bi bi-bullseye text-danger text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Actions</span>
           </a>
@@ -217,7 +217,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=weapons&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-rainbow text-info text-sm opacity-10"></i>
+              <i class="bi bi-heart-arrow text-pink text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Weapons</span>
           </a>
@@ -225,7 +225,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=maps&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-map-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-map-fill text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Maps</span>
           </a>
@@ -233,7 +233,7 @@ For support and installation notes visit http://www.hlxcommunity.com
         <li class="nav-item">
           <a class="nav-link " href="' . $g_options['scripturl'] . '?mode=roles&amp;game=' . $game . '">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="bi bi-person-vcard-fill text-info text-sm opacity-10"></i>
+              <i class="bi bi-person-vcard-fill text-indigo text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Roles</span>
           </a>
@@ -282,7 +282,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             </li>
             <?php
             if (isset($_SESSION['loggedin'])) {
-              echo '<li class="nav-item d-flex align-items-center">
+              echo '<li class="nav-item px-3 d-flex align-items-center">
               <a href="hlstats.php?logout=1" class="nav-link text-white font-weight-bold px-0">
                 <i class="bi bi-door-closed-fill me-sm-1"></i>
                 <span class="d-sm-inline d-none">Logout</span>
@@ -290,7 +290,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             </li>';
             }
             ?>
-            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <li class="nav-item d-xl-none d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
