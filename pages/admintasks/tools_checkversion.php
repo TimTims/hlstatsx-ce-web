@@ -50,10 +50,11 @@ if (!defined('IN_HLSTATS')) {
         <div class="col-12">
             <div class="card mb-4">
 		<div class="card-header pb-0">
+                        <a class="btn btn-primary btn-sm ms-auto float-end" href="<?php echo getVersion('gitlink') . '/CHANGELOG.md'; ?>" target="_blank">View Changelog</a>
               	        <h6><?php echo $task->title; ?></h6>
                 </div>
-                    <div class="ms-4">
-                        <table class="table table-responsive">
+                    <div class="table-responsive ms-4">
+                        <table class="table">
                                 <tr>
                                         <td><label for="main-version"><strong>Version</strong></label><p class="ms-1">Checks the main version of your HLX:CE.</p></td>
                                         <td></br><p><?php echo getVersion('version'); ?></p></td>

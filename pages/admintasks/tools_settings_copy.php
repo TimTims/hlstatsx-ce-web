@@ -43,11 +43,6 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata['acclevel'] < 80) {
 		die ('Access denied!');
 	}
-?>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b><p>
-
-<?php
 
 function check_writable() {
 
@@ -227,37 +222,40 @@ function scanCopyFiles($source,$dest) {
 		}
 
 ?>
-
-<form method="post">
-<table width="60%" align="center" border="0" cellspacing="0" cellpadding="0" class="border">
-
-<tr>
-	<td>
-		<table width="100%" border="0" cellspacing="1" cellpadding="10">
-		
-		<tr class="bg1">
-			<td class="fNormal" style="text-align:center;">
-
-Are you sure to copy all settings from the selected gametype to the new gametype name?<br>
-All existing images will be copied also to the new gametype!<p>
-
-<input type="hidden" name="confirm" value="1" />
- Existing gametype: 
- <select Name="game1">
- <?php foreach ($games as $g) echo $g; ?>
- </select><br />
- New gametype code: 
- <input type="text" size="10" value="newcode" name="game2"><br />
- New gametype name: 
- <input type="text" size="26" value="New Game" name="game2name"><br />
- <input type="submit" value="  Copy selected gametype to the new name " />
-</td>
-		</tr>
-		</table></td>
-</tr>
-
-</table>
-</form>
+<div class="container-fluid py-4">
+	<div class="row justify-content-center">
+		<div class="col-sm-8">
+			<div class="card mb-4">
+				<div class="card-header pb-0 text-center">
+					<h6><?php echo $task->title; ?></h6>
+				</div>
+				<form method="post">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td>
+									<p class="text-center">Are you sure to copy all settings from the selected gametype to the new gametype name?</p>
+									<p class="text-center">All existing images will be copied also to the new gametype!</p>
+									<div class="col-md-5 mx-auto text-center">
+										<input type="hidden" name="confirm" value="1">
+										<label for="game1">Existing gametype</label> 
+										<select Name="game1" class="form-select">
+											<?php foreach ($games as $g) echo $g; ?>
+										</select>
+										<label for="game2" class="mt-2">New gametype code</label> 
+										<input type="text" size="10" value="newcode" name="game2" class="form-control col-md-4">
+										<label for="game2name" class="mt-2">New gametype name</label> 
+										<input type="text" size="26" value="New Game" name="game2name" class="form-control">
+										<input type="submit" value="Copy selected gametype to the new name" class="btn btn-primary mt-4">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 <?php
 	}
 ?>

@@ -116,7 +116,7 @@ function getVersion($version_var)
 			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-danger">Your HLstatsX: CE is out-of-date.</a>';
 		}
 		else{
-			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-warning>An unknown error has occured.</a>';
+			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-warning">An unknown error has occured.</a>';
 		}
 	}
 }

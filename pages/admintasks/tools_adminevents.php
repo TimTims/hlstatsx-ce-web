@@ -43,17 +43,13 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata["acclevel"] < 80) {
         die ("Access denied!");
 	}
-?>
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b> (Last <?php echo $g_options["DeleteDays"]; ?> Days)<p>
-
-<?php
 	$table = new Table(
 		array(
 			new TableColumn(
 				"eventTime",
 				"Date",
-				"width=20"
+				"width=20&align=center"
 			),
 			new TableColumn(
 				"eventType",
@@ -63,17 +59,17 @@ For support and installation notes visit http://www.hlxcommunity.com
 			new TableColumn(
 				"eventDesc",
 				"Description",
-				"width=40&sort=no&append=.&embedlink=yes"
+				"width=40&sort=no&append=.&embedlink=yes&align=center"
 			),
 			new TableColumn(
 				"serverName",
 				"Server",
-				"width=20"
+				"width=20&align=center"
 			),
 			new TableColumn(
 				"map",
 				"Map",
-				"width=10"
+				"width=10&align=center"
 			)
 		),
 		"eventTime",
@@ -184,32 +180,43 @@ For support and installation notes visit http://www.hlxcommunity.com
 	
 	list($numitems) = $db->fetch_row($resultCount);
 ?>
-<form method="get" action="<?php echo $g_options["scripturl"]; ?>">
-<input type="hidden" name="mode" value="admin" />
-<input type="hidden" name="task" value="<?php echo $code; ?>" />
-<input type="hidden" name="sort" value="<?php echo $sort; ?>" />
-<input type="hidden" name="sortorder" value="<?php echo $sortorder; ?>" />
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              	    <h6><?php echo $task->title; ?> (Last <?php echo $g_options["DeleteDays"]; ?> Days)</h6>
+                </div>
+				<form method="get" action="<?php echo $g_options["scripturl"]; ?>">
+					<input type="hidden" name="mode" value="admin" />
+					<input type="hidden" name="task" value="<?php echo $code; ?>" />
+					<input type="hidden" name="sort" value="<?php echo $sort; ?>" />
+					<input type="hidden" name="sortorder" value="<?php echo $sortorder; ?>" />
 
-<b style="padding-left:35px;">&#149;</b> Show only events of type: <?php
-	$resultTypes = $db->query("
-		SELECT
-			DISTINCT eventType
-		FROM
-			hlstats_AdminEventHistory
-		ORDER BY
-			eventType ASC
-	");
-	
-	$types[""] = "(All)";
-	
-	while (list($k) = $db->fetch_row($resultTypes)) {
-		$types[$k] = $k;
-	}
-	
-	echo getSelect("type", $types, $select_type);
-?>
-<input type="submit" value="Filter" class="smallsubmit" /><br /><br />
-</form>
-<?php
-	$table->draw($result, $numitems, 95, "center");
-?>
+					<div class="ms-4">&#149; Show only events of type: <?php
+						$resultTypes = $db->query("
+							SELECT
+								DISTINCT eventType
+							FROM
+								hlstats_AdminEventHistory
+							ORDER BY
+								eventType ASC
+						");
+						
+						$types[""] = "(All)";
+						
+						while (list($k) = $db->fetch_row($resultTypes)) {
+							$types[$k] = $k;
+						}
+						
+						echo '<div class="col-md-2">'.getSelect("type", $types, $select_type).'</div>';
+					?>
+					<input type="submit" value="Filter" class="btn btn-primary" />
+					</div>
+				</form>
+				<?php
+					$table->draw($result, $numitems, 95, "center");
+				?>
+			</div>
+		</div>
+	</div>
