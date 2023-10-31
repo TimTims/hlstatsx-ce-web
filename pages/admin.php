@@ -506,20 +506,21 @@ class EditList
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 
-<tr valign="top" class="table_border">
-	<td><table width="100%" border="0" cellspacing="1" cellpadding="4">
+    <tr valign="top" class="table_border">
+        <td>
+            <table width="100%" border="0" cellspacing="1" cellpadding="4">
 
-		<tr valign="bottom" class="head">
-<?php
+                <tr valign="bottom" class="head">
+                    <?php
 		echo '<td></td>';
 
 		if ($this->showid)
 		{
 ?>
-			<td align="right" class="fSmall"><?php
+                    <td align="right" class="fSmall"><?php
 			echo 'ID';
 ?></td>
-<?php
+                    <?php
 		}
 
 		foreach ($this->columns as $col)
@@ -534,20 +535,20 @@ class EditList
 		if ($this->drawDetailsLink)
 		{
 ?>
-			<td align="right" class="fSmall"><?php
+                    <td align="right" class="fSmall"><?php
 			echo '';
 ?></td>
-<?php
+                    <?php
 		}
 
 
 ?>
-			<td align="center" class="fSmall"><?php
+                    <td align="center" class="fSmall"><?php
 		echo 'Delete';
 ?></td>
-		</tr>
+                </tr>
 
-<?php
+                <?php
 		while ($rowdata = $db->fetch_array($result))
 		{
 			echo "\n<tr>\n";
@@ -573,20 +574,21 @@ class EditList
 			{
 				global $gamecode;
 ?>
-			<td align="center" class="bg2 fSmall"><?php
+                <td align="center" class="bg2 fSmall"><?php
 				echo "<a href='" . $g_options["scripturl"] . "?mode=admin&amp;game=$gamecode&amp;task=" . $this->DetailsLink . "&amp;key=" . $rowdata[$this->keycol] . "'><b>CONFIGURE</b></a>";
 ?></td>
-<?php
+                <?php
 			}
 
 ?>
-<td align="center" class="bg2"><input type="checkbox" name="<?php echo $rowdata[$this->keycol]; ?>_delete" value="1" /></td>
-<?php echo "</tr>\n\n";
+                <td align="center" class="bg2"><input type="checkbox"
+                        name="<?php echo $rowdata[$this->keycol]; ?>_delete" value="1" /></td>
+                <?php echo "</tr>\n\n";
 		}
 ?>
 
-<tr>
-<?php
+                <tr>
+                    <?php
 		if ( $draw_new )
 		{
 			echo "<td class=\"bg1 fSmall\" align=\"center\">" . "new</td>\n";
@@ -606,10 +608,11 @@ class EditList
 			echo "<td class=\"bg1\"></td>\n";
 		}
 ?>
-</tr>
+                </tr>
 
-		</table></td>
-</tr>
+            </table>
+        </td>
+    </tr>
 
 </table><br /><br />
 <?php
@@ -903,16 +906,18 @@ class PropertyPage_Group
 <b><?php echo $this->title; ?></b><br />
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 
-<tr valign="top">
-	<td><table width="100%" border="0" cellspacing="1" cellpadding="4">
-<?php
+    <tr valign="top">
+        <td>
+            <table width="100%" border="0" cellspacing="1" cellpadding="4">
+                <?php
 		foreach ($this->properties as $prop)
 		{
 			$prop->draw($data[$prop->name]);
 		}
 ?>
-		</table></td>
-</tr>
+            </table>
+        </td>
+    </tr>
 
 </table><br /><br />
 <?php
@@ -938,10 +943,10 @@ class PropertyPage_Property
 		global $g_options;
 ?>
 <tr style="vertical-align:middle;">
-	<td class="bg1" style="width:45%;"><?php
+    <td class="bg1" style="width:45%;"><?php
 		echo $this->title . ':';
 ?></td>
-	<td class="bg1" style="width:55%;"><?php
+    <td class="bg1" style="width:55%;"><?php
 		switch ($this->type)
 		{
 			case 'textarea':
@@ -971,7 +976,7 @@ class PropertyPage_Property
 				break;
 		}
 ?>
-</td>
+    </td>
 </tr>
 <?php
 	}
@@ -981,16 +986,17 @@ function message($icon, $msg)
 {
 	global $g_options;
 ?>
-		<table width="60%" border="0" cellspacing="0" cellpadding="0">
+<table width="60%" border="0" cellspacing="0" cellpadding="0">
 
-		<tr valign="top">
-			<td width="40"><img src="<?php echo IMAGE_PATH . "/$icon"; ?>.gif" width="16" height="16" border="0" hspace="5" alt="" /></td>
-			<td width="100%"><?php
+    <tr valign="top">
+        <td width="40"><img src="<?php echo IMAGE_PATH . "/$icon"; ?>.gif" width="16" height="16" border="0" hspace="5"
+                alt="" /></td>
+        <td width="100%"><?php
 	echo "<b>$msg</b>";
 ?></td>
-		</tr>
+    </tr>
 
-		</table><br /><br />
+</table><br /><br />
 <?php
 }
 
@@ -1006,206 +1012,219 @@ pageHeader(array('Admin'), array('Admin' => ''));
 $selTask = valid_request($_GET['task'], false);
 $selGame = valid_request($_GET['game'], false);
 ?>
+<div class="container-fluid py-4">
+    <div class="row">
+        <?php
+		// General Settings
+		$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80);
+		$admintasks['adminusers'] = new AdminTask('Admin Users', 100);
+		$admintasks['games'] = new AdminTask('Games', 80);
+		$admintasks['hostgroups'] = new AdminTask('Host Groups', 100);
+		$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80);
+		$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80);
 
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+		// Game Settings
+		$admintasks['newserver'] = new AdminTask('Add Server', 80, 'game');
+		$admintasks['servers'] = new AdminTask('Edit Servers', 80, 'game');
+		$admintasks['serversettings'] = new AdminTask('Server Details', 80, 'game');
+		$admintasks['actions'] = new AdminTask('Actions', 80, 'game');
+		$admintasks['teams'] = new AdminTask('Teams', 80, 'game');
+		$admintasks['roles'] = new AdminTask('Roles', 80, 'game');
+		$admintasks['weapons'] = new AdminTask('Weapons', 80, 'game');
+		$admintasks['awards_weapons'] = new AdminTask('Weapon Awards', 80, 'game');
+		$admintasks['awards_plyractions'] = new AdminTask('Plyr Action Awards', 80, 'game');
+		$admintasks['awards_plyrplyractions'] = new AdminTask('PlyrPlyr Action Awards', 80, 'game');
+		$admintasks['awards_plyrplyractions_victim'] = new AdminTask('PlyrPlyr Action Awards (Victim)', 80, 'game');
+		$admintasks['ranks'] = new AdminTask('Ranks (triggered by Kills)', 80, 'game');
+		$admintasks['ribbons'] = new AdminTask('Ribbons (triggered by Awards)', 80, 'game');
 
-<tr valign="top">
-	<td><?php
-
-// General Settings
-$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80);
-$admintasks['adminusers'] = new AdminTask('Admin Users', 100);
-$admintasks['games'] = new AdminTask('Games', 80);
-$admintasks['hostgroups'] = new AdminTask('Host Groups', 100);
-$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80);
-$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80);
-
-// Game Settings
-$admintasks['newserver'] = new AdminTask('Add Server', 80, 'game');
-$admintasks['servers'] = new AdminTask('Edit Servers', 80, 'game');
-$admintasks['serversettings'] = new AdminTask('&nbsp;&nbsp;&nbsp;&gt;&gt;&nbsp;Server Details', 80, 'game');
-$admintasks['actions'] = new AdminTask('Actions', 80, 'game');
-$admintasks['teams'] = new AdminTask('Teams', 80, 'game');
-$admintasks['roles'] = new AdminTask('Roles', 80, 'game');
-$admintasks['weapons'] = new AdminTask('Weapons', 80, 'game');
-$admintasks['awards_weapons'] = new AdminTask('Weapon Awards', 80, 'game');
-$admintasks['awards_plyractions'] = new AdminTask('Plyr Action Awards', 80, 'game');
-$admintasks['awards_plyrplyractions'] = new AdminTask('PlyrPlyr Action Awards', 80, 'game');
-$admintasks['awards_plyrplyractions_victim'] = new AdminTask('PlyrPlyr Action Awards (Victim)', 80, 'game');
-$admintasks['ranks'] = new AdminTask('Ranks (triggered by Kills)', 80, 'game');
-$admintasks['ribbons'] = new AdminTask('Ribbons (triggered by Awards)', 80, 'game');
-
-// Tools
-$admintasks['tools_perlcontrol'] = new AdminTask('HLstatsX: CE Daemon Control', 80, 'tool', 'Reload or stop your HLX: CE Daemons');
-$admintasks['tools_editdetails'] = new AdminTask('Edit Player or Clan Details', 80, 'tool', 'Edit a player or clan\'s profile information.');
-$admintasks['tools_adminevents'] = new AdminTask('Admin-Event History', 80, 'tool', 'View event history of logged Rcon commands and Admin Mod messages.');
-$admintasks['tools_ipstats'] = new AdminTask('Host Statistics', 80, 'tool', 'See which ISPs your players are using.');
-$admintasks['tools_optimize'] = new AdminTask('Optimize Database', 100, 'tool', 'This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month.');
-//$admintasks['tools_synchronize'] = new AdminTask('Synchronize Statistics', 80, 'tool', 'Sychronize all players with the offical global ELstatsNEO banlist with catched VAC cheaters.');
-$admintasks['tools_resetdbcollations'] = new AdminTask('Reset All DB Collations to UTF8', 100, 'tool', 'Reset DB Collations to UTF-8 if you receive collation errors after an upgrade from another HLstats(X)-based system.');
-$admintasks['tools_checkversion'] = new AdminTask('Check for Updates', 100, 'tool', 'Check for updates for the HLstatsX: CE web panel.');
+		// Tools
+		$admintasks['tools_perlcontrol'] = new AdminTask('HLstatsX: CE Daemon Control', 80, 'tool', 'Reload or stop your HLX: CE Daemons');
+		$admintasks['tools_editdetails'] = new AdminTask('Edit Player or Clan Details', 80, 'tool', 'Edit a player or clan\'s profile information.');
+		$admintasks['tools_adminevents'] = new AdminTask('Admin-Event History', 80, 'tool', 'View event history of logged Rcon commands and Admin Mod messages.');
+		$admintasks['tools_ipstats'] = new AdminTask('Host Statistics', 80, 'tool', 'See which ISPs your players are using.');
+		$admintasks['tools_optimize'] = new AdminTask('Optimize Database', 100, 'tool', 'This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month.');
+		//$admintasks['tools_synchronize'] = new AdminTask('Synchronize Statistics', 80, 'tool', 'Sychronize all players with the offical global ELstatsNEO banlist with catched VAC cheaters.');
+		$admintasks['tools_resetdbcollations'] = new AdminTask('Reset All DB Collations to UTF8', 100, 'tool', 'Reset DB Collations to UTF-8 if you receive collation errors after an upgrade from another HLstats(X)-based system.');
+		$admintasks['tools_checkversion'] = new AdminTask('Check for Updates', 100, 'tool', 'Check for updates for the HLstatsX: CE web panel.');
 
 
-// Sub-Tools
-$admintasks['tools_editdetails_player'] = new AdminTask('Edit Player Details', 80, 'subtool', 'Edit a player\'s profile information.');
-$admintasks['tools_editdetails_clan'] = new AdminTask('Edit Clan Details', 80, 'subtool', 'Edit a clan\'s profile information.');
+		// Sub-Tools
+		$admintasks['tools_editdetails_player'] = new AdminTask('Edit Player Details', 80, 'subtool', 'Edit a player\'s profile information.');
+		$admintasks['tools_editdetails_clan'] = new AdminTask('Edit Clan Details', 80, 'subtool', 'Edit a clan\'s profile information.');
 
-// Reset Tools
-$admintasks['tools_reset'] = new AdminTask('Full or Partial Reset', 100, 'tool', 'Resets chosen data globally or for selected game', 'reset');
-$admintasks['tools_reset_2'] = new AdminTask('Clean up Statistics', 100, 'tool', 'Delete all inactive players, clans and corresponding events from the database.', 'reset');
+		// Reset Tools
+		$admintasks['tools_reset'] = new AdminTask('Full or Partial Reset', 100, 'tool', 'Resets chosen data globally or for selected game', 'reset');
+		$admintasks['tools_reset_2'] = new AdminTask('Clean up Statistics', 100, 'tool', 'Delete all inactive players, clans and corresponding events from the database.', 'reset');
 
-// Game Settings Tools
-$admintasks['tools_settings_copy'] = new AdminTask('Duplicate Game settings', 80, 'tool', 'Duplicate a whole game settings tree to split servers of same gametype', 'settingstool');
+		// Game Settings Tools
+		$admintasks['tools_settings_copy'] = new AdminTask('Duplicate Game settings', 80, 'tool', 'Duplicate a whole game settings tree to split servers of same gametype', 'settingstool');
 
 
-// Show Tool
-if (!empty($admintasks[$selTask]) && ($admintasks[$selTask]->type == 'tool' || $admintasks[$selTask]->type == 'subtool'))
-{
-	$task = $admintasks[$selTask];
-
-	$code = $selTask;
-?>
-&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin">Tools</a></b><br />
-<img src="<?php echo IMAGE_PATH; ?>/spacer.gif" width="1" height="8" border="0" alt="" /><br />
-
-<?php
-	include (PAGE_PATH . "/admintasks/$code.php");
-}
-else
-{
-	// General Settings
-
-?>
-&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;General Settings</b><br /><br />
-<?php
-	foreach ($admintasks as $code => $task)
-	{
-		if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
+		// Show Tool
+		if (!empty($admintasks[$selTask]) && ($admintasks[$selTask]->type == 'tool' || $admintasks[$selTask]->type == 'subtool'))
 		{
-			if ($selTask == $code)
-			{
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin" name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
+			$task = $admintasks[$selTask];
 
-<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+			$code = $selTask;
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-
-<tr>
-	<td width="2%">&nbsp;</td>
-	<td width="98%"><?php
-				include (PAGE_PATH . "/admintasks/$code.php");
-?></td>
-</tr>
-
-</table><br /><br />
-</form>
-<?php
-			}
-			else
-			{
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code;
-?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
-			}
-		}
-	}
-?>
-	
-&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;Game Settings</b><br /><br />
-<?php
-	$gamesresult = $db->query("
-			SELECT
-				name,
-				code
-			FROM
-				hlstats_Games
-			WHERE
-				hidden = '0'
-			ORDER BY
-				name ASC
-			;
-		");
-
-	while ($gamedata = $db->fetch_array($gamesresult))
-	{
-		$gamename = $gamedata['name'];
-		$gamecode = $gamedata['code'];
-
-		if ($gamecode == $selGame)
-		{
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin" name="game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b> (<?php echo $gamecode; ?>)<br /><br /> <?php
-			foreach ($admintasks as $code => $task)
-			{
-				if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'game')
-				{
-					if ($selTask == $code)
-					{
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>" name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
-
-<form method="post" name="<?php echo $code; ?>form" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-
-<tr>
-	<td width="10%">&nbsp;</td>
-	<td width="90%"><?php
-						include (PAGE_PATH . "/admintasks/$code.php");
-?></td>
-</tr>
-
-</table><br /><br />
-</form>
-<?php
-					}
-					elseif ($code != 'serversettings')
-					{
-	?>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
-					}
-				}
-			}
+			include (PAGE_PATH . "/admintasks/$code.php");
 		}
 		else
 		{
-?>
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9" alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>#game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b> (<?php echo $gamecode; ?>)<br /><br /> <?php
-		}
-	}
-}
-echo "</td>\n";
 
-if (!$selTask || !$admintasks[$selTask])
-{
-	echo '<td width="50%">';
-?>
-&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;Tools</b>
+		?>
+        <!-- General Settings -->
+        <div class="col-md-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-uppercase text-sm">General Settings</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+								foreach ($admintasks as $code => $task)
+								{
+									if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
+									{
+										if ($selTask == $code)
+										{
+							?>
+                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
+                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin"
+                                    name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
 
-<ul>
-<?php
-	foreach ($admintasks as $code => $task)
-	{
-		if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'tool')
+                            <form method="post"
+                                action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+                                <?php include (PAGE_PATH . "/admintasks/$code.php"); ?>
+                            </form>
+                            <?php
+								}
+							else
+							{
+							?>
+                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
+                                alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code;
+							?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
+									} 
+								}
+							}?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Settings -->
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-uppercase text-sm">Game Settings</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+								$gamesresult = $db->query("
+										SELECT
+											name,
+											code
+										FROM
+											hlstats_Games
+										WHERE
+											hidden = '0'
+										ORDER BY
+											name ASC
+										;
+									");
+
+								while ($gamedata = $db->fetch_array($gamesresult))
+								{
+									$gamename = $gamedata['name'];
+									$gamecode = $gamedata['code'];
+
+									if ($gamecode == $selGame)
+									{
+							?>
+                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
+                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin"
+                                    name="game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b>
+                            (<?php echo $gamecode; ?>)<br /><br /> <?php
+										foreach ($admintasks as $code => $task)
+										{
+											if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'game')
+											{
+												if ($selTask == $code)
+												{
+							?>
+                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
+                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>"
+                                    name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
+
+                            <form method="post" name="<?php echo $code; ?>form"
+                                action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">
+
+                                <?php
+								include (PAGE_PATH . "/admintasks/$code.php");
+							?>
+                            </form>
+                            <?php
+												}
+												elseif ($code != 'serversettings')
+												{
+								?>
+                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
+                                alt="" /><b>&nbsp;<a
+                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
+												}
+											}
+										}
+									}
+									else
+									{
+							?>
+                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
+                                alt="" /><b>&nbsp;<a
+                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>#game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b>
+                            (<?php echo $gamecode; ?>)<br /><br /> <?php
+									}
+								} ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php	}
+
+		if (!$selTask || !$admintasks[$selTask])
 		{
-?>	<li><b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br />
-		<?php echo $task->description; ?><br /><br />
-	</li>
-<?php
-		}
-	}
-?>
-</ul>
-<?php
-	echo '</td>';
-}
-?>
-</tr>
+		?>
+        <div class="col-md-12 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-uppercase text-sm">Tools</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <?php
+								foreach ($admintasks as $code => $task)
+								{
+									if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'tool')
+									{
+							?> <li><b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br />
+                                    <?php echo $task->description; ?><br /><br />
+                                </li>
+                                <?php
+									}
+								}?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php	}
+		?>
+    </div>
 
-</table>
-
-<?php
+    <?php
 if (isset($footerscript))
 {
     echo $footerscript;

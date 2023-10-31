@@ -91,25 +91,25 @@ For support and installation notes visit http://www.hlxcommunity.com
 					echo '<input type="hidden" name="'.htmlspecialchars($var, ENT_QUOTES).'" value="'.htmlspecialchars($value, ENT_QUOTES)."\" />\n";
 				}
 			?>
-				<div class="table-responsible ms-4">
+				<div class="table-responsive ms-4">
 					<table class="table mb-0">
-						<tr style="vertical-align:middle;" class="bg1">
-							<td>Search For:</td>
-							<td>
-								<input type="text" name="q" size="20" maxlength="128" value="<?php echo htmlspecialchars($this->query, ENT_QUOTES); ?>" style="width:300px;" />
+						<tr>
+							<td style="width: 20%;">Search For:</td>
+							<td style="width: 20%;">
+								<input class="form-control" type="text" name="q" size="20" maxlength="128" value="<?php echo htmlspecialchars($this->query, ENT_QUOTES); ?>" />
 							</td>
 						</tr>
 						<tr>
-							<td>In:</td>
-							<td>
+							<td style="width: 20%;">In:</td>
+							<td style="width: 20%;">
 								<?php
 									echo getSelect('st', $searchtypes, $this->type);
 								?>
 							</td>
 						</tr>
 						<tr>
-							<td>Game:</td>
-							<td>
+							<td style="width: 20%;">Game:</td>
+							<td style="width: 20%;">
 								<?php
 									$games = array ();
 									$games[''] = '(All)';
@@ -133,9 +133,9 @@ For support and installation notes visit http://www.hlxcommunity.com
 							</td>
 						</tr>
 						<tr>
-							<td></td>
-							<td>
-								<input type="submit" value=" Find Now " class="submit" />
+							<td style="width: 20%;"></td>
+							<td style="width: 20%;">
+								<input type="submit" value=" Find Now " class="btn btn-primary" />
 							</td> 
 						</tr>
 					</table>

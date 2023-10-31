@@ -1,5 +1,16 @@
 # Changelog
 
+### 31/10/2023
+* Update version.json to link to dev edition
+* Begin fixing up admin page
+* Removed temporary "Edit Player" button in profiles for nicer permanent one
+* Redesign "HLstatsX: CE Daemon Control" page
+* Redesign "Edit Player / Clan Details" page
+* Fix search page form
+* Redesigned award details page
+* Fix up "Check Version" page
+* Added "Version Status" to "Check Update" page
+
 ### 24/10/2023
 * Fix up some tables in pages
 * Fix top nav item alignment when logged in

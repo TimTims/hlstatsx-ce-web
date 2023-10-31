@@ -85,17 +85,17 @@ For support and installation notes visit http://www.hlxcommunity.com
 			new TableColumn(
 				'awardTime',
 				'Day',
-				'width=20&align=left'
+				'width=20&align=center'
 			),
 			new TableColumn(
 				'lastName',
 				'Player',
-				'width=40&align=left&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k') 
+				'width=40&align=center&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k') 
 			),
 			new TableColumn(
 				'count',
 				'Count for the Day',
-				'width=35&align=right&append=' . urlencode(" $awardverb")
+				'width=35&align=center&append=' . urlencode(" $awardverb")
 			)
 		),
 		'playerId',
@@ -141,22 +141,22 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 ?>
 
-<div class="block">
-	<?php printSectionTitle('Daily Award Details'); ?>
-	<div class="subblock">
-		<div style="float:right;">
-			Back to <a href="<?php echo $g_options['scripturl'] . "?mode=awards&amp;game=$game"; ?>">Daily Awards</a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Daily Award Details</h6>
+				</div>			
+				<?php
+					$img = IMAGE_PATH."/games/$game/dawards/".strtolower($awardtype).'_'.strtolower($awardcode).'.png';
+					if (!is_file($img))
+					{
+						$img = IMAGE_PATH.'/award.png';
+					}
+					echo "<img src=\"$img\" alt=\"$awardcode\" class=\"rounded mx-auto\"/> <p class=\"ms-3\"><strong>$awardname</strong></p>";
+					$table->draw($result, $numitems, 95, 'center');
+				?>
+			</div>
 		</div>
-		<div style="clear:both;"></div>
 	</div>
-	<br /><br />
-	<?php
-	$img = IMAGE_PATH."/games/$game/dawards/".strtolower($awardtype).'_'.strtolower($awardcode).'.png';
-	if (!is_file($img))
-	{
-		$img = IMAGE_PATH.'/award.png';
-	}
-	echo "<img src=\"$img\" alt=\"$awardcode\" /> <strong>$awardname</strong>";
-	$table->draw($result, $numitems, 95, 'center');
-?>
-</div>

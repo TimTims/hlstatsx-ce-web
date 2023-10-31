@@ -44,8 +44,11 @@ For support and installation notes visit http://www.hlxcommunity.com
         die ("Access denied!");
 	}
 ?>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" ><strong>&nbsp;<?php echo $task->title; ?></strong>
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6><?php echo $task->title; ?></h6>
+				</div>
 
 <?php
 
@@ -127,37 +130,42 @@ For support and installation notes visit http://www.hlxcommunity.com
         
 ?>        
 
-<p>After every configuration change made in the Administration Center, you should reload the daemon configuration.  To do so, enter the hostname or IP address of your HLXCE daemon and choose the reload option.  You can also shut down your daemon from this panel.  <strong>NOTE: The daemon can not be restarted through the web interface!</strong></p>
+				<p class="ms-4">After every configuration change made in the Administration Center, you should reload the daemon configuration.  To do so, enter the hostname or IP address of your HLXCE daemon and choose the reload option.  You can also shut down your daemon from this panel.  <strong>NOTE: The daemon can not be restarted through the web interface!</strong></p>
 
-<form method="POST">
+				<form class="mb-2" method="POST">
+					<div class="table-responsive ms-4">
+						<table class="table">
+							<tr>
+								<td><label for="masterserver">Daemon IP or Hostname:</label><p class="ms-1">Hostname or IP address of your HLX:CE Daemon<br />Normally the IP or Hostname listed in the "logaddress_add" line on your game server.<br />example: daemon1.hlxce.com <em>or</em> 1.2.3.4</p></td>
+								<td><input class="form-control" type="text" name="masterserver" value="localhost"></td>
+							</tr>
+							<tr>
+								<td><label for="port">Daemon Port:</label><p class="ms-1">Port number the daemon (or proxy_daemon) is listening on.<br />Normally the port listed in the "logaddress_add" line on your game server configuration.<br />example: 27500</p></td>
+								<td><input class="form-control" type="text" name="port" value="27500" size="6"></td>
+							</tr>
+							<tr>
+								<td><label for="command">Command:</label><p class="ms-1">Select the operation to perform on the daemon<br /><strong>* Note: If you shut the daemond down through this page it can not be restarted through this interface!</strong></p></td>
+								<td><select class="form-select" name="command"><?php
+									$i = 0;
+									foreach ($commands as $cmd) {
+									echo "<option value=\"$i\">".$cmd["name"];
+									$i++;
+									} 
+									?>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					
+					<input type="hidden" name="confirm" value="1">
+					<div class="text-center">
+						<input class="btn btn-primary" type="submit" value="Execute">
+					</div>
+				</form>
 
-	<table class="data-table">
-		<tr class="bg1">
-			<td width="40%"><label for="masterserver">Daemon IP or Hostname:</label><p>Hostname or IP address of your HLX:CE Daemon<br />Normally the IP or Hostname listed in the "logaddress_add" line on your game server.<br />example: daemon1.hlxce.com <em>or</em> 1.2.3.4</p></td>
-			<td><input type="text" name="masterserver" value="localhost"></td>
-		</tr>
-		<tr class="bg2">
-			<td><label for="port">Daemon Port:</label><p>Port number the daemon (or proxy_daemon) is listening on.<br />Normally the port listed in the "logaddress_add" line on your game server configuration.<br />example: 27500</p></td>
-			<td><input type="text" name="port" value="27500" size="6"></td>
-		</tr>
-		<tr class="bg1">
-			<td><label for="command">Command:</label><p>Select the operation to perform on the daemon<br /><strong>* Note: If you shut the daemond down through this page it can not be restarted through this interface!</strong></p></td>
-			<td><SELECT NAME="command"><?php
-  $i = 0;
-  foreach ($commands as $cmd) {
-   echo "<OPTION VALUE=\"$i\">".$cmd["name"];
-   $i++;
-  } 
-?>
-					</SELECT></td>
-	</table>
-	
-	<input type="hidden" name="confirm" value="1">
-	<div style="text-align: center; margin-top: 20px;">
-		<input type="submit" value="  EXECUTE  ">
-	</div>
-</form>
-
-<?php
-    }
-?>    
+				<?php
+					}
+				?>
+			</div>
+		</div>

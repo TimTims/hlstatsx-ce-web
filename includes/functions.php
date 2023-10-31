@@ -103,14 +103,20 @@ function getVersion($version_var)
 		$repo_array = file_get_contents($version_array_decoded->gitremoteversion); //Ensures it's only run when getVersion('remoteversion') is requested
 		$repo_array_decoded = json_decode($repo_array, false);
 		
+		return $repo_array_decoded->git;
+	}
+	if ($version_var == "versionstatus"){
+		$repo_array = file_get_contents($version_array_decoded->gitremoteversion); //Ensures it's only run when getVersion('remoteversion') is requested
+		$repo_array_decoded = json_decode($repo_array, false);
+
 		if ($repo_array_decoded->git == $version_array_decoded->git){
-			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #008000"><p>Your HLstatsX: CE is up-to-date.</p></a>'; 
+			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-success">Your HLstatsX: CE is up-to-date.</a>'; 
 		}
 		elseif ($repo_array_decoded->git > $version_array_decoded->git){
-			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #FF5733"><p>Your HLstatsX: CE is out-of-date.</p></a>';
+			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-danger">Your HLstatsX: CE is out-of-date.</a>';
 		}
 		else{
-			return $repo_array_decoded->git . '<a href="'.$version_array_decoded->gitlink.'" target="_blank" style="color: #FF5733"><p>An unknown error has occured.</p></a>';
+			return '<a href="'.$version_array_decoded->gitlink.'" target="_blank" class="text-warning>An unknown error has occured.</a>';
 		}
 	}
 }
@@ -353,7 +359,7 @@ function getSortArrow($sort, $sortorder, $name, $longname, $var_sort = 'sort', $
  */
 function getSelect($name, $values, $currentvalue = '')
 {
-	$select = "<select name=\"$name\" style=\"width:300px;\">\n";
+	$select = "<select name=\"$name\" class=\"form-select\">\n";
 
 	$gotcval = false;
 

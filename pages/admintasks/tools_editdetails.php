@@ -46,64 +46,51 @@ For support and installation notes visit http://www.hlxcommunity.com
     
 ?>
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b><p>
-
-<span style="padding-left:35px;">You can enter a player or clan ID number directly, or you can search for a player or clan.</span><p>
-
-<table border="0" width="95%" align="center" border=0 cellspacing=0 cellpadding=0>
-
-<tr valign="top">
-	<td width="100%" class="fNormal">&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;Jump Direct</b><p>
-	
-		<form method="GET" action="<?php echo $g_options["scripturl"]; ?>">
-		<input type="hidden" name="mode" value="admin">
-		<table width="100%" border=0 cellspacing=0 cellpadding=0>
-		
-		<tr>
-			<td width="5%">&nbsp;</td>
-			<td width="95%">
-				<table width="40%" border=0 cellspacing=0 cellpadding=0 class="border">
-				
-				<tr valign="top" >
-					<td>
-						<table width="100%" border=0 cellspacing=1 cellpadding=4>
-						<tr valign="middle" class="bg1">
-							<td nowrap width="45%" class="fNormal">Type:</td>
-							<td width="55%">
-								<?php
-									echo getSelect("task",
-										array(
-											"tools_editdetails_player"=>"Player",
-											"tools_editdetails_clan"=>"Clan"
-										)
-									);
-								?></td>
-						</tr>
-						
-						<tr valign="middle" class="bg1">
-							<td nowrap width="45%" class="fNormal">ID Number:</td>
-							<td width="55%"><input type="text" name="id" size=15 maxlength=12 class="textbox"></td>
-						</tr>
-						
-						</table></td>
-					<td align="right">
-						<table border=0 cellspacing=0 cellpadding=10>
-						<tr>
-							<td><input type="submit" value=" Edit &gt;&gt; " class="submit"></td>
-						</tr>
-						</table></td>
-				</tr>
-				
-				</table></td>
-		</tr>
-		
-		</table>
-		
-		</form></td>
-</tr>
-
-</table><p>
-
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6><?php echo $task->title; ?></h6>
+		</div>
+		<p class="ms-5">You can enter a player or clan ID number directly, or you can search for a player or clan.</p>
+		<div class="container-fluid py-4">
+			<div class="row">
+				<div class="col-12">
+					<div class="card mb-4">
+						<div class="card-header pb-0">
+							<h6>Jump Direct</h6>
+						</div>
+						<form method="GET" action="<?php echo $g_options["scripturl"]; ?>">
+							<input type="hidden" name="mode" value="admin">
+							<div class="table-responsive ms-4">
+								<table class="table mb-0" style="width: 100%;">
+									<tr>
+										<td style="width: 5%;">Type:</td>
+										<td style="width: 5%;">
+										<?php
+											echo getSelect("task",
+											array(
+												"tools_editdetails_player"=>"Player",
+												"tools_editdetails_clan"=>"Clan"
+												)
+											);
+										?>
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 5%;">ID Number:</td>
+										<td style="width: 5%;"><input type="text" name="id" size=15 maxlength=12 class="form-control"></td>
+									</tr>
+									<tr>
+										<td style="width: 5%;"></td>
+										<td style="width: 5%;"><input type="submit" value=" Edit &gt;&gt; " class="btn btn-primary"></td>
+									</tr>				
+								</table>
+							</div>
+						</form>							
+					</div>
+				</div>
+			</div>
+		</div>
 <?php
 	require(PAGE_PATH . "/search-class.php");
 	
@@ -130,3 +117,5 @@ For support and installation notes visit http://www.hlxcommunity.com
 		);
 	}
 ?>
+	</div>
+</div>

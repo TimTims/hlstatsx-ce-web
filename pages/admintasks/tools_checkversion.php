@@ -45,24 +45,37 @@ if (!defined('IN_HLSTATS')) {
     }
 ?>
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" ><strong>&nbsp;<?php echo $task->title; ?></strong>
-
-<p></p>
-<table class="data-table">
-    <tr class="bg1">
-            <td width="40%"><label for="main-version"><b>Version:</b></label><p>Checks the main version of your HLX:CE.</p></td>
-            <td><p><?php echo getVersion('version'); ?></p></td>
-    </tr>
-    <tr class="bg2">
-            <td><label for="developer"><b>Development Branch:</b></label><p>Checks if this version of your HLX:CE is a development branch version.</p></td>
-            <td><p><?php if (getVersion('dev') == "Dev"){ echo "Yes"; } else { echo "No"; }?></p></td>
-    </tr>
-    <tr class="bg1">
-            <td><label for="git-version"><b>Current Git Version:</b></label><p>Checks the Git Version of this instance of HLX:CE.</p></td>
-            <td><p><?php echo getVersion('gitversion'); ?></p></td>
-    </tr>
-    <tr class="bg2">
-            <td><label for="repo-version"><b>Git Repo Version:</b></label><p>Checks the Git version of the remote repository. This will check to see if your version of HLX:CE is up-to-date.</p></td>
-            <td><p><?php echo getVersion('remoteversion'); ?></p></td>
-    </tr>
-</table>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+		<div class="card-header pb-0">
+              	        <h6><?php echo $task->title; ?></h6>
+                </div>
+                    <div class="ms-4">
+                        <table class="table table-responsive">
+                                <tr>
+                                        <td><label for="main-version"><strong>Version</strong></label><p class="ms-1">Checks the main version of your HLX:CE.</p></td>
+                                        <td></br><p><?php echo getVersion('version'); ?></p></td>
+                                </tr>
+                                <tr>
+                                        <td><label for="developer"><strong>Development Branch</strong></label><p class="ms-1">Checks if this version of your HLX:CE is a development branch version.</p></td>
+                                        <td></br><p><?php if (getVersion('dev') == "Dev"){ echo "Yes"; } else { echo "No"; }?></p></td>
+                                </tr>
+                                <tr>
+                                        <td><label for="git-version"><strong>Current Git Version</strong></label><p class="ms-1">Checks the Git Version of this instance of HLX:CE.</p></td>
+                                        <td></br><p><?php echo getVersion('gitversion'); ?></p></td>
+                                </tr>
+                                <tr>
+                                        <td><label for="repo-version"><strong>Git Repo Version</strong></label><p class="ms-1">Checks the Git version of the remote repository. This will check to see if your version of HLX:CE is up-to-date.</p></td>
+                                        <td></br><p><?php echo getVersion('remoteversion'); ?></p></td>
+                                </tr>
+                                <tr>
+                                        <td><label for="status"><strong>Version Status</strong></label><p class="ms-1">Shows the update status of your HLX:CE instance</p></td>
+                                        <td></br><p><?php echo getVersion('versionstatus'); ?></p></td>
+                                </tr>
+                        </table>
+                   </div>
+            </div>
+        </div>
+    </div>
