@@ -107,10 +107,13 @@ define("CONFIG_PATH", './configs');
 //                of back slash (\) and use absolute paths if you are having any issue.
 //
 // 		Note: the progress directory under hlstatsimg must be writable!!
-define("IMAGE_PATH", './hlstatsimg');
+define("IMAGE_PATH", './assets/images/hlstatsimg');
 
 // How often dynamicly generated images are updated (in seconds)
 define("IMAGE_UPDATE_INTERVAL", 300);
+
+// Does the site use SSL?
+define('SITE_SSL', true);
 
 define('GOOGLE_MAPS_API_KEY', "");
 

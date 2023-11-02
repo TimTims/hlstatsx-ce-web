@@ -222,7 +222,6 @@ function scanCopyFiles($source,$dest) {
 		}
 
 ?>
-<div class="container-fluid py-4">
 	<div class="row justify-content-center">
 		<div class="col-sm-8">
 			<div class="card mb-4">

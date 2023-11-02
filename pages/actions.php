@@ -73,13 +73,13 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'description',
 				'Action',
-				'width=45&link=' . urlencode('mode=actioninfo&amp;action=%k&amp;game='.$game)
+				'width=45&align=center&link=' . urlencode('mode=actioninfo&amp;action=%k&amp;game='.$game)
 			),
 			new TableColumn
 			(
 				'obj_count',
 				'Earned',
-				'width=25&align=right&append=+times'
+				'width=25&align=center&append=+times'
 			),
 			new TableColumn
 			(

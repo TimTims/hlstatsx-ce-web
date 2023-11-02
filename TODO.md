@@ -14,9 +14,11 @@
 * Remove obsolete features and code that no longer work or aren't required
 * Make new icon and update favicon
 * Add theme licencing in folders and to header after reading licence (Thanks to Creative Tim)
-* Change versioning
+* ~~Change versioning~~
 * Fix footer properly to work with all pages
 * Universalise margins and paddings (winging it currently)
 * Reformat all pages to make sure it's readable
 * Add Google Maps alternative
 * Change some HLStatsX:CE settings to other defaults
+* Fix checkboxes in lightmode
+* Fix progress bars not centering in tables (horizontally and vertically)

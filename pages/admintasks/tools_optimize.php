@@ -43,16 +43,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata["acclevel"] < 100) {
         die ("Access denied!");
 	}
-?>
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b><p>
-
-
-<span style="padding-left:35px;">Optimizing tables...</span></td>
-</tr>
-</table><br /><br />
-
-<?php
 		flush();
 
 		$dbtables = null;
@@ -66,82 +57,90 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 			$dbtables .= $table;
 		}
-
-		$tableOptimize = new Table(
-			array(
-				new TableColumn(
-					"Table",
-					"Table",
-					"width=30&sort=no"
-				),
-				new TableColumn(
-					"Op",
-					"Operation",
-					"width=12&sort=no"
-				),
-				new TableColumn(
-					"Msg_type",
-					"Msg. Type",
-					"width=12&sort=no"
-				),
-				new TableColumn(
-					"Msg_text",
-					"Message",
-					"width=46&sort=no"
-				)
-			),
-			"Table",
-			"Table",
-			"Msg_type",
-			false,
-			9999
-		);
-		
-		$result = $db->query("OPTIMIZE TABLE $dbtables");
-
-		$tableOptimize->draw($result, mysqli_num_rows($result), 80);
 ?>
-<br /><br />
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card mb-4">
+				<div class="card-header pb-0">
+					<h6>Optimizing Tables...</h6>
+				</div>
+				<?php
+					$tableOptimize = new Table(
+						array(
+							new TableColumn(
+								"Table",
+								"Table",
+								"width=46&sort=no&align=center"
+							),
+							new TableColumn(
+								"Op",
+								"Operation",
+								"width=12&sort=no&align=center"
+							),
+							new TableColumn(
+								"Msg_type",
+								"Msg. Type",
+								"width=12&sort=no&align=center"
+							),
+							new TableColumn(
+								"Msg_text",
+								"Message",
+								"width=30&sort=no&align=center"
+							)
+						),
+						"Table",
+						"Table",
+						"Msg_type",
+						false,
+						9999
+					);
+					
+					$result = $db->query("OPTIMIZE TABLE $dbtables");
+			
+					$tableOptimize->draw($result, mysqli_num_rows($result), 80);
+				?>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<div class="card mb-4">
+				<div class="card-header pb-0">
+					<h6>Analysing Tables...</h6>
+				</div>		
+				<?php
+					$tableAnalyze = new Table(
+						array(
+							new TableColumn(
+								"Table",
+								"Table",
+								"width=46&sort=no&align=center"
+							),
+							new TableColumn(
+								"Op",
+								"Operation",
+								"width=12&sort=no&align=center"
+							),
+							new TableColumn(
+								"Msg_type",
+								"Msg. Type",
+								"width=12&sort=no&align=center"
+							),
+							new TableColumn(
+								"Msg_text",
+								"Message",
+								"width=30&sort=no&align=center"
+							)
+						),
+						"Table",
+						"Table",
+						"Msg_type",
+						false,
+						9999
+					);
+					
+					$result = $db->query("ANALYZE TABLE $dbtables");
 
-<table style="width:90%;text-align:center;border:0" cellspacing="0" cellpadding="2">
-
-<tr>
-	<td class="fNormal">Analyzing tables...</td>
-</tr>
-</table><br /><br />
-	
-<?php
-		$tableAnalyze = new Table(
-			array(
-				new TableColumn(
-					"Table",
-					"Table",
-					"width=30&sort=no"
-				),
-				new TableColumn(
-					"Op",
-					"Operation",
-					"width=12&sort=no"
-				),
-				new TableColumn(
-					"Msg_type",
-					"Msg. Type",
-					"width=12&sort=no"
-				),
-				new TableColumn(
-					"Msg_text",
-					"Message",
-					"width=46&sort=no"
-				)
-			),
-			"Table",
-			"Table",
-			"Msg_type",
-			false,
-			9999
-		);
-		
-		$result = $db->query("ANALYZE TABLE $dbtables");
-
-		$tableAnalyze->draw($result, mysqli_num_rows($result), 80);
-?>
+					$tableAnalyze->draw($result, mysqli_num_rows($result), 80);
+				?>
+			</div>
+		</div>
+	</div>

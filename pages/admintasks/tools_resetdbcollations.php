@@ -43,11 +43,6 @@ For support and installation notes visit http://www.hlxcommunity.com
     if ($auth->userdata['acclevel'] < 80) {
         die ('Access denied!');
     }
-?>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b><p>
-
-<?php
 
 	if (isset($_POST['confirm'])){
 		$convert_to = DB_COLLATE;
@@ -138,34 +133,31 @@ For support and installation notes visit http://www.hlxcommunity.com
     } else {
         
 ?>        
-
-<form method="POST">
-<table width="60%" align="center" border=0 cellspacing=0 cellpadding=0 class="border">
-
-<tr>
-    <td>
-        <table width="100%" border=0 cellspacing=1 cellpadding=10>
-        
-        <tr class="bg1">
-            <td class="fNormal">
-
-Resets DB Collations if you get collation errors after an upgrade from another HLstats(X)-based system. <br><br>
-You should not lose any data, but be sure to back up your database before running to be on the safe side.<br><br><br>
-
-
-
-<input type="hidden" name="confirm" value="1">
-<input type="radio" name="printonly" value="0" checked> Run the commands on the database<br>
-<input type="radio" name="printonly" value="1"> Print the commands and I'll run them myself (recommended if you have a very large database likely to hang the script)<br>
-<center><input type="submit" value="Generate commands and do the above"></center>
-</td>
-        </tr>
-        
-        </table></td>
-</tr>
-
-</table>
-</form>
+	<div class="row justify-content-center">
+		<div class="col-sm-8">
+			<div class="card mb-4">
+				<div class="card-header pb-0 text-center">
+					<h6><?php echo $task->title; ?></h6>
+				</div>
+				<form method="POST">
+					<div class="table-responsive">
+						<table class="table">
+							<tr> 
+								<td class="text-center">
+									<p>Resets DB Collations if you get collation errors after an upgrade from another HLstats(X)-based system.</p>
+									<p>You should not lose any data, but be sure to back up your database before running to be on the safe side.</p>
+									<input type="hidden" name="confirm" value="1">
+									<p><input class="form-check-input" type="radio" name="printonly" value="0" checked> Run the commands on the database</p>
+									<p><input class="form-check-input" type="radio" name="printonly" value="1"> Print the commands and I'll run them myself<br/>(recommended if you have a very large database likely to hang the script)</p>
+									<input class="btn btn-primary mt-4" type="submit" value="Generate commands and do the above">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 <?php
     }

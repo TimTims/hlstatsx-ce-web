@@ -139,7 +139,7 @@ class Table
 		if ($this->showranking)
 		{
 			$totalwidth += 5;
-			echo "<td style=\"width:5%;text-align:right;\">Rank</td>\n";
+			echo "<td style=\"width:5%;text-align:center;\">Rank</td>\n";
 		}
 
 		foreach ($this->columns as $col)
@@ -188,7 +188,7 @@ class Table
 		if ($this->showranking)
 		{
 			$totalwidth += 5;
-			echo "<td style=\"width:5%;text-align=:right;\">Rank</td>\n";
+			echo "<td style=\"width:5%;text-align=:center;\">Rank</td>\n";
 		}
 
 		foreach ($this->columns as $col)
@@ -239,17 +239,9 @@ class Table
 				$colval = $rowdata[$col->name];
                 $colval_lower = (!empty($rowdata[$col->name])) ? strtolower($rowdata[$col->name]) : null;
 
-				if ($col->align != 'left' && $col->align != 'middle')
+				if ($col->align != 'left')
 				{
 					$colalign = " style=\"text-align:$col->align;\"";
-				}
-				if ($col->align == 'middlecenter')
-				{
-					$colalign = " style=\"vertical-align:middle !important;\"";
-				}
-				if ($col->align == 'middle')
-				{
-					$colalign = " style=\"vertical-align:middle !important;\"";
 				}
 				else
 				{
@@ -358,9 +350,9 @@ class Table
 						break;
 
 					case 'bargraph':
-						$cellbody .= '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+						$cellbody .= '<p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:'.$colval.'%;"></div>
-									  </div>';
+									  </div></p>';
 						break;
 					case 'heatmap':
 						$heatmap = getImage("/games/$game/heatmaps/$colval-kill");

@@ -43,11 +43,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata["acclevel"] < 80) {
         die ("Access denied!");
 	}
-?>
 
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width=9 height=6 class="imageformat"><b>&nbsp;<?php echo $task->title; ?></b><p>
-
-<?php
     if (isset($_POST['confirm'])) {
 		
 		echo "<ul>\n";
@@ -101,31 +97,30 @@ For support and installation notes visit http://www.hlxcommunity.com
 	else
 	{
 ?>
-
-<form method="POST">
-<table width="60%" align="center" border=0 cellspacing=0 cellpadding=0 class="border">
-
-<tr>
-	<td>
-		<table width="100%" border=0 cellspacing=1 cellpadding=10>
-		
-		<tr class="bg1">
-			<td class="fNormal">
-
-Are you sure you want to clean up all statistics? All inactive players, clans and events will be deleted from the database. (All other admin settings will be retained.)<p>
-
-<b>Note</b> You should kill <b>hlstats.pl</b> before resetting the stats. You can restart it after they are reset.<p>
-
-<input type="hidden" name="confirm" value="1">
-<center><input type="submit" value="  Reset Stats  "></center>
-</td>
-		</tr>
-		
-		</table></td>
-</tr>
-
-</table>
-</form>
+	<div class="row justify-content-center">
+		<div class="col-sm-8">
+			<div class="card mb-4">
+				<div class="card-header pb-0 text-center">
+					<h6><?php echo $task->title; ?></h6>
+				</div>
+				<form method="POST">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td class="text-center">
+									<p>Are you sure you want to clean up all statistics?</p> 
+									<p>All inactive players, clans and events will be deleted from the database.<br/>(All other admin settings will be retained.)</p>
+									<p><strong>Note:</strong> You should kill <strong>hlstats.pl</strong> before resetting the stats. You can restart it after they are reset.</p>
+									<input type="hidden" name="confirm" value="1">
+									<input type="submit" class="btn btn-primary mt-4" value="Reset Stats">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 <?php
 	}
 ?>

@@ -43,11 +43,6 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata['acclevel'] < 80) {
 		die ('Access denied!');
 	}
-?>
-
-&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" class="imageformat" alt="" /><strong>&nbsp;<?php echo $task->title; ?></strong><br /><br />
-
-<?php
 
 	if (isset($_POST['confirm']))
 	{
@@ -925,71 +920,65 @@ function name_history_checked()
 }
 
 </script>
-<form name="resetform" method="post">
-<table width="600" align="center" border="0" cellspacing="0" cellpadding="0" class="border">
-
-<tr>
-	<td>
-		<table width="100%" border="0" cellspacing="1" cellpadding="10">
-
-<tr class="bg1">
-	<td class="fNormal" align="middle">
-<select name="game">
-<?php foreach ($games as $g) echo $g; ?>
-</select><br />
-<em>* indicates game is currently disabled</em>
-<table width="350" align="middle" border="0"><tr class="bg1"><td class="fNormal" align="left">
-<ul style="list-style-type:none;">
-	<li style="font-weight:bold;"><input type="checkbox" name="clear_all_delete" onclick="clear_all_delete_checked()" /> Reset/Clear All and Delete Players and Clans</li><br />
-	<li style="font-weight:bold;"><input type="checkbox" name="clear_all" onclick="clear_all_checked()" /> Reset/Clear All</li>
-	<li><input type="checkbox" name="clear_awards" /> Clear Players' Awards History and Ribbons</li>
-	<li><input type="checkbox" name="clear_sessions" /> Clear Players' Session History</li>
-	<li><input type="checkbox" name="clear_names" onclick="name_history_checked()" /> Clear Players' Name History</li>
-	<li><input type="checkbox" name="clear_names_counts" /> Reset Players' Names' Counts</li>
-	<li><input type="checkbox" name="clear_skill" /> Reset Players' Skill</li>
-	<li><input type="checkbox" name="clear_pcounts" /> Reset Players' Counts</li>
-	<li><input type="checkbox" name="clear_scounts" /> Reset Servers' Counts</li>
-	<li><input type="checkbox" name="clear_wcounts" /> Reset Weapons' Counts</li>
-	<li><input type="checkbox" name="clear_acounts" /> Reset Actions' Counts</li>
-	<li><input type="checkbox" name="clear_mcounts" /> Reset Maps' Counts</li>
-	<li><input type="checkbox" name="clear_rcounts" /> Reset Roles' Counts</li>
-	<br />
-	<li style="font-weight:bold;"><input type="checkbox" name="clear_all_events" onclick="clear_all_events_checked()" /> Delete All Events</li>
-	<li><input type="checkbox" name="clear_events_admin" /> Delete Admin Events</li>
-	<li><input type="checkbox" name="clear_events_rcon" /> Delete Rcon Events</li>
-	<li><input type="checkbox" name="clear_events_connects" /> Delete Connect Events</li>
-	<li><input type="checkbox" name="clear_events_disconnects" /> Delete Disconnect Events</li>
-	<li><input type="checkbox" name="clear_events_entries" /> Delete Entry Events</li>
-	<li><input type="checkbox" name="clear_events_chat" /> Delete Chat Events</li>
-	<li><input type="checkbox" name="clear_events_changename" /> Delete Name Change Events</li>
-	<li><input type="checkbox" name="clear_events_changerole" /> Delete Role Change Events</li>
-	<li><input type="checkbox" name="clear_events_changeteam" /> Delete Team Change Events</li>
-	<li><input type="checkbox" name="clear_events_frags" /> Delete Frags Events</li>
-	<li><input type="checkbox" name="clear_events_suicides" /> Delete Suicide Events</li>
-	<li><input type="checkbox" name="clear_events_teamkills" /> Delete Teamkill Events</li>
-	<li><input type="checkbox" name="clear_events_statsme" /> Delete Weapon Stats Events</li>
-	<li><input type="checkbox" name="clear_events_actions" /> Delete Action Events</li>
-	<li><input type="checkbox" name="clear_events_latency" /> Delete Latency Events</li>
-	<li><input type="checkbox" name="clear_events_statsmetime" /> Delete Statsme Time Events</li>
-</ul>
-<br />
-</td></tr></table>
-<p align="middle" />
-		Are you sure you want to reset the above? (All other admin settings will be retained.)<br /><br />
-
-<strong>Note</strong> You should <a href="<?php echo $g_options['scripturl'] . "?mode=admin&amp;task=tools_perlcontrol"; ?>" style="text-decoration:underline;font-weight:bold">stop the HLX:CE daemon</a> before resetting the stats. You can restart it after the reset completes.<br /><br />
-
-<input type="hidden" name="confirm" value="1" />
-
- <input type="submit" value="  Click here to confirm Reset  " />
-</td>
-		</tr>
-		
-		</table></td>
-</tr>
-
-</table>
-</form>
+	<div class="row justify-content-center">
+		<div class="col-sm-8">
+			<div class="card mb-4">
+				<div class="card-header pb-0 text-center">
+					<h6><?php echo $task->title; ?></h6>
+				</div>
+				<form name="resetform" method="post">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<td class="text-center">
+									<select name="game" class="form-select w-50 mx-auto"><?php foreach ($games as $g) echo $g; ?></select>
+									<p><em>* indicates game is currently disabled</em></p>
+									<ul style="list-style-type:none;">
+										<li style="font-weight:bold;"><input class="form-check-input" type="checkbox" name="clear_all_delete" onclick="clear_all_delete_checked()" /> Reset/Clear All and Delete Players and Clans</li><br />
+										<li style="font-weight:bold;"><input class="form-check-input" type="checkbox" name="clear_all" onclick="clear_all_checked()" /> Reset/Clear All</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_awards" /> Clear Players' Awards History and Ribbons</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_sessions" /> Clear Players' Session History</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_names" onclick="name_history_checked()" /> Clear Players' Name History</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_names_counts" /> Reset Players' Names' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_skill" /> Reset Players' Skill</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_pcounts" /> Reset Players' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_scounts" /> Reset Servers' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_wcounts" /> Reset Weapons' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_acounts" /> Reset Actions' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_mcounts" /> Reset Maps' Counts</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_rcounts" /> Reset Roles' Counts</li>
+										<li>&nbsp;</li>
+										<li style="font-weight:bold;"><input class="form-check-input" type="checkbox" name="clear_all_events" onclick="clear_all_events_checked()" /> Delete All Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_admin" /> Delete Admin Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_rcon" /> Delete Rcon Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_connects" /> Delete Connect Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_disconnects" /> Delete Disconnect Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_entries" /> Delete Entry Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_chat" /> Delete Chat Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_changename" /> Delete Name Change Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_changerole" /> Delete Role Change Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_changeteam" /> Delete Team Change Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_frags" /> Delete Frags Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_suicides" /> Delete Suicide Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_teamkills" /> Delete Teamkill Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_statsme" /> Delete Weapon Stats Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_actions" /> Delete Action Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_latency" /> Delete Latency Events</li>
+										<li><input class="form-check-input" type="checkbox" name="clear_events_statsmetime" /> Delete Statsme Time Events</li>
+									</ul>
+									<p>Are you sure you want to reset the above? (All other admin settings will be retained.)</p>
+									<p><strong>Note:</strong> You should <a href="<?php echo $g_options['scripturl'] . "?mode=admin&amp;task=tools_perlcontrol"; ?>" style="text-decoration:underline;font-weight:bold">stop the HLX:CE daemon</a> before resetting the stats.</p>
+									<p>You can restart it after the reset completes.</p>
+									<input type="hidden" name="confirm" value="1" />
+									<input class="btn btn-primary mt-4" type="submit" value="Click here to confirm Reset" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 <?php
 	}
 ?>

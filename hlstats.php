@@ -66,7 +66,11 @@ session_start();
 
 if (!empty($_GET['logout']) && $_GET['logout'] == '1') {
 	unset($_SESSION['loggedin']);
-	header("Location: http://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
+	if(defined('SITE_SSL') == true){
+		header("Location: https://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
+	} else {
+		header("Location: http://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']);
+	}
 	die;
 }
 

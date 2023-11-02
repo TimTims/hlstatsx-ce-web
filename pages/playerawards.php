@@ -230,24 +230,26 @@ For support and installation notes visit http://www.hlxcommunity.com
 				<div class="card-header pb-0">
               		<h6>Player Awards History</h6>
 				</div>
-				<?php
-					if ($numitems > 0)
-					{
-						$table->draw($result, $numitems, 95);
-					}
-				?>
-				<?php 
-					$db->query
-					("
-						SELECT
-							hlstats_Players.lastName
-						FROM
-							hlstats_Players
-						WHERE
-							hlstats_Players.playerId = $player
-					");
-					list($lastName) = $db->fetch_row();
-				?>
+				<div class="text-capitalize">
+					<?php
+						if ($numitems > 0)
+						{
+							$table->draw($result, $numitems, 95);
+						}
+					?>
+					<?php 
+						$db->query
+						("
+							SELECT
+								hlstats_Players.lastName
+							FROM
+								hlstats_Players
+							WHERE
+								hlstats_Players.playerId = $player
+						");
+						list($lastName) = $db->fetch_row();
+					?>
+				</div>
 			</div>
 		</div>
 	</div>
