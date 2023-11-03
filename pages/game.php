@@ -157,9 +157,9 @@ For support and installation notes visit http://www.hlxcommunity.com
 						else
 							$hpk = sprintf("%.2f", 0);
 						if ($players_last_day > -1)
-							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers</h6></div>";
 						else
-							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers</h6></div>";
 					}
 					else
 					{
@@ -168,11 +168,10 @@ For support and installation notes visit http://www.hlxcommunity.com
 						else
 							$hpk = sprintf("%.2f", 0);
 						if ($players_last_day > -1)
-							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
+							echo "Tracking <b>" . number_format($total_players) . "</b> players (<b>+" . number_format($players_last_day) . "</b> new players last 24h) with <b>" . number_format($total_kills) . "</b> kills (<b>+" . number_format($kills_last_day) . "</b> last 24h) and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers</h6></div>";
 						else
-							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers";
-				?></h6>
-            	</div>
+							echo "Tracking <b>" . number_format($total_players) . "</b> players with <b>" . number_format($total_kills) . "</b> kills and <b>" . number_format($total_headshots) . "</b> headshots (<b>$hpk%</b>) on <b>" . number_format($total_servers) . "</b> servers</h6></div>";
+				?>
 		<div class="table-responsive p-0">
 			<table class="table align-items-center mb-0">
 				<thead>
@@ -469,8 +468,10 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 		if ($db->num_rows($resultAwards) > 0 && $awards_d_date) {
 ?>
-        </div>
-    </div>
+			</div>
+		</div>
+		</div>
+	<div class="row">
         <div class="col-12">
             <div class="card mb-4">
 				<div class="card-header pb-0">
@@ -525,10 +526,12 @@ For support and installation notes visit http://www.hlxcommunity.com
 ?>
             </table>
 		</div>
-        </div>
 		</div>
     </div>
     <?php
 		}
-	}
+	} else { ?>
+	</div>
+	</div>
+<?php	}
 ?>

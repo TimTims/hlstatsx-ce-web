@@ -1,5 +1,12 @@
 # Changelog
 
+### 03/11/2023 - Git Commit 98
+* Fix missing div tags in game.php when daily awards are disabled
+* Fix missing header and div tags in certain conditions
+* Fix missing div tag by adding it to footer.php (temporary fix, will add to individual pages eventually)
+* Changed layout of admin page*
+    *NOTE: The in-page admin settings are currently are broken. They need a code change to make them function properly which I will do   at a later date.
+
 ### 02/11/2023 - Git Commit 97
 * Fix page spacing on "Check Version" and "Duplicate Game Settings" pages
 * Fix inconsistent capitalisation on "Player Award" page

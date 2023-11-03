@@ -1016,12 +1016,12 @@ $selGame = valid_request($_GET['game'], false);
     <div class="row">
         <?php
 		// General Settings
-		$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80);
-		$admintasks['adminusers'] = new AdminTask('Admin Users', 100);
-		$admintasks['games'] = new AdminTask('Games', 80);
-		$admintasks['hostgroups'] = new AdminTask('Host Groups', 100);
-		$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80);
-		$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80);
+		$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80, "general", "Test Description");
+		$admintasks['adminusers'] = new AdminTask('Admin Users', 100, "general", "Test Description");
+		$admintasks['games'] = new AdminTask('Games', 80, "general", "Test Description");
+		$admintasks['hostgroups'] = new AdminTask('Host Groups', 100, "general", "Test Description");
+		$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80, "general", "Test Description");
+		$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80, "general", "Test Description");
 
 		// Game Settings
 		$admintasks['newserver'] = new AdminTask('Add Server', 80, 'game');
@@ -1080,34 +1080,34 @@ $selGame = valid_request($_GET['game'], false);
                 <div class="card-body">
                     <p class="text-uppercase text-sm">General Settings</p>
                     <div class="row">
-                        <div class="col-md-6">
-                            <?php
-								foreach ($admintasks as $code => $task)
-								{
-									if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
+                        <div class="col-md-12">
+							<ul class="list-group" style="display: grid; grid-template-columns: repeat(2, 1fr);">
+								<?php
+									foreach ($admintasks as $code => $task)
 									{
-										if ($selTask == $code)
+										if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
 										{
-							?>
-                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
-                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin"
-                                    name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
-
-                            <form method="post"
-                                action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
-                                <?php include (PAGE_PATH . "/admintasks/$code.php"); ?>
-                            </form>
-                            <?php
-								}
-							else
-							{
-							?>
-                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
-                                alt="" /><b>&nbsp;<a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code;
-							?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
-									} 
-								}
-							}?>
+											if ($selTask == $code)
+											{
+												?>
+												<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin" name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
+												<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+													<?php include (PAGE_PATH . "/admintasks/$code.php"); ?>
+												</form>
+												<?php
+													}
+											else
+											{
+												?>
+												<li class="list-group-item border-1 rounded-1">
+													<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b>
+													<p><?php echo $task->description; ?></p>
+												</li> <?php
+											} 
+										}
+									}
+								?>
+							</ul>
                         </div>
                     </div>
                 </div>
@@ -1115,78 +1115,69 @@ $selGame = valid_request($_GET['game'], false);
         </div>
 
         <!-- Game Settings -->
-        <div class="col-md-6 mt-2">
+        <div class="col-md-12 mt-2">
             <div class="card">
                 <div class="card-body">
                     <p class="text-uppercase text-sm">Game Settings</p>
                     <div class="row">
-                        <div class="col-md-6">
-                            <?php
-								$gamesresult = $db->query("
-										SELECT
-											name,
-											code
-										FROM
-											hlstats_Games
-										WHERE
-											hidden = '0'
-										ORDER BY
-											name ASC
-										;
-									");
+                        <div class="col-md-12">
+							<ul class="list-group" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+								<?php
+									$gamesresult = $db->query("
+											SELECT
+												name,
+												code
+											FROM
+												hlstats_Games
+											WHERE
+												hidden = '0'
+											ORDER BY
+												name ASC
+											;
+										");
 
-								while ($gamedata = $db->fetch_array($gamesresult))
-								{
-									$gamename = $gamedata['name'];
-									$gamecode = $gamedata['code'];
-
-									if ($gamecode == $selGame)
+									while ($gamedata = $db->fetch_array($gamesresult))
 									{
-							?>
-                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
-                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin"
-                                    name="game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b>
-                            (<?php echo $gamecode; ?>)<br /><br /> <?php
-										foreach ($admintasks as $code => $task)
+										$gamename = $gamedata['name'];
+										$gamecode = $gamedata['code'];
+
+										if ($gamecode == $selGame)
 										{
-											if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'game')
-											{
-												if ($selTask == $code)
-												{
-							?>
-                            <img src="<?php echo IMAGE_PATH; ?>/downarrow.gif" width="9" height="6" alt="" /><b>&nbsp;<a
-                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>"
-                                    name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
-
-                            <form method="post" name="<?php echo $code; ?>form"
-                                action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">
-
-                                <?php
-								include (PAGE_PATH . "/admintasks/$code.php");
-							?>
-                            </form>
-                            <?php
-												}
-												elseif ($code != 'serversettings')
-												{
 								?>
-                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
-                                alt="" /><b>&nbsp;<a
-                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br /> <?php
+								<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin" name="game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b> (<?php echo $gamecode; ?>)<?php
+											foreach ($admintasks as $code => $task)
+											{
+												if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'game')
+												{
+													if ($selTask == $code)
+													{
+													?>
+														<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>" name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b>
+														<form method="post" name="<?php echo $code; ?>form"
+															action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">
+
+															<?php
+															include (PAGE_PATH . "/admintasks/$code.php");
+														?>
+														</form>
+													<?php
+													}
+													elseif ($code != 'serversettings')
+													{
+													?>
+														<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b> <?php
+													}
 												}
 											}
 										}
-									}
-									else
-									{
-							?>
-                            <img src="<?php echo IMAGE_PATH; ?>/rightarrow.gif" width="6" height="9"
-                                alt="" /><b>&nbsp;<a
-                                    href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>#game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a></b>
-                            (<?php echo $gamecode; ?>)<br /><br /> <?php
-									}
-								} ?>
-                        </div>
+												else
+												{
+												?>
+													<li class="list-group-item border-1 rounded-1"><b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>#game_<?php echo $gamecode; ?>"><?php echo $gamename; ?></a> (<?php echo $gamecode; ?>)</b></li> <?php
+												}
+									} ?>
+							</ul>
+						</div>
                     </div>
                 </div>
             </div>
@@ -1201,30 +1192,25 @@ $selGame = valid_request($_GET['game'], false);
                 <div class="card-body">
                     <p class="text-uppercase text-sm">Tools</p>
                     <div class="row">
-                        <div class="col-md-6">
-                            <ul>
-                                <?php
-								foreach ($admintasks as $code => $task)
+						<ul class="list-group" style="display: grid; grid-template-columns: repeat(2, 1fr);">
+							<?php
+							foreach ($admintasks as $code => $task)
+							{
+								if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'tool')
 								{
-									if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'tool')
-									{
-							?> <li><b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br />
-                                    <?php echo $task->description; ?><br /><br />
-                                </li>
-                                <?php
-									}
-								}?>
-                            </ul>
-                        </div>
+									?><li class="list-group-item border-1 rounded-0"><a class="list-group-item-action" href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>"><b><?php echo $task->title; ?></b></a>
+									<p><?php echo $task->description; ?></p>
+									</li>
+							<?php
+								}
+							}?>
+						</ul>
                     </div>
                 </div>
             </div>
         </div>
         <?php	}
-		?>
-    </div>
 
-    <?php
 if (isset($footerscript))
 {
     echo $footerscript;

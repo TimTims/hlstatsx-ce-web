@@ -540,7 +540,7 @@ function printserverstats($server_id)
 			}
 		?>
 	</table>
-</div>
+
 <?php			  	
 	}  // for servers
 }
