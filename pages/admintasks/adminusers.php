@@ -58,35 +58,37 @@ For support and installation notes visit http://www.hlxcommunity.com
 	}
 	
 ?>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Admin Users</h6>
+		</div>
+		<p class="ms-4">Usernames and passwords can be set up for access to this HLstats Admin area. For most sites you will only want one admin user - yourself. Some sites may however need to give administration access to several people.</p>
+		<p class="ms-4"><b>Note</b> Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field.</p>
+		<p class="ms-4"><b>Access Levels</b></p>
+		<ul class="ms-4">
+			<li><i><b>Restricted</b></i> users only have access to the Host Groups, Clan Tag Patterns, Weapons, Teams, Awards and Actions configuration areas. This means these users cannot set Options or add new Games, Servers or Admin Users to HLstats, or use any of the admin Tools.</li>
+			<li><i><b>Administrator</b></i> users have full, unrestricted access.</li>
+		</ul>
 
-Usernames and passwords can be set up for access to this HLstats Admin area. For most sites you will only want one admin user - yourself. Some sites may however need to give administration access to several people.<p>
+		<?php
+			
+			$result = $db->query("
+				SELECT
+					username,
+					IF(password='','','(encrypted)') AS password,
+					acclevel
+				FROM
+					hlstats_Users
+				ORDER BY
+					username
+			");
+			
+			$edlist->draw($result);
+		?>
 
-<b>Note</b> Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field.<p>
+		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
 
-<b>Access Levels</b><br>
-
-&#149; <i>Restricted</i> users only have access to the Host Groups, Clan Tag Patterns, Weapons, Teams, Awards and Actions configuration areas. This means these users cannot set Options or add new Games, Servers or Admin Users to HLstats, or use any of the admin Tools.<br>
-&#149; <i>Administrator</i> users have full, unrestricted access.<p>
-
-<?php
-	
-	$result = $db->query("
-		SELECT
-			username,
-			IF(password='','','(encrypted)') AS password,
-			acclevel
-		FROM
-			hlstats_Users
-		ORDER BY
-			username
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
+	</div>
+</div>
 

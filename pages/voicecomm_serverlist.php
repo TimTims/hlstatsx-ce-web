@@ -20,18 +20,23 @@
         ");
   
 	if ($db->num_rows($result) >= 1) {
-		printSectionTitle('Voice Server');
 ?>
-	<div class="subblock">
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall">Server Name</td>
-				<td class="fSmall">Server Address</td>
-				<td class="fSmall">Password</td>
-				<td class="fSmall" style="text-align:right;">Channels</td>
-				<td class="fSmall" style="text-align:right;">Slots&nbsp;used</td>
-				<td class="fSmall">Notes</td>
-			</tr> 
+	<div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Voice Servers</h6>
+				</div>
+		<div class="table-responsive">
+			<table class="table">
+				<tr>
+					<td>Server Name</td>
+					<td>Server Address</td>
+					<td>Password</td>
+					<td>Channels</td>
+					<td>Slots&nbsp;used</td>
+					<td>Notes</td>
+				</tr> 
 <?php
 		$i = 0;
 		$j = 0;
@@ -142,8 +147,10 @@
 		}
 ?>
     </table>
+			</div>
+		</div>
 	</div>
-<br /><br />
+</div>
 <?php
 	}
 	// VOICECOMM MODULE END

@@ -581,8 +581,8 @@ class EditList
 			}
 
 ?>
-                <td align="center" class="bg2"><input type="checkbox"
-                        name="<?php echo $rowdata[$this->keycol]; ?>_delete" value="1" /></td>
+                <td align="center" class="bg2"><div class="form-check"><input type="checkbox"
+                        name="<?php echo $rowdata[$this->keycol]; ?>_delete" value="1" class="form-check-input"/></div></td>
                 <?php echo "</tr>\n\n";
 		}
 ?>
@@ -700,7 +700,7 @@ class EditList
 						$width = '';
 					}
 
-					echo "<select name=\"" . $keyval . "_$col->name\"$width>\n";
+					echo "<select class=\"form-select\" name=\"" . $keyval . "_$col->name\"$width>\n";
 
 					if (!$col->required)
 					{
@@ -745,7 +745,7 @@ class EditList
 						$selected = '';
 					}
 
-					echo '<center><input type="checkbox" name="' . $keyval . "_$col->name\" value=\"$selectedval\"$selected /></center>";
+					echo '<center><div class="form-check"><input type="checkbox" class="form-check-input" name="' . $keyval . "_$col->name\" value=\"$selectedval\"$selected /></div></center>";
 					break;
 					
 				case 'hidden':
@@ -782,7 +782,7 @@ class EditList
 
 					$input_value = (!empty($value)) ? htmlentities(html_entity_decode($value), ENT_COMPAT, 'UTF-8') : "";
 
-					echo "<input $onClick type=\"text\" name=\"" . $keyval . "_$col->name\" size=$col->width " . "value=\"" . $input_value . "\" class=\"textbox\"" . " maxlength=\"$col->maxlength\"$onclick />";
+					echo "<input $onClick type=\"text\" name=\"" . $keyval . "_$col->name\" size=$col->width " . "value=\"" . $input_value . "\" class=\"textbox form-control\"" . " maxlength=\"$col->maxlength\"$onclick />";
 // doing htmlentities on something that we just decoded is because we need to encode them when we fill out a form, but we don't want to double encode them (some items like rcon are not encoded at all - but server names are)
 			}
 
@@ -1062,7 +1062,7 @@ $selGame = valid_request($_GET['game'], false);
 
 
 		// Show Tool
-		if (!empty($admintasks[$selTask]) && ($admintasks[$selTask]->type == 'tool' || $admintasks[$selTask]->type == 'subtool'))
+		if (!empty($admintasks[$selTask]) && ($admintasks[$selTask]->type == 'tool' || $admintasks[$selTask]->type == 'subtool' || $admintasks[$selTask]->type == 'general' || $admintasks[$selTask]->type == 'game'))
 		{
 			$task = $admintasks[$selTask];
 
@@ -1083,30 +1083,16 @@ $selGame = valid_request($_GET['game'], false);
                         <div class="col-md-12">
 							<ul class="list-group" style="display: grid; grid-template-columns: repeat(2, 1fr);">
 								<?php
-									foreach ($admintasks as $code => $task)
+								foreach ($admintasks as $code => $task)
+								{
+									if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
 									{
-										if ($auth->userdata['acclevel'] >= $task->acclevel && $task->type == 'general')
-										{
-											if ($selTask == $code)
-											{
-												?>
-												<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin" name="<?php echo $code; ?>"><?php echo $task->title; ?></a></b><br /><br />
-												<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
-													<?php include (PAGE_PATH . "/admintasks/$code.php"); ?>
-												</form>
-												<?php
-													}
-											else
-											{
-												?>
-												<li class="list-group-item border-1 rounded-1">
-													<b><a href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>"><?php echo $task->title; ?></a></b>
-													<p><?php echo $task->description; ?></p>
-												</li> <?php
-											} 
-										}
+										?><li class="list-group-item border-1 rounded-0"><a class="list-group-item-action" href="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>"><b><?php echo $task->title; ?></b></a>
+										<p><?php echo $task->description; ?></p>
+										</li>
+								<?php
 									}
-								?>
+								}?>
 							</ul>
                         </div>
                     </div>

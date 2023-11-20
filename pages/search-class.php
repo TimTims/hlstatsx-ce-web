@@ -171,13 +171,13 @@ For support and installation notes visit http://www.hlxcommunity.com
 						(
 							'player_id',
 							'ID',
-							'width=5&align=right'
+							'width=10&align=center'
 						),
 						new TableColumn
 						(
 							'name',
 							'Player',
-							'align=center&width=65&flag=1&link=' . urlencode($link_player)
+							'align=center&width=60&flag=1&link=' . urlencode($link_player)
 						),
 						new TableColumn
 						(

@@ -1,11 +1,21 @@
 # Changelog
 
+### 20/11/2023 - Git Commit 99
+* Fixed table layout on some pages
+* Ensured barcharts in tables are centered horizontally
+* Added "align=middle" to draw table class to allow vertical alignment
+* Fix sidebar not showing full length
+* Removed Google Maps code in "game.php" (Will implement a new system with an FOSS alternative)
+* Make sure all admin tasks open up in new page, rather than in the table
+* Fixed general settings by removing stylesheet selection (Will re-add option to allow for customisation)
+* Redesigned all "general" admin tasks
+
 ### 03/11/2023 - Git Commit 98
 * Fix missing div tags in game.php when daily awards are disabled
 * Fix missing header and div tags in certain conditions
 * Fix missing div tag by adding it to footer.php (temporary fix, will add to individual pages eventually)
 * Changed layout of admin page*
-    *NOTE: The in-page admin settings are currently are broken. They need a code change to make them function properly which I will do   at a later date.
+    *NOTE: The in-page admin settings are currently broken. They need a code change to make them function properly which I will do at a later date.
 
 ### 02/11/2023 - Git Commit 97
 * Fix page spacing on "Check Version" and "Duplicate Game Settings" pages

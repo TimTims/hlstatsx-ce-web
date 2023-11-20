@@ -58,7 +58,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             <div class="col-lg-6">
               <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                 <li class="nav-item">
-					<?php echo 'Generated in real-time by <a href="https://github.com/NomisCZ/hlstatsx-community-edition" target="_blank">HLstatsX Community Edition '.getVersion('version').' '.getVersion('dev').'</a> '.getVersion('git'); ?>
+					        <?php echo 'Generated in real-time by <a href="https://github.com/NomisCZ/hlstatsx-community-edition" target="_blank">HLstatsX Community Edition '.getVersion('version').' '.getVersion('dev').'</a> '.getVersion('git'); ?>
                 </li>
               </ul>
             </div>

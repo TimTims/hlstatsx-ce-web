@@ -184,31 +184,31 @@ For support and installation notes visit http://www.hlxcommunity.com
 						(
 							'eventTime',
 							'Date',
-							'width=16&align=center'
+							'align=center'
 						),
 						new TableColumn
 						(
 							'lastName',
 							'Player',
-							'width=17&sort=no&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k')
+							'align=center&sort=no&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k')
 						),
 						new TableColumn
 						(
 							'message',
 							'Message',
-							'width=34&sort=no&embedlink=yes'
+							'align=center&sort=no&embedlink=yes'
 						),
 						new TableColumn
 						(
 							'serverName',
 							'Server',
-							'width=23&sort=no'
+							'sort=no&align=center'
 						),
 						new TableColumn
 						(
 							'map',
 							'Map',
-							'width=10&sort=no'
+							'sort=no&align=center'
 						)
 					),
 					'playerId',

@@ -61,32 +61,33 @@ For support and installation notes visit http://www.hlxcommunity.com
 	}
 	
 ?>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Manage Voice Servers</h6>
+		</div>
+		<?php
+			
+			$result = $db->query("
+				SELECT
+					serverId,
+					name,
+					addr,
+					password,
+					UDPPort,
+					queryPort,
+					descr,
+					serverType
+				FROM
+					hlstats_Servers_VoiceComm
+				ORDER BY
+					serverType,
+					name
+			");
+			
+			$edlist->draw($result);
+		?>
 
-<?php
-	
-	$result = $db->query("
-		SELECT
-			serverId,
-			name,
-			addr,
-			password,
-			UDPPort,
-			queryPort,
-			descr,
-			serverType
-		FROM
-			hlstats_Servers_VoiceComm
-		ORDER BY
-			serverType,
-			name
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
-
+		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+	</div>
+</div>

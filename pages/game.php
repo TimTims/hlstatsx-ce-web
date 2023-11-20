@@ -38,8 +38,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 
     if (!defined('IN_HLSTATS')) {
         die('Do not access this file directly.');
-    }
-
+    } 
 	require (PAGE_PATH . '/livestats.php');
 	$db->query("SELECT name FROM hlstats_Games WHERE code='$game'");
 	if ($db->num_rows() < 1) {
@@ -50,8 +49,6 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$db->free_result();
 
 	pageHeader(array($gamename), array($gamename => ''));
-
-	include (PAGE_PATH . '/voicecomm_serverlist.php');
 
 	$query = "
 			SELECT
@@ -142,8 +139,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$servers = $db->fetch_row_set();
 	$db->free_result();
 ?>
-
 <div class="container-fluid py-4">
+<?php include (PAGE_PATH . '/voicecomm_serverlist.php'); ?>
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -286,45 +283,12 @@ For support and installation notes visit http://www.hlxcommunity.com
 
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
                         <?php	
 			}
 		}
 		echo '</tbody>';
 		echo '</table>';
 		echo '</div>';
-	}
-	
-	if (($g_options['show_google_map'] == 1) || ($g_options['show_server_load_image'] == 1)) {
- 
-		echo '<div class="table-responsive p-0">';
-		echo '<table class="table align-items-center mb-0">';
-	
-		if ($g_options['show_google_map'] == 1)	{
-?>
-                        <tr>
-                            <td style="text-align:center;">
-                                <div id="map" style="margin:10px auto;width: 870px; height: 380px; color:black;"></div>
-                            </td>
-                        </tr>
-                        <?php
-		}
-		if ($g_options['show_server_load_image'] == 1) {
-?>
-                        <tr>
-                            <td style="text-align:center;">
-                                <img src="show_graph.php?type=1&amp;game=<?php echo $game ?>&amp;width=870&amp;height=200&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>"
-                                    alt="Server Load Graph" title="serverLoadGraph" />
-                            </td>
-                        </tr>
-                        <?php
-		}
-	
-		echo '</table></div>';
-	} 
-	if (($g_options['show_google_map'] == 0) && ($g_options['show_server_load_image'] == 0)) {
-		echo '<br />     ';
 	}
 
 	if ($g_options['slider'] == 0 || ($g_options['slider'] == 1 && count($servers) == 1)) {

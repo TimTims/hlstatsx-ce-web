@@ -88,49 +88,49 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'modifier',
 				'Modifier',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'kills',
 				'Kills',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'%',
-				'width=5&sort=no&align=right&append=' . urlencode('%')
+				'width=5&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'Ratio',
-				'width=18&sort=no&type=bargraph'
+				'width=18&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'headshots',
 				'Headshots',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'%',
-				'width=5&sort=no&align=right&append=' . urlencode('%')
+				'width=5&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'Ratio',
-				'width=18&sort=no&type=bargraph'
+				'width=18&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'hpk',
 				'HS:K',
-				'width=5&align=right'
+				'width=5&align=center'
 			)
 			
 		),

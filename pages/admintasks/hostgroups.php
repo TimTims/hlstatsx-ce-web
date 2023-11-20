@@ -57,32 +57,31 @@ For support and installation notes visit http://www.hlxcommunity.com
 	}
 	
 ?>
-Host Groups allow you to group, for example, all players from "...adsl.someisp.net" as "SomeISP ADSL", in the Host Statistics admin tool.<p>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Host Groups</h6>
+		</div>
+		<p class="ms-4">Host Groups allow you to group, for example, all players from "...adsl.someisp.net" as "SomeISP ADSL", in the Host Statistics admin tool.</p>
+		<p class="ms-4">The Host Pattern should look like the <b>end</b> of the hostname. For example a pattern ".adsl.someisp.net" will match "1234.ny.adsl.someisp.net". You can use asterisks "*" in the pattern, e.g. ".ny.*.someisp.net". The asterisk matches zero or more of any character except a dot ".".</p>
+		<p class="ms-4">The patterns are sorted below in the order they will be applied. A more specific pattern should match before a less specific pattern.</p>
+		<p class="ms-4"><b>Note</b> Run <b>hlstats-resolve.pl --regroup</b> to apply grouping changes to existing data.</p>
+		<?php $result = $db->query("
+				SELECT
+					id,
+					pattern,
+					name,
+					LENGTH(pattern) AS patternlength
+				FROM
+					hlstats_HostGroups
+				ORDER BY
+					patternlength DESC,
+					pattern ASC
+			");
+			
+			$edlist->draw($result);
+		?>
 
-The Host Pattern should look like the <b>end</b> of the hostname. For example a pattern ".adsl.someisp.net" will match "1234.ny.adsl.someisp.net". You can use asterisks "*" in the pattern, e.g. ".ny.*.someisp.net". The asterisk matches zero or more of any character except a dot ".".<p>
-
-The patterns are sorted below in the order they will be applied. A more specific pattern should match before a less specific pattern.<p>
-
-<b>Note</b> Run <b>hlstats-resolve.pl --regroup</b> to apply grouping changes to existing data.<p>
-<?php $result = $db->query("
-		SELECT
-			id,
-			pattern,
-			name,
-			LENGTH(pattern) AS patternlength
-		FROM
-			hlstats_HostGroups
-		ORDER BY
-			patternlength DESC,
-			pattern ASC
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
-
+		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+	</div>
+</div>

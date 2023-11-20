@@ -152,67 +152,61 @@ For support and installation notes visit http://www.hlxcommunity.com
 									(
 										'lastName',
 										'Player',
-										'width=26&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k')
+										'width=26&align=center&flag=1&link=' . urlencode('mode=playerinfo&amp;player=%k')
 									),
-														new TableColumn
-														(
-																'mmrank',
-																'Rank',
-																'width=4&type=elorank'
-														),
 									new TableColumn
 									(
 										'skill',
 										'Points',
-										'width=7&align=right&skill_change=1'
+										'width=7&align=center&skill_change=1'
 									),
 									new TableColumn
 									(
 										'activity',
 										'Activity',
-										'width=10&sort=no&type=bargraph'
+										'width=10&sort=no&type=bargraph&align=center'
 									),
 									new TableColumn
 									(
 										'connection_time',
 										'Connection Time',
-										'width=10&align=right&type=timestamp'
+										'width=10&align=center&type=timestamp'
 									),
 									new TableColumn
 									(
 										'kills',
 										'Kills',
-										'width=7&align=right'
+										'width=8&align=center'
 									),
 									new TableColumn
 									(
 										'deaths',
 										'Deaths',
-										'width=7&align=right'
+										'width=8&align=center'
 									),
 									new TableColumn
 									(
 										'kpd',
 										'K:D',
-										'width=6&align=right'
+										'width=7&align=center'
 									),
 									new TableColumn
 									(
 										'headshots',
 										'Headshots',
-										'width=6&align=right'
+										'width=6&align=center'
 									),
 									new TableColumn
 									(
 										'hpk',
 										'HS:K',
-										'width=6&align=right'
+										'width=7&align=center'
 									),
 									new TableColumn
 									(
 										'acc',
 										'Accuracy',
-										'width=6&align=right&append=' . urlencode('%')
+										'width=6&align=center&append=' . urlencode('%')
 									)
 								),
 								'playerId',

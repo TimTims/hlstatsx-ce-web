@@ -243,9 +243,13 @@ class Table
 				{
 					$colalign = " style=\"text-align:$col->align;\"";
 				}
-				else
+				if ($col->align == 'middle')
 				{
-					$colalign = "";
+					$colalign = " class=\"align-middle\"";
+				}
+				elseif ($col->align == 'left')
+				{
+					$colalign = " style=\"text-align:left;\"";
 				}
 
 				$class = "bg$c";
@@ -350,9 +354,9 @@ class Table
 						break;
 
 					case 'bargraph':
-						$cellbody .= '<p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+						$cellbody .= '<div class="progress mx-auto" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width:'.$colval.'%;"></div>
-									  </div></p>';
+									  </div>';
 						break;
 					case 'heatmap':
 						$heatmap = getImage("/games/$game/heatmaps/$colval-kill");
