@@ -53,47 +53,52 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("awardCount", "No. awards needed", 10, true, "text", "0", 64);
 	$edlist->columns[] = new EditListColumn("special", "Special logic", 10, false, "text", "0", 64);
 
-	if ($_POST) {
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
-	
 ?>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Ribbons</h6>
+		</div>
+		<?php
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
+		?>
+		<p class="ms-4">Special Logic:</p>
+		<ul class="ms-4">
+		<li>0 = standard ribbon (weapon award triggered)
+		<li>1 = CSS Only: HeadShot ribbon
+		<li>2 = Connection Time ribbon (no. of awards = connection time in hours to trigger this ribbon, select any award code - it will be ignored)
+		</ul>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
-Special Logic:<br>
-<ul>
-<li>0 = standard ribbon (weapon award triggered)
-<li>1 = CSS Only: HeadShot ribbon
-<li>2 = Connection Time ribbon (no. of awards = connection time in hours to trigger this ribbon, select any award code - it will be ignored)
-</ul>
+			<?php
+				
+				$result = $db->query("
+					SELECT
+						ribbonId,
+						game,
+						awardCode,
+						awardCount,
+						image,
+						ribbonName,
+						special
+					FROM
+						hlstats_Ribbons
+					WHERE
+						game='$gamecode'
+					ORDER BY
+						awardCount,awardCode
+				");
+				
+				$edlist->draw($result);
+			?>
 
-<?php
-	
-	$result = $db->query("
-		SELECT
-			ribbonId,
-			game,
-			awardCode,
-			awardCount,
-			image,
-			ribbonName,
-			special
-		FROM
-			hlstats_Ribbons
-		WHERE
-			game='$gamecode'
-		ORDER BY
-			awardCount,awardCode
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
-
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
+	</div>
+</div>

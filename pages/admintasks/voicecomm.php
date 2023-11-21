@@ -53,41 +53,43 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn('descr', 'Notes', 40, false, 'text', '', 64);
 	$edlist->columns[] = new EditListColumn('serverType', 'Server Type', 20, true, 'select', '0/Teamspeak;1/Ventrilo');
 	
-	if ($_POST) {
-		if ($edlist->update())
-			message('success', 'Operation successful.');
-		else
-			message('warning', $edlist->error());
-	}
-	
 ?>
 <div class="col-12">
 	<div class="card mb-4">
 		<div class="card-header pb-0">
 			<h6>Manage Voice Servers</h6>
 		</div>
-		<?php
-			
-			$result = $db->query("
-				SELECT
-					serverId,
-					name,
-					addr,
-					password,
-					UDPPort,
-					queryPort,
-					descr,
-					serverType
-				FROM
-					hlstats_Servers_VoiceComm
-				ORDER BY
-					serverType,
-					name
-			");
-			
-			$edlist->draw($result);
-		?>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+			<?php
+				if ($_POST)
+				{
+					if ($edlist->update())
+						echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+					else
+						echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+				}
+				
+				$result = $db->query("
+					SELECT
+						serverId,
+						name,
+						addr,
+						password,
+						UDPPort,
+						queryPort,
+						descr,
+						serverType
+					FROM
+						hlstats_Servers_VoiceComm
+					ORDER BY
+						serverType,
+						name
+				");
+				
+				$edlist->draw($result);
+			?>
 
-		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
 	</div>
 </div>

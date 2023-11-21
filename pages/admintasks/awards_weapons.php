@@ -50,36 +50,45 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("code", "Weapon", 0, true, "select", "hlstats_Weapons.name/code/game='$gamecode';latency/*Latency;mostkills/*Most Kills;bonuspoints/*Bonus Points;suicide/*Suicides;teamkills/*Team Kills;connectiontime/*Connection Time;killstreak/*Kill Streak;deathstreak/*Death Streak;allsentrykills/*All Sentry Kills (TF2)");
 	$edlist->columns[] = new EditListColumn("name", "Award Name", 20, true, "text", "", 128);
 	$edlist->columns[] = new EditListColumn("verb", "Verb Plural", 20, true, "text", "", 64);
-	
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
+	?>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Weapon Awards</h6>
+		</div>
+		<?php
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
+		?>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
-	$result = $db->query("
-		SELECT
-			awardId,
-			code,
-			name,
-			verb
-		FROM
-			hlstats_Awards
-		WHERE
-			game='$gamecode'
-			AND awardType='W'
-		ORDER BY
-			code ASC
-	");
-	
-	$edlist->draw($result);
-?>
+			<?php
 
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
+				$result = $db->query("
+					SELECT
+						awardId,
+						code,
+						name,
+						verb
+					FROM
+						hlstats_Awards
+					WHERE
+						game='$gamecode'
+						AND awardType='W'
+					ORDER BY
+						code ASC
+				");
+				
+				$edlist->draw($result);
 
+			?>
+
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
+	</div>
+</div>

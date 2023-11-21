@@ -49,38 +49,42 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("code", "Role Code", 20, true, "text", "", 32);
 	$edlist->columns[] = new EditListColumn("name", "Role Name", 20, true, "text", "", 64);
 	$edlist->columns[] = new EditListColumn("hidden", "<center>Hide Role</center>", 0, false, "checkbox");
-
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
 ?>
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Roles</h6>
+		</div>
+		<?php
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
+		?>
+		<p class="ms-4">You can specify descriptive names for each game's role codes.</p>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
-You can specify descriptive names for each game's role codes.<p>
+			<?php $result = $db->query("
+					SELECT
+						roleId,
+						code,
+						name,
+						hidden
+					FROM
+						hlstats_Roles
+					WHERE
+						game='$gamecode'
+					ORDER BY
+						code ASC
+				");
+				
+				$edlist->draw($result);
+			?>
 
-<?php $result = $db->query("
-		SELECT
-			roleId,
-			code,
-			name,
-			hidden
-		FROM
-			hlstats_Roles
-		WHERE
-			game='$gamecode'
-		ORDER BY
-			code ASC
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
-
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
+	</div>
+</div>

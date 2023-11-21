@@ -144,6 +144,52 @@ For support and installation notes visit http://www.hlxcommunity.com
           </a>
         </li>';
         }
+        if ($g_options['discord_address']){
+          echo '<li class="nav-item">
+            <a class="nav-link " href="' . $g_options['discord_address'] . '">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="bi bi-discord text-primary text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Discord</span>
+            </a>
+          </li>';
+          }
+        if ($g_options['custom_link_1']){
+          $custom1 = $g_options['custom_link_1'];
+          $custom1_array = explode(';', $custom1);
+          echo '<li class="nav-item">
+            <a class="nav-link " href="' . $custom1_array['3'] . '">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="bi ' . $custom1_array['2'] .' ' . $custom1_array['1'] . ' text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">' . $custom1_array['0'] . '</span>
+            </a>
+          </li>';
+          }
+        if ($g_options['custom_link_2']){
+          $custom2 = $g_options['custom_link_2'];
+          $custom2_array = explode(';', $custom2);
+          echo '<li class="nav-item">
+            <a class="nav-link " href="' . $custom2_array['3'] . '">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="bi ' . $custom2_array['2'] .' ' . $custom2_array['1'] . 'text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">' . $custom3_array['0'] . '</span>
+            </a>
+          </li>';
+          }
+        if ($g_options['custom_link_3']){
+          $custom3 = $g_options['custom_link_3'];
+          $custom3_array = explode(';', $custom3);
+          echo '<li class="nav-item">
+            <a class="nav-link " href="' . $custom3_array['3'] . '">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="bi ' . $custom3_array['2'] .' ' . $custom3_array['1'] . 'text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">' . $custom3_array['0'] . '</span>
+            </a>
+          </li>';
+          }
         ?>
         <li class="nav-item">
           <a class="nav-link " href="<?php echo $g_options['scripturl'] ?>?mode=help">

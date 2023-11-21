@@ -48,94 +48,96 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("pattern", "Pattern", 40, true, "text", "", 64);
 	$edlist->columns[] = new EditListColumn("position", "Match Position", 0, true, "select", "EITHER/EITHER;START/START only;END/END only");
 	
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
-	
 ?>
 <div class="col-12">
 	<div class="card mb-4">
 		<div class="card-header pb-0">
 			<h6>Clan Tags</h6>
 		</div>
-		<p class="ms-4">Here you can define the patterns used to determine what clan a player is in. These patterns are applied to players' names when they connect or change name.</p>
-		<p class="ms-4"><strong>Special characters in the pattern:</strong></p>
-
-		<div class="table-responsive ms-4">
-			<table class="table">
-				<tr class="head">
-					<td>Character</td>
-					<td>Description</td>
-				</tr>
-				<tr>
-					<td><tt>A</tt></td>
-					<td>Matches one character  (i.e. a character is required)</td>
-				</tr>
-				<tr>
-					<td><tt>X</tt></td>
-					<td>Matches zero or one characters  (i.e. a character is optional)</td>
-				</tr>
-				<tr>
-					<td><tt>a</tt></td>
-					<td>Matches literal A or a</td>
-				</tr>
-				<tr>
-					<td><tt>x</tt></td>
-					<td>Matches literal X or x</td>
-				</tr>
-			</table>
-		</div>
-
-		<p class="ms-4"><strong>Example patterns:</strong></p>
-
-		<div class="table-responsive ms-4">
-			<table class="table">
-				<tr class="head">
-					<td>Pattern</td>
-					<td>Description</td>
-					<td>Example</td>
-				</tr>
-				<tr>
-					<td><tt>[AXXXXX]</tt></td>
-					<td>Matches 1 to 6 characters inside square braces</td>
-					<td><tt>[ZOOM]Player</tt></td>
-				</tr>
-				<tr>
-					<td><tt>{AAXX}</tt></td>
-					<td>Matches 2 to 4 characters inside curly braces</td>
-					<td><tt>{S3G}Player</tt></td>
-				</tr>
-				<tr>
-					<td><tt>rex>></tt></td>
-					<td>Matches the string "rex>>", "REX>>", etc.</td>
-					<td><tt>REX>>Tyranno</tt></td>
-				</tr>
-			</table>
-		</div>
-		
-		<p class="ms-4">Avoid adding patterns to the database that are too generic. Always ensure you have at least one literal (non-special) character in the pattern -- for example if you were to add the pattern "AXXA", it would match any player with 2 or more letters in their name!</p>
-		<p class="ms-4">The Match Position field sets which end of the player's name the clan tag is allowed to appear.</p>
-
 		<?php
-			
-			$result = $db->query("
-				SELECT
-					id,
-					pattern,
-					position
-				FROM
-					hlstats_ClanTags
-				ORDER BY
-					id
-			");
-			
-			$edlist->draw($result);
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
 		?>
+			<p class="ms-4">Here you can define the patterns used to determine what clan a player is in. These patterns are applied to players' names when they connect or change name.</p>
+			<p class="ms-4"><strong>Special characters in the pattern:</strong></p>
 
-		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+			<div class="table-responsive ms-4">
+				<table class="table">
+					<tr class="head">
+						<td>Character</td>
+						<td>Description</td>
+					</tr>
+					<tr>
+						<td><tt>A</tt></td>
+						<td>Matches one character  (i.e. a character is required)</td>
+					</tr>
+					<tr>
+						<td><tt>X</tt></td>
+						<td>Matches zero or one characters  (i.e. a character is optional)</td>
+					</tr>
+					<tr>
+						<td><tt>a</tt></td>
+						<td>Matches literal A or a</td>
+					</tr>
+					<tr>
+						<td><tt>x</tt></td>
+						<td>Matches literal X or x</td>
+					</tr>
+				</table>
+			</div>
+
+			<p class="ms-4"><strong>Example patterns:</strong></p>
+
+			<div class="table-responsive ms-4">
+				<table class="table">
+					<tr class="head">
+						<td>Pattern</td>
+						<td>Description</td>
+						<td>Example</td>
+					</tr>
+					<tr>
+						<td><tt>[AXXXXX]</tt></td>
+						<td>Matches 1 to 6 characters inside square braces</td>
+						<td><tt>[ZOOM]Player</tt></td>
+					</tr>
+					<tr>
+						<td><tt>{AAXX}</tt></td>
+						<td>Matches 2 to 4 characters inside curly braces</td>
+						<td><tt>{S3G}Player</tt></td>
+					</tr>
+					<tr>
+						<td><tt>rex>></tt></td>
+						<td>Matches the string "rex>>", "REX>>", etc.</td>
+						<td><tt>REX>>Tyranno</tt></td>
+					</tr>
+				</table>
+			</div>
+			
+			<p class="ms-4">Avoid adding patterns to the database that are too generic. Always ensure you have at least one literal (non-special) character in the pattern -- for example if you were to add the pattern "AXXA", it would match any player with 2 or more letters in their name!</p>
+			<p class="ms-4">The Match Position field sets which end of the player's name the clan tag is allowed to appear.</p>
+			<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+			<?php
+				
+				$result = $db->query("
+					SELECT
+						id,
+						pattern,
+						position
+					FROM
+						hlstats_ClanTags
+					ORDER BY
+						id
+				");
+				
+				$edlist->draw($result);
+			?>
+
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
 	</div>
 </div>

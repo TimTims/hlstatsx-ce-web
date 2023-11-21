@@ -48,40 +48,43 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("pattern", "Host Pattern", 30, true, "text", "", 128);
 	$edlist->columns[] = new EditListColumn("name", "Group Name", 30, true, "text", "", 128);
 	
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
-	
 ?>
 <div class="col-12">
 	<div class="card mb-4">
 		<div class="card-header pb-0">
 			<h6>Host Groups</h6>
 		</div>
+		<?php
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
+		?>
 		<p class="ms-4">Host Groups allow you to group, for example, all players from "...adsl.someisp.net" as "SomeISP ADSL", in the Host Statistics admin tool.</p>
 		<p class="ms-4">The Host Pattern should look like the <b>end</b> of the hostname. For example a pattern ".adsl.someisp.net" will match "1234.ny.adsl.someisp.net". You can use asterisks "*" in the pattern, e.g. ".ny.*.someisp.net". The asterisk matches zero or more of any character except a dot ".".</p>
 		<p class="ms-4">The patterns are sorted below in the order they will be applied. A more specific pattern should match before a less specific pattern.</p>
 		<p class="ms-4"><b>Note</b> Run <b>hlstats-resolve.pl --regroup</b> to apply grouping changes to existing data.</p>
-		<?php $result = $db->query("
-				SELECT
-					id,
-					pattern,
-					name,
-					LENGTH(pattern) AS patternlength
-				FROM
-					hlstats_HostGroups
-				ORDER BY
-					patternlength DESC,
-					pattern ASC
-			");
-			
-			$edlist->draw($result);
-		?>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+			<?php $result = $db->query("
+					SELECT
+						id,
+						pattern,
+						name,
+						LENGTH(pattern) AS patternlength
+					FROM
+						hlstats_HostGroups
+					ORDER BY
+						patternlength DESC,
+						pattern ASC
+				");
+				
+				$edlist->draw($result);
+			?>
 
-		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
 	</div>
 </div>

@@ -251,7 +251,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 ?></td>
                         </tr>
                         <?php
-			if ($g_options['slider'] == 1) {
+			if ($g_options['slider'] == 2) {
 ?>
                         <tr>
                             <td style="padding: 0px; border: none;">
@@ -432,9 +432,10 @@ For support and installation notes visit http://www.hlxcommunity.com
 
 		if ($db->num_rows($resultAwards) > 0 && $awards_d_date) {
 ?>
+				</div>
 			</div>
 		</div>
-		</div>
+	</div>
 	<div class="row">
         <div class="col-12">
             <div class="card mb-4">

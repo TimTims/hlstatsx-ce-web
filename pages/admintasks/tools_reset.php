@@ -930,10 +930,10 @@ function name_history_checked()
 					<div class="table-responsive">
 						<table class="table">
 							<tr>
-								<td class="text-center">
+								<td class="text-center ">
 									<select name="game" class="form-select w-50 mx-auto"><?php foreach ($games as $g) echo $g; ?></select>
 									<p><em>* indicates game is currently disabled</em></p>
-									<ul style="list-style-type:none;">
+									<ul style="list-style-type:none;" class="form-check d-inline-block">
 										<li style="font-weight:bold;"><input class="form-check-input" type="checkbox" name="clear_all_delete" onclick="clear_all_delete_checked()" /> Reset/Clear All and Delete Players and Clans</li><br />
 										<li style="font-weight:bold;"><input class="form-check-input" type="checkbox" name="clear_all" onclick="clear_all_checked()" /> Reset/Clear All</li>
 										<li><input class="form-check-input" type="checkbox" name="clear_awards" /> Clear Players' Awards History and Ribbons</li>

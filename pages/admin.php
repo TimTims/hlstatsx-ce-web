@@ -504,20 +504,21 @@ class EditList
 
 
 ?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div class="table-responsive">
+<table class="table">
 
-    <tr valign="top" class="table_border">
+    <tr>
         <td>
-            <table width="100%" border="0" cellspacing="1" cellpadding="4">
+            <table class="table">
 
-                <tr valign="bottom" class="head">
+                <tr>
                     <?php
 		echo '<td></td>';
 
 		if ($this->showid)
 		{
 ?>
-                    <td align="right" class="fSmall"><?php
+                    <td><?php
 			echo 'ID';
 ?></td>
                     <?php
@@ -529,13 +530,13 @@ class EditList
 			{
 				continue;
 			}
-			echo '<td class="fSmall">' . $col->title . "</td>\n";
+			echo '<td>' . $col->title . "</td>\n";
 		}
 
 		if ($this->drawDetailsLink)
 		{
 ?>
-                    <td align="right" class="fSmall"><?php
+                    <td><?php
 			echo '';
 ?></td>
                     <?php
@@ -543,7 +544,7 @@ class EditList
 
 
 ?>
-                    <td align="center" class="fSmall"><?php
+                    <td class="text-center"><?php
 		echo 'Delete';
 ?></td>
                 </tr>
@@ -552,7 +553,7 @@ class EditList
 		while ($rowdata = $db->fetch_array($result))
 		{
 			echo "\n<tr>\n";
-			echo '<td align="center" class="bg1">';
+			echo '<td>';
 			if  (file_exists(IMAGE_PATH . "/$this->icon.gif"))
 			{
 				echo '<img src="' . IMAGE_PATH . "/$this->icon.gif\" width=\"16\" height=\"16\" border=\"0\" alt=\"\" />";
@@ -565,7 +566,7 @@ class EditList
 			
 			if ($this->showid)
 			{
-				echo '<td align="right" class="bg2 fSmall">' . $rowdata[$this->keycol] . "</td>\n";
+				echo '<td>' . $rowdata[$this->keycol] . "</td>\n";
 			}
 
 			$this->drawfields($rowdata, false, false);
@@ -574,14 +575,14 @@ class EditList
 			{
 				global $gamecode;
 ?>
-                <td align="center" class="bg2 fSmall"><?php
+                <td><?php
 				echo "<a href='" . $g_options["scripturl"] . "?mode=admin&amp;game=$gamecode&amp;task=" . $this->DetailsLink . "&amp;key=" . $rowdata[$this->keycol] . "'><b>CONFIGURE</b></a>";
 ?></td>
                 <?php
 			}
 
 ?>
-                <td align="center" class="bg2"><div class="form-check"><input type="checkbox"
+                <td class="text-center"><div class="form-check d-inline-block"><input type="checkbox"
                         name="<?php echo $rowdata[$this->keycol]; ?>_delete" value="1" class="form-check-input"/></div></td>
                 <?php echo "</tr>\n\n";
 		}
@@ -591,10 +592,10 @@ class EditList
                     <?php
 		if ( $draw_new )
 		{
-			echo "<td class=\"bg1 fSmall\" align=\"center\">" . "new</td>\n";
+			echo "<td>" . "new</td>\n";
 
 			if ($this->showid)
-				echo "<td class=\"bg2 fSmall\" align=\"right\">" . "&nbsp;</td>\n";
+				echo "<td>" . "&nbsp;</td>\n";
 	
 			if ($this->newerror)
 			{
@@ -605,7 +606,7 @@ class EditList
 				$this->drawfields(array(), true);
 			}
 
-			echo "<td class=\"bg1\"></td>\n";
+			echo "<td></td>\n";
 		}
 ?>
                 </tr>
@@ -614,7 +615,8 @@ class EditList
         </td>
     </tr>
 
-</table><br /><br />
+</table>
+</div>
 <?php
 	}
 
@@ -642,7 +644,7 @@ class EditList
 
 			if ($col->type != 'hidden')
 			{
-				echo '<td class="bg1">';
+				echo '<td>';
 			}
 
 			if ($i == 0 && !$new)
@@ -745,7 +747,7 @@ class EditList
 						$selected = '';
 					}
 
-					echo '<center><div class="form-check"><input type="checkbox" class="form-check-input" name="' . $keyval . "_$col->name\" value=\"$selectedval\"$selected /></div></center>";
+					echo '<center><div class="form-check d-inline-block"><input type="checkbox" class="form-check-input" name="' . $keyval . "_$col->name\" value=\"$selectedval\"$selected /></div></center>";
 					break;
 					
 				case 'hidden':
@@ -1016,12 +1018,12 @@ $selGame = valid_request($_GET['game'], false);
     <div class="row">
         <?php
 		// General Settings
-		$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80, "general", "Test Description");
-		$admintasks['adminusers'] = new AdminTask('Admin Users', 100, "general", "Test Description");
-		$admintasks['games'] = new AdminTask('Games', 80, "general", "Test Description");
-		$admintasks['hostgroups'] = new AdminTask('Host Groups', 100, "general", "Test Description");
-		$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80, "general", "Test Description");
-		$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80, "general", "Test Description");
+		$admintasks['options'] = new AdminTask('HLstatsX:CE Settings', 80, "general", "Change general HLstatsX:CE settings.");
+		$admintasks['adminusers'] = new AdminTask('Admin Users', 100, "general", "Add/edit/delete admin users.");
+		$admintasks['games'] = new AdminTask('Games', 80, "general", "Hide or delete games from the games list.");
+		$admintasks['hostgroups'] = new AdminTask('Host Groups', 100, "general", "Set host group patterns.");
+		$admintasks['clantags'] = new AdminTask('Clan Tag Patterns', 80, "general", "Set clan tag patterns");
+		$admintasks['voicecomm'] = new AdminTask('Manage Voice Servers', 80, "general", "Add/edit/delete voice servers.");
 
 		// Game Settings
 		$admintasks['newserver'] = new AdminTask('Add Server', 80, 'game');

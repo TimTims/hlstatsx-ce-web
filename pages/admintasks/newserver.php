@@ -99,67 +99,76 @@ For support and installation notes visit http://www.hlxcommunity.com
     $server_rcon = (!empty($_POST['server_rcon'])) ? clean_data($_POST['server_rcon']) : "";
     $server_public_address = (!empty($_POST['public_address'])) ? clean_data($_POST['public_address']) : "";
 ?>
-Enter the address of a server that you want to accept data from.<br /><br />
-The "Public Address" should be the address you want shown to users. If left blank, it will be generated from the IP Address and Port. If you are using any kind of log relaying utility (i.e. hlstats.pl will not be receiving data directly from the game servers), you will want to set the IP Address and Port to the address of the log relay program, and set the Public Address to the real address of the game server. You will need a separate log relay for each game server. You can specify a hostname (or anything at all) in the Public Address.<p>
+<div class="row">
+	<div class="col-12">
+		<div class="card mb-4">
+			<div class="card-header pb-0">
+				<h6>New Server</h6>
+			</div>
+			<p class="ms-4">Enter the address of a server that you want to accept data from.</p>
+			<p class="ms-4">The "Public Address" should be the address you want shown to users. If left blank, it will be generated from the IP Address and Port. If you are using any kind of log relaying utility (i.e. hlstats.pl will not be receiving data directly from the game servers), you will want to set the IP Address and Port to the address of the log relay program, and set the Public Address to the real address of the game server. You will need a separate log relay for each game server. You can specify a hostname (or anything at all) in the Public Address.</p>
+			<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+				<div class="table-responsive ms-4">
+					<table class="table">
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr valign="top" class="table_border">
+							<td>
+								<script type="text/javascript">
+								function checkMod() {
+									if (!document.newserverform.server_address.value.match(/^\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b$/)) {
+										alert('Server address must be a valid IP address');
+										return false;
+									}
+									if (document.newserverform.game_mod.value == 'PLEASESELECT') {
+										alert('You must make a selection for Admin Mod');
+										return false;
+									}
+									document.newserverform.submit();
+								}
+								</script>
+								<table class="table">
+									<tr>
+										<td>Server IP Address</td>
+										<td><input class="form-control" type="text" name="server_address" maxlength="15" size="15" value="<?=$server_ip;?>" /></td>
+									</tr>
+									<tr>
+										<td>Server Port</td>
+										<td><input class="form-control" type="text" name="server_port" maxlength="5" size="5" value="<?=$server_port;?>" /></td>
+									</tr>
+									<tr>
+										<td>Server Name</td>
+										<td><input class="form-control" type="text" name="server_name" maxlength="255" size="35" value="<?=$server_name;?>" /></td>
+									</tr>
+									<tr>
+										<td>Rcon Password</td>
+										<td><input class="form-control" type="text" name="server_rcon" maxlength="128" size="15" value="<?=$server_rcon;?>" /></td>
+									</tr>
+									<tr>
+										<td>Public Address</td>
+										<td><input class="form-control" type="text" name="public_address" maxlength="128" size="15" value="<?=$server_public_address;?>" /></td>
+									</tr>
+									<tr>
+										<td>Admin Mod</td>
+										<td>
+											<select class="form-select" name="game_mod">
+											<option value="PLEASESELECT">PLEASE SELECT</option>
+											<?php
+												$db->query("SELECT code, name FROM `hlstats_Mods_Supported`");
 
-<tr valign="top" class="table_border">
-	<td>
-		<script type="text/javascript">
-		function checkMod() {
-			if (!document.newserverform.server_address.value.match(/^\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b$/)) {
-				alert('Server address must be a valid IP address');
-				return false;
-			}
-			if (document.newserverform.game_mod.value == 'PLEASESELECT') {
-				alert('You must make a selection for Admin Mod');
-				return false;
-			}
-			document.newserverform.submit();
-		}
-		</script>
-		<table width="100%" border=0 cellspacing=1 cellpadding=4>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Server IP Address</td>
-				<td class='fSmall'><input type="text" name="server_address" maxlength="15" size="15" value="<?=$server_ip;?>" /></td>
-			</tr>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Server Port</td>
-				<td class='fSmall'><input type="text" name="server_port" maxlength="5" size="5" value="<?=$server_port;?>" /></td>
-			</tr>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Server Name</td>
-				<td class='fSmall'><input type="text" name="server_name" maxlength="255" size="35" value="<?=$server_name;?>" /></td>
-			</tr>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Rcon Password</td>
-				<td class='fSmall'><input type="text" name="server_rcon" maxlength="128" size="15" value="<?=$server_rcon;?>" /></td>
-			</tr>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Public Address</td>
-				<td class='fSmall'><input type="text" name="public_address" maxlength="128" size="15" value="<?=$server_public_address;?>" /></td>
-			</tr>
-			<tr valign="bottom" class="head">
-				<td class='fSmall'>Admin Mod</td>
-				<td class='fSmall'>
-					<select name="game_mod">
-					<option value="PLEASESELECT">PLEASE SELECT</option>
-					<?php
-                        $db->query("SELECT code, name FROM `hlstats_Mods_Supported`");
-
-                        while ($row = $db->fetch_array()) {
-                            echo '<option value="' . $row['code'] . '">' . $row['name'] . '</option>';
-                        }
-					?>
-					</select>
-				</td>
-			</tr>
-		</table>
-	</td>
-</tr>
-	<table width="75%" border=0 cellspacing=0 cellpadding=0>
-        <tr>
-            <td align="center"><input type="submit" value="  Add Server  " class="submit" onclick="checkMod();return false;"></td>
-        </tr>
-	</table>
+												while ($row = $db->fetch_array()) {
+													echo '<option value="' . $row['code'] . '">' . $row['name'] . '</option>';
+												}
+											?>
+											</select>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="text-center"><input type="submit" value="Add Server" class="col-4 btn btn-primary" onclick="checkMod();return false;"></div>
+			</form>
+		</div>
+	</div>
+</div>

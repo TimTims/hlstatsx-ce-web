@@ -48,14 +48,6 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$edlist->columns[] = new EditListColumn("username", "Username", 15, true, "text", "", 16);
 	$edlist->columns[] = new EditListColumn("password", "Password", 15, true, "password", "", 16);
 	$edlist->columns[] = new EditListColumn("acclevel", "Access Level", 25, true, "select", "0/No Access;80/Restricted;100/Administrator");
-
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", "Operation successful.");
-		else
-			message("warning", $edlist->error());
-	}
 	
 ?>
 <div class="col-12">
@@ -63,32 +55,42 @@ For support and installation notes visit http://www.hlxcommunity.com
 		<div class="card-header pb-0">
 			<h6>Admin Users</h6>
 		</div>
-		<p class="ms-4">Usernames and passwords can be set up for access to this HLstats Admin area. For most sites you will only want one admin user - yourself. Some sites may however need to give administration access to several people.</p>
-		<p class="ms-4"><b>Note</b> Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field.</p>
-		<p class="ms-4"><b>Access Levels</b></p>
-		<ul class="ms-4">
-			<li><i><b>Restricted</b></i> users only have access to the Host Groups, Clan Tag Patterns, Weapons, Teams, Awards and Actions configuration areas. This means these users cannot set Options or add new Games, Servers or Admin Users to HLstats, or use any of the admin Tools.</li>
-			<li><i><b>Administrator</b></i> users have full, unrestricted access.</li>
-		</ul>
-
 		<?php
-			
-			$result = $db->query("
-				SELECT
-					username,
-					IF(password='','','(encrypted)') AS password,
-					acclevel
-				FROM
-					hlstats_Users
-				ORDER BY
-					username
-			");
-			
-			$edlist->draw($result);
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
 		?>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
+			<p class="ms-4">Usernames and passwords can be set up for access to this HLstats Admin area. For most sites you will only want one admin user - yourself. Some sites may however need to give administration access to several people.</p>
+			<p class="ms-4"><b>Note</b> Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field.</p>
+			<p class="ms-4"><b>Access Levels</b></p>
+			<ul class="ms-4">
+				<li><i><b>Restricted</b></i> users only have access to the Host Groups, Clan Tag Patterns, Weapons, Teams, Awards and Actions configuration areas. This means these users cannot set Options or add new Games, Servers or Admin Users to HLstats, or use any of the admin Tools.</li>
+				<li><i><b>Administrator</b></i> users have full, unrestricted access.</li>
+			</ul>
 
-		<input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto mt-4">
+			<?php
+				
+				$result = $db->query("
+					SELECT
+						username,
+						IF(password='','','(encrypted)') AS password,
+						acclevel
+					FROM
+						hlstats_Users
+					ORDER BY
+						username
+				");
+				
+				$edlist->draw($result);
+			?>
 
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
 	</div>
 </div>
 

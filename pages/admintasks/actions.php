@@ -65,37 +65,47 @@ For support and installation notes visit http://www.hlxcommunity.com
 	}
 	
 ?>
-
-You can make an action map-specific by prepending the map name and an underscore to the Action Code. For example, if the map "<b>rock2</b>" has an action "<b>goalitem</b>" then you can either make the action code just "<b>goalitem</b>" (in which case it will match all maps) or you can make it "<b>rock2_goalitem</b>" to match only on the "rock2" map.<p>
-
-<?php
-	
-	$result = $db->query("
-		SELECT
-			id,
-			code,
-			reward_player,
-			reward_team,
-			team,
-			description,
-			for_PlayerActions,
-			for_PlayerPlayerActions,
-			for_TeamActions,
-			for_WorldActions
-		FROM
-			hlstats_Actions
-		WHERE
-			game='$gamecode'
-		ORDER BY
-			code ASC
-	");
-	
-	$edlist->draw($result);
-?>
-
-<table width="75%" border=0 cellspacing=0 cellpadding=0>
-<tr>
-	<td align="center"><input type="submit" value="  Apply  " class="submit"></td>
-</tr>
-</table>
-
+<div class="col-12">
+	<div class="card mb-4">
+		<div class="card-header pb-0">
+			<h6>Actions</h6>
+		</div>
+		<?php
+			if ($_POST)
+			{
+				if ($edlist->update())
+					echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Operation Completed Successfully!</strong></div>';
+				else
+					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
+			}
+		?>
+		<p class="ms-4">You can make an action map-specific by prepending the map name and an underscore to the Action Code. For example, if the map "<b>rock2</b>" has an action "<b>goalitem</b>" then you can either make the action code just "<b>goalitem</b>" (in which case it will match all maps) or you can make it "<b>rock2_goalitem</b>" to match only on the "rock2" map.</p>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
+			<?php
+				
+				$result = $db->query("
+					SELECT
+						id,
+						code,
+						reward_player,
+						reward_team,
+						team,
+						description,
+						for_PlayerActions,
+						for_PlayerPlayerActions,
+						for_TeamActions,
+						for_WorldActions
+					FROM
+						hlstats_Actions
+					WHERE
+						game='$gamecode'
+					ORDER BY
+						code ASC
+				");
+				
+				$edlist->draw($result);
+			?>
+			<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary mt-2"></div>
+		</form>
+	</div>
+</div>

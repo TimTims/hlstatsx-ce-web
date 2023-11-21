@@ -50,9 +50,10 @@ For support and installation notes visit http://www.hlxcommunity.com
 		<div class="card-header pb-0">
 			<h6>General Settings</h6>
 		</div>	
-		<div class="col-6 alert alert-danger text-center mx-auto" role="alert">
+		<div class="col-8 alert alert-warning text-center mx-auto" role="alert">
 			<b>Options with an asterisk (*) beside them require a restart of the perl daemon to fully take effect.</b>
 		</div>
+		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">
 <?php
 
 	class OptionGroup
@@ -218,6 +219,10 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$optiongroups[0]->options[] = new Option('nav_cheaters', 'Show Banned Players nav-link', 'Shows banned players in server menu (obsolete)', 'select');
 	$optiongroups[0]->options[] = new Option('sourcebans_address', 'SourceBans URL', 'Full path to your SourceBans web site, if you have one. Ex: http://www.yoursite.com/sourcebans/', 'text');
 	$optiongroups[0]->options[] = new Option('forum_address', 'Forum URL', 'Full path to your forum/message board, if you have one. Ex: http://www.yoursite.com/forum/', 'text');
+	$optiongroups[0]->options[] = new Option('discord_address', 'Discord URL', 'Full path to your Discord Server, if you have one. Ex: https://discord.gg/invite/discord-townhall', 'text');	
+	$optiongroups[0]->options[] = new Option('custom_link_1', 'Custom Link 1', 'Add a custom link to your menu.</br>Pick a name, icon, colour and link, seperated by ";". Ex: Example;bi-hammer;text-primary;https://example.com', 'text');		
+	$optiongroups[0]->options[] = new Option('custom_link_2', 'Custom Link 2', 'Add a custom link to your menu.</br>Pick a name, icon, colour and link, seperated by ";". Ex: Example;bi-hammer;text-primary;https://example.com', 'text');		
+	$optiongroups[0]->options[] = new Option('custom_link_3', 'Custom Link 3', 'Add a custom link to your menu.</br>Pick a name, icon, colour and link, seperated by ";". Ex: Example;bi-hammer;text-primary;https://example.com', 'text');		
 	$optiongroups[0]->options[] = new Option('show_weapon_target_flash', 'Show hitbox flash animation', 'Instead of plain html table for games with accuracy tracking (on supported games)', 'select');
 	$optiongroups[0]->options[] = new Option('show_server_load_image', 'Load summaries', 'Shows load summaries from all monitored servers', 'select');
 	$optiongroups[0]->options[] = new Option('showqueries', 'Footer message', 'Show "Executed X queries, generated this page in Y Seconds." message in footer?', 'select');
@@ -249,6 +254,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 	$optiongroups[30] = new OptionGroup('Visual style settings');
 	$optiongroups[30]->options[] = new Option('graphbg_load', 'Server Load Background Colour', 'Server Load graph: background color hex# (RRGGBB)', 'text');
 	$optiongroups[30]->options[] = new Option('graphtxt_load', 'Server Load Text Colour', 'Server Load graph: text color# (RRGGBB)', 'text');
+	// $optiongroups[30]->options[] = new Option('style', 'Select Style', 'Stylesheet filename to use', 'styles');
 	$optiongroups[30]->options[] = new Option('graphbg_trend', 'Player Trend Background Colour', 'Player Trend graph: background color hex# (RRGGBB)', 'text');
 	$optiongroups[30]->options[] = new Option('graphtxt_trend', 'Player Trend Text Colour', 'Player Trend graph: text color hex# (RRGGBB)', 'text');
 	$optiongroups[30]->options[] = new Option('display_gamelist', 'Enable Gamelist icons', 'Enables or Disables the game icons near the top-right of all pages.', 'select');
@@ -292,7 +298,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 			{
 				$og->update();
 			}
-			message('success', 'Options updated successfully.');
+			echo '<div class="alert alert-success col-8 text-center mx-auto" role="alert"><strong>Options Updated Successfully!</strong></div>';
 	}
 	
 	
@@ -307,10 +313,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 		$og->draw();
 	}
 ?>
-	<tr>
-		<td><input type="submit" value="Apply" class="col-4 btn btn-primary mx-auto" /></td>
-	</tr>
-</table>
+	<div class="text-center"><input type="submit" value="Apply" class="col-4 btn btn-primary" /></div>
+</form>
 </div>
 </div>
 

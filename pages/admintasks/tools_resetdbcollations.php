@@ -147,8 +147,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 									<p>Resets DB Collations if you get collation errors after an upgrade from another HLstats(X)-based system.</p>
 									<p>You should not lose any data, but be sure to back up your database before running to be on the safe side.</p>
 									<input type="hidden" name="confirm" value="1">
-									<p><input class="form-check-input" type="radio" name="printonly" value="0" checked> Run the commands on the database</p>
-									<p><input class="form-check-input" type="radio" name="printonly" value="1"> Print the commands and I'll run them myself<br/>(recommended if you have a very large database likely to hang the script)</p>
+									<p><div class="form-check d-inline-block"><input class="form-check-input" type="radio" name="printonly" value="0" checked></div> Run the commands on the database</p>
+									<p><div class="form-check d-inline-block"><input class="form-check-input" type="radio" name="printonly" value="1"></div> Print the commands and I'll run them myself<br/>(recommended if you have a very large database likely to hang the script)</p>
 									<input class="btn btn-primary mt-4" type="submit" value="Generate commands and do the above">
 								</td>
 							</tr>

@@ -110,6 +110,19 @@ For support and installation notes visit http://www.hlxcommunity.com
             <input class="form-check-input mt-1 ms-auto themec" type="checkbox" id="dark-version" onclick="darkMode(this)">
           </div>
         </div>
+        <?php
+        if (getVersion('dev') == true){ ?>
+        <hr class="horizontal dark my-sm-4">
+        <div class="w-100 text-center">
+          <h6 class="mt-3">Found a bug? Report it!</h6>
+          <a href="https://github.com/TimTims/hlstatsx-ce-web/issues" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="bi bi-bug-fill me-1" aria-hidden="true"></i> GitHub
+          </a>
+          <a href="https://discord.gg/bY8NMSx3kr" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="bi bi-discord" aria-hidden="true"></i> Discord
+          </a>
+        </div>
+        <?php } ?>
       </div>
     </div>
   </div>

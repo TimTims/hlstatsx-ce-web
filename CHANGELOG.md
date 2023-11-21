@@ -1,5 +1,14 @@
 # Changelog
 
+### 21/11/2023 - Git Commit 100
+* Change placeholder descriptions in admin page
+* Fixed alignment of checkboxes in admin pages
+* Added "Discord" option in "HLstatsX:CE Settings" which shows up in menu
+* Added "Custom Link" options in "HLstatsX:CE Settings"
+* Fixed admin pages submit button not working
+* Added bug report section in side panel when in "dev"
+* Fixed most, if not all of the admin pages
+
 ### 20/11/2023 - Git Commit 99
 * Fixed table layout on some pages
 * Ensured barcharts in tables are centered horizontally
@@ -9,6 +18,7 @@
 * Make sure all admin tasks open up in new page, rather than in the table
 * Fixed general settings by removing stylesheet selection (Will re-add option to allow for customisation)
 * Redesigned all "general" admin tasks
+* Disabled some options in "HLstatsX:CE Settings" to either fix, rework or disable 
 
 ### 03/11/2023 - Git Commit 98
 * Fix missing div tags in game.php when daily awards are disabled
