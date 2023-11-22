@@ -8,7 +8,6 @@
 * Fix customiser
 * Find some better icons
 * Remove obsolete features and code that no longer work or aren't required
-* Make new icon and update favicon
 * Add theme licencing in folders and to header after reading licence (Thanks to Creative Tim)
 * Universalise margins and paddings (winging it currently)
 * Add Google Maps alternative
@@ -24,3 +23,4 @@
 * ~~Fix admin tools to show properly on admin page~~ (Git Commit 100)
 * ~~Fix tables not aligning properly in admin pages~~ (Git Commit 100)
 * ~~Fix checkboxes in lightmode (Forgot to add div tags to checkboxes, will add as I go)~~ (Git Commit 100)
+* ~~Make new icon and update favicon~~ (Git Commit 101)

@@ -434,8 +434,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 ?>
 				</div>
 			</div>
-		</div>
-	</div>
+
 	<div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -492,11 +491,10 @@ For support and installation notes visit http://www.hlxcommunity.com
             </table>
 		</div>
 		</div>
-    </div>
+		</div>
     <?php
 		}
 	} else { ?>
-	</div>
 	</div>
 <?php	}
 ?>

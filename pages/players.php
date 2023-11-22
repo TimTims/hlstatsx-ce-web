@@ -164,7 +164,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 									(
 										'activity',
 										'Activity',
-										'width=10&sort=no&type=bargraph&align=center'
+										'width=10&sort=no&type=bargraph&align=middle'
 									),
 									new TableColumn
 									(

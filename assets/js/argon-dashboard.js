@@ -618,6 +618,7 @@ function darkMode(el) {
   const navLinks = document.querySelectorAll('.navbar-main .nav-link, .navbar-main .breadcrumb-item, .navbar-main .breadcrumb-item a, .navbar-main h6');
   const cardNavLinksIcons = document.querySelectorAll('.card .nav .nav-link i');
   const cardNavSpan = document.querySelectorAll('.card .nav .nav-link span');
+  const modal_content = document.querySelectorAll('.modal-content');
 
   if (!el.getAttribute("checked")) {
     body.classList.add('dark-version');
@@ -658,6 +659,12 @@ function darkMode(el) {
       if (text_span[i].classList.contains('text-dark')) {
         text_span[i].classList.remove('text-dark');
         text_span[i].classList.add('text-white');
+      }
+    }
+    for (var i = 0; i < modal_content.length; i++) {
+      if (modal_content[i].classList.contains('themec')) {
+        modal_content[i].classList.remove('');
+        modal_content[i].classList.add('bg-default');
       }
     }
     for (var i = 0; i < text_strong.length; i++) {
@@ -701,7 +708,11 @@ function darkMode(el) {
       card_border[i].classList.add('border-dark');
     }
     el.setAttribute("checked", "true");
-    document.cookie = "darkMode=1; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/";
+    if (cookieSettings.getSettings('personalization') == "true" ) {
+      document.cookie = "darkMode=1; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/";
+    }
+    // Reload the page to apply changes
+    location.reload();
   } else {
     body.classList.remove('dark-version');
     sidebar.classList.add('bg-white');
@@ -785,6 +796,8 @@ function darkMode(el) {
     }
     el.removeAttribute("checked");
     document.cookie = "darkMode=0; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+    // Reload the page to apply changes
+    location.reload();
   }
 };
 

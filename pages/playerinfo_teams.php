@@ -55,19 +55,19 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'teamcount',
 				'Joined',
-				'width=10&align=right&append=+times'
+				'width=10&align=center&append=+times'
 			),
 			new TableColumn
 			(
 				'percent',
 				'%',
-				'width=10&sort=no&align=right&append=' . urlencode('%')
+				'width=10&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'percent',
 				'Ratio',
-				'width=40&sort=no&type=bargraph'
+				'width=40&sort=no&type=bargraph&align=middle'
 			)
 		),
 		'name',

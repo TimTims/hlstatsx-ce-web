@@ -90,10 +90,10 @@ For support and installation notes visit http://www.hlxcommunity.com
       <div class="card-body pt-sm-3 pt-0 overflow-auto">
         <!-- Sidebar Backgrounds -->
         <div>
-          <h6 class="mb-0">Sidebar Accent Colour</h6>
+          <h6 class="mb-0 text-center">Accent Colour</h6>
         </div>
         <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
+          <div class="badge-colors my-2 text-center">
             <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this);themeColor(this);"></span>
             <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this);themeColor(this);"></span>
             <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this);themeColor(this);"></span>
@@ -104,10 +104,10 @@ For support and installation notes visit http://www.hlxcommunity.com
         </a>
         <hr class="horizontal dark my-sm-4">
         <!-- Dark Mode -->
-        <div class="mt-2 mb-5 d-flex">
+        <div class="mt-2 d-flex">
           <h6 class="mb-0">Dark Mode</h6>
           <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto themec" type="checkbox" id="dark-version" onclick="darkMode(this)">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Cookies must be enabled for darkmode to work."><input class="form-check-input mt-1 ms-auto themec" type="checkbox" id="dark-version" onclick="darkMode(this)"></span>
           </div>
         </div>
         <?php
@@ -123,6 +123,8 @@ For support and installation notes visit http://www.hlxcommunity.com
           </a>
         </div>
         <?php } ?>
+        <hr class="horizontal dark my-sm-4">
+        <div class="text-center"><a class="btn btn-outline-dark w-75" href="#" onclick="cookieSettings.showDialog(); return false;">Edit Cookie Settings</a></div>
       </div>
     </div>
   </div>
@@ -256,11 +258,25 @@ For support and installation notes visit http://www.hlxcommunity.com
         });
     });
   </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="assets/js/argon-dashboard.js"></script>
   <script src="assets/js/tabs.js"></script>
+  <!-- Cookie Consent -->
+  <script src="assets/js/cookie-consent.js"></script>
+  <script>
+    var cookieSettings = new BootstrapCookieConsentSettings({
+        contentURL: "assets/js/cookie-consent-content",
+        privacyPolicyUrl: "<?php echo $g_options['scripturl'] ?>?mode=privacypolicy",
+        legalNoticeUrl: "<?php echo $g_options['scripturl'] ?>?mode=privacypolicy",
+        defaultLang: "en",
+        categories: ["necessary", "personalization"],
+        cookieName: "cookie-consent",
+        cookieStorageDays: 365,
+        postSelectionCallback: function () {
+            location.reload() // reload after selection
+        }
+    })
+  </script>  
 </body>
 
 </html>

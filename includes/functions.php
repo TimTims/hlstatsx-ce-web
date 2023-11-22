@@ -130,26 +130,28 @@ function getVersion($version_var)
  */
 function valid_request($str, $numeric = false)
 {
-	$search_pattern = array("/[^A-Za-z0-9\[\]*.,=()!\"$%&^`ґ':;ЯІі#+~_\-|<>\/\\\\@{}дцьДЦЬ ]/");
-	$replace_pattern = array('');
-	$str = preg_replace($search_pattern, $replace_pattern, $str);
+    if ($str === null) {
+        return ''; // or handle it accordingly based on your logic
+    }
 
-	if (!$numeric) {
-		// Deprecated, throws an warning in php 7.4 and above
-		/*if ( get_magic_quotes_gpc() )
-			return $str = htmlspecialchars(stripslashes($str), ENT_QUOTES);
-		else
-			return $str = htmlspecialchars($str, ENT_QUOTES);*/
+    $search_pattern = array("/[^A-Za-z0-9\[\]*.,=()!\"$%&^`ґ':;ЯІі#+~_\-|<>\/\\\\@{}дцьДЦЬ ]/");
+    
+    // Replace with an anonymous function using preg_replace_callback
+    $str = preg_replace_callback($search_pattern, function($matches) {
+        return '';
+    }, $str);
 
-		return htmlspecialchars($str, ENT_QUOTES);
-	}
+    if (!$numeric) {
+        return htmlspecialchars($str, ENT_QUOTES);
+    }
 
-	if (is_numeric($str)) {
-		return intval($str);
-	}
+    if (is_numeric($str)) {
+        return intval($str);
+    }
 
-	return -1;
+    return -1;
 }
+
 
 /**
  * timestamp_to_str()

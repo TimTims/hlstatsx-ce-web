@@ -1,0 +1,30 @@
+{
+  "title": "Cookie Settings",
+  "body": "We use cookies and similar technologies that are necessary to operate the website. These cookies are used for personalization and to retain sessions when logging in only. You are free to decline the usage of personalization cookies on this site, but this will result in preferences not being saved. Note that necessary cookies used for logins will always be saved by using this site.",
+  "privacyPolicy": "Data Protection Statement",
+  "legalNotice": "Privacy Policy",
+  "mySettings": "My Settings",
+  "buttonNotAgree": "I do not agree",
+  "buttonAgree": "Agree",
+  "buttonSaveSelection": "Save selection",
+  "buttonAgreeAll": "Agree to all",
+  "categories": {
+    "necessary": {
+      "title": "Necessary",
+      "description": ["Required to run the website"]
+    },
+    "statistics": {
+      "title": "Statistics",
+      "description": ["Monitoring website usage and optimizing the user experience"]
+    },
+    "marketing": {
+      "title": "Marketing",
+      "description": ["Evaluation of marketing actions"]
+    },
+    "personalization": {
+      "title": "Personalization",
+      "description": ["Storage of your preferences from previous visits",
+        "Recording of your interests in order to provide customisation"]
+    }
+  }
+}

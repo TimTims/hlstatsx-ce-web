@@ -54,67 +54,67 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'kills',
 				'Kills',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'%',
-				'width=6&sort=no&align=right&append=' . urlencode('%')
+				'width=6&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'Ratio',
-				'width=8&sort=no&type=bargraph'
+				'width=8&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'deaths',
 				'Deaths',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'dpercent',
 				'%',
-				'width=6&sort=no&align=right&append=' . urlencode('%')
+				'width=6&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'dpercent',
 				'Ratio',
-				'width=8&sort=no&type=bargraph'
+				'width=8&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'kpd',
 				'K:D',
-				'width=5&align=right'
+				'width=5&align=center'
 			),
 			new TableColumn
 			(
 				'headshots',
 				'Headshots',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'%',
-				'width=6&sort=no&align=right&append=' . urlencode('%')
+				'width=6&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'Ratio',
-				'width=8&sort=no&type=bargraph'
+				'width=8&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'hpk',
 				'HS:K',
-				'width=5&align=right'
+				'width=5&align=center'
 			)
 		),
 		'map',

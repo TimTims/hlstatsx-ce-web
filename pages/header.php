@@ -57,10 +57,10 @@ For support and installation notes visit http://www.hlxcommunity.com
      
 	global $game,$mode;
 
-	$iconpath = IMAGE_PATH . "/icons";
-	if (file_exists($iconpath . "/" . $style)) {
-			$iconpath = $iconpath . "/" . $style;
-	}
+	// $iconpath = IMAGE_PATH . "/icons";
+	// if (file_exists($iconpath . "/" . $style)) {
+	//		$iconpath = $iconpath . "/" . $style;
+	// }
 	
 ?>
 <!DOCTYPE html>
@@ -69,8 +69,8 @@ For support and installation notes visit http://www.hlxcommunity.com
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/logo-small.png">
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <title>
   <?php
 	echo $g_options['sitename']; 
@@ -100,8 +100,7 @@ For support and installation notes visit http://www.hlxcommunity.com
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" <?php echo $g_options['scripturl']; ?> " target="_self">
-        <img src="assets/images/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">HLX: CE</span>
+        <img src="assets/images/logo.png" class="navbar-brand-img h-100" alt="main_logo">
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -295,7 +294,7 @@ For support and installation notes visit http://www.hlxcommunity.com
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <?php echo '<li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="http://' . preg_replace('/http:\/\//', '', $g_options['siteurl']) . '">'. $g_options['sitename'] .'</a></li>';
+            <?php echo '<li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="' . $g_options['siteurl'] . '">' . $g_options['sitename'] . '</a></li>';
             $i = 0;
             foreach ($location as $l => $url) {
               $url = preg_replace('/%s/', $g_options['scripturl'], $url);

@@ -1,6 +1,6 @@
 {
     "version": "1.7.0",
-    "git": "100",
+    "git": "101",
     "dev": true,
     "gitlink": "https://github.com/TimTims/hlstatsx-ce-web/tree/dev",
     "gitremoteversion": "https://raw.githubusercontent.com/TimTims/hlstatsx-ce-web/dev/configs/version.json"

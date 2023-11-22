@@ -88,61 +88,61 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'picked',
 				'Picked',
-				'width=9&align=right&append=+times'
+				'width=9&align=center&append=+times'
 			),
 			new TableColumn
 			(
 				'ppercent',
 				'%',
-				'width=6&align=right&append=' . urlencode('%')
+				'width=6&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'ppercent',
 				'Ratio',
-				'width=9&sort=no&type=bargraph'
+				'width=9&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'kills',
 				'Kills',
-				'width=6&align=right'
+				'width=6&align=center'
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'%',
-				'width=6&align=right&append=' . urlencode('%')
+				'width=6&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'Ratio',
-				'width=9&sort=no&type=bargraph'
+				'width=9&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'deaths',
 				'Deaths',
-				'width=6&align=right'
+				'width=6&align=center'
 			),
 			new TableColumn
 			(
 				'dpercent',
 				'%',
-				'width=6&sort=no&align=right&append=' . urlencode('%')
+				'width=6&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'dpercent',
 				'Ratio',
-				'width=9&sort=no&type=bargraph'
+				'width=9&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'kpd',
 				'K:D',
-				'width=5&align=right'
+				'width=5&align=center'
 			)
 		),
 		'code',

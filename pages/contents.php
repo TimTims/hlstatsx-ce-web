@@ -78,6 +78,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 				<div class="card-header pb-0">
               		<h6>Games</h6>
 				</div>
+				<div class="table-responsive">
 				<table class="table">
 					<tr>
 						<td class="text-left">&nbsp;Game</td>
@@ -225,7 +226,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 		}
 ?>	
 				</table>
-		
+			</div>
 		</div>
 	</div>
 </div>
@@ -261,7 +262,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 ?>
 
 	<div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-md-6">
             <div class="card mb-4">
 				<div class="card-header pb-0">
               		<h6>General Statistics</h6>

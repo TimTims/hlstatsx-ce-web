@@ -204,7 +204,8 @@ $valid_modes = array(
 	'teamspeak',
 	'ventrilo',
 	'updater',
-	'profile'
+	'profile',
+	'privacypolicy'
 );
    
 if (file_exists('./updater') && $mode != 'updater')

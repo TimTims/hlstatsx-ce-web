@@ -1,5 +1,25 @@
 # Changelog
 
+## 22/11/2023 - Git Commit 101
+* Fixed "game.php" row extending too far when awards enabled
+* Fixed progress bars alignment in "roles", "maps" & "players"
+* Added Cookie Consent banner for GDPR purposes
+* Ensured that personalization cookies aren't saved when not accepting cookies
+* Added generic privacy policy & cookie policy
+* Added "hacky" way to enable darkmode for cookie consent modal
+* Fix non-responsive table on home page
+* Fix homepage link displaying wrong on breadcrumbs
+* Fix "General Statistics" box being too small on homepage when using smaller screen
+* Remove some old dependencies
+* Fix wrong filename in CSS
+* Fix progress bars in playerinfo pages
+* Fix table cell alignment in playerinfo pages
+* Added original logos
+* Fixed deprecated code in functions.php
+* Updated Auth() class (This will now check the database if the password is saved as an MD5 string, if it is, it will change it to
+                        a password_hash() password and update the database when logging in succesfully.)
+* Updated "Admin Users" to save new passwords as password_hash'ed passwords
+
 ### 21/11/2023 - Git Commit 100
 * Change placeholder descriptions in admin page
 * Fixed alignment of checkboxes in admin pages
@@ -25,7 +45,7 @@
 * Fix missing header and div tags in certain conditions
 * Fix missing div tag by adding it to footer.php (temporary fix, will add to individual pages eventually)
 * Changed layout of admin page*
-    *NOTE: The in-page admin settings are currently broken. They need a code change to make them function properly which I will do at a later date.
+    ~~*NOTE: The in-page admin settings are currently broken. They need a code change to make them function properly which I will do at a later date.~~
 
 ### 02/11/2023 - Git Commit 97
 * Fix page spacing on "Check Version" and "Duplicate Game Settings" pages

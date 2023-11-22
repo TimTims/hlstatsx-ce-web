@@ -72,49 +72,49 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'modifier',
 				'Modifier',
-				'width=10&align=right'
+				'width=10&align=center'
 			),
 			new TableColumn
 			(
 				'kills',
 				'Kills',
-				'width=11&align=right'
+				'width=11&align=center'
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'%',
-				'width=5&sort=no&align=right&append=' . urlencode('%')
+				'width=5&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'kpercent',
 				'Ratio',
-				'width=18&sort=no&type=bargraph'
+				'width=18&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'headshots',
 				'Headshots',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'%',
-				'width=5&sort=no&align=right&append=' . urlencode('%')
+				'width=5&sort=no&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'hpercent',
 				'Ratio',
-				'width=18&sort=no&type=bargraph'
+				'width=18&sort=no&type=bargraph&align=middle'
 			),
 			new TableColumn
 			(
 				'hpk',
 				'HS:K',
-				'width=5&align=right'
+				'width=5&align=center'
 			)
 		),
 		'weapon',
@@ -197,54 +197,54 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'smshots',
 				'Shots',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'smhits',
 				'Hits',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'smdamage',
 				'Damage',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'smheadshots',
 				'Headshots',
-				'width=8&align=right'
+				'width=8&align=center'
 			),
 			new TableColumn
 			(
 				'smkills',
 				'Kills',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smkdr',
 				'K:D',
-				'width=12&align=right'
+				'width=12&align=center'
 			),
 			new TableColumn
 			(
 				'smaccuracy',
 				'Accuracy',
-				'width=8&align=right&append=' . urlencode('%')
+				'width=8&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'smdhr',
 				'Damage per Hit',
-				'width=10&align=right'
+				'width=10&align=center'
 			),
 			new TableColumn(
 				'smspk',
 				'Shots per Kill',
-				'width=11&align=right'
+				'width=11&align=center'
 			)
 		),
 		'smweapon',
@@ -323,25 +323,25 @@ For support and installation notes visit http://www.hlxcommunity.com
 				(
 					'smhits',
 					'Hits',
-					'width=15&align=right'
+					'width=15&align=center'
 				),
 				new TableColumn
 				(
 					'smleft',
 					'Left',
-					'width=15&align=right&append=' . urlencode('%')
+					'width=15&align=center&append=' . urlencode('%')
 				),
 				new TableColumn
 				(
 					'smmiddle',
 					'Middle',
-					'width=15&align=right&append=' . urlencode('%')
+					'width=15&align=center&append=' . urlencode('%')
 				),
 				new TableColumn
 				(
 					'smright',
 					'Right',
-					'width=15&align=right&append=' . urlencode('%')
+					'width=15&align=center&append=' . urlencode('%')
 				)
 			),
 			'smweapon',
@@ -373,67 +373,67 @@ For support and installation notes visit http://www.hlxcommunity.com
 			(
 				'smhits',
 				'Hits',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smhead',
 				'Head',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smchest',
 				'Chest',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smstomach',
 				'Stomach',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smleftarm',
 				'Left Arm',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smrightarm',
 				'Right Arm',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smleftleg',
 				'Left Leg',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smrightleg',
 				'Right Leg',
-				'width=7&align=right'
+				'width=7&align=center'
 			),
 			new TableColumn
 			(
 				'smleft',
 				'Left',
-				'width=8&align=right&append=' . urlencode('%')
+				'width=8&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'smmiddle',
 				'Middle',
-				'width=8&align=right&append=' . urlencode('%')
+				'width=8&align=center&append=' . urlencode('%')
 			),
 			new TableColumn
 			(
 				'smright',
 				'Right',
-				'width=8&align=right&append=' . urlencode('%')
+				'width=8&align=center&append=' . urlencode('%')
 			)
 		),
 		'smweapon',

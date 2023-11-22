@@ -76,7 +76,7 @@ class Auth
 		{
 			$this->username = valid_request($_POST['authusername'], false);
 			$this->password = valid_request($_POST['authpassword'], false);
-			$this->savepass = valid_request($_POST['authsavepass'], false);
+			$this->savepass = isset($_POST['authsavepass']) ? valid_request($_POST['authsavepass'], false) : false;
 			$this->sessionStart = 0;
 
 			# clear POST vars so as not to confuse the receiving page
@@ -123,31 +123,42 @@ class Auth
 	function checkPass()
 	{
 		global $db;
-
+	
 		$db->query("
-				SELECT
-					*
-				FROM
-					hlstats_Users
-				WHERE
-					username='$this->username'
-				LIMIT 1
-			");
-
+			SELECT
+				*
+			FROM
+				hlstats_Users
+			WHERE
+				username='$this->username'
+			LIMIT 1
+		");
+	
 		if ($db->num_rows() == 1)
 		{
 			// The username is OK
-
+	
 			$this->userdata = $db->fetch_array();
 			$db->free_result();
-
-			if (md5($this->password) == $this->userdata["password"])
+	
+			$storedPassword = $this->userdata["password"];
+	
+			// Check if the stored password is MD5
+			$isMD5 = (strlen($storedPassword) == 32 && ctype_xdigit($storedPassword));
+	
+			if ($this->isPasswordValid($storedPassword, $isMD5))
 			{
 				// The username and the password are OK
-
+	
 				$this->ok = true;
 				$this->error = false;
 				$_SESSION['loggedin']=1;
+
+				if ($isMD5) {
+					// The stored password is MD5, update to password_hash
+					$this->updatePassword();
+				}
+
 				if ($this->sessionStart > (time() - 3600))
 				{
 					// Valid session, update session time & display the page
@@ -166,11 +177,7 @@ class Auth
 					}
 					else
 					{
-						$this->ok = false;
-						$this->error = 'Your session has expired. Please try again.';
-						$this->password = '';
-
-						$this->printAuth();
+						$this->handleExpiredSession();
 						return false;
 					}
 				}
@@ -190,20 +197,8 @@ class Auth
 			}
 			else
 			{
-				// The username is OK but the password is wrong
-
-				$this->ok = false;
-				if ($this->session)
-				{
-					// Cookie without 'Save my password' - not an error
-					$this->error = false;
-				}
-				else
-				{
-					$this->error = 'The password you supplied is incorrect.';
-				}
-				$this->password = '';
-				$this->printAuth();
+				// Incorrect password
+				$this->handleIncorrectPassword();
 			}
 		}
 		else
@@ -213,6 +208,53 @@ class Auth
 			$this->error = 'The username you supplied is not valid.';
 			$this->printAuth();
 		}
+	}
+	
+	function updatePassword()
+	{
+		global $db;
+	
+		// Update the database with the new hashed password
+		$newHashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+		$db->query("
+			UPDATE hlstats_Users
+			SET password='$newHashedPassword', new_password=1
+			WHERE username='$this->username'
+		");
+	}
+	
+	function isPasswordValid($storedPassword, $isMD5)
+	{
+		// Check the entered password against the stored password
+		return $isMD5 ? md5($this->password) == $storedPassword : password_verify($this->password, $storedPassword);
+	}
+	
+	function handleExpiredSession()
+	{
+		// Handle expired session logic here
+		$this->ok = false;
+		$this->error = 'Your session has expired. Please try again.';
+		$this->password = '';
+		$this->printAuth();
+	}
+	
+	function handleIncorrectPassword()
+	{
+		// Handle incorrect password logic here
+		$this->ok = false;
+	
+		if ($this->session)
+		{
+			// Cookie without 'Save my password' - not an error
+			$this->error = false;
+		}
+		else
+		{
+			$this->error = 'The password you supplied is incorrect.';
+		}
+	
+		$this->password = '';
+		$this->printAuth();
 	}
 
 	function doCookies()
@@ -365,9 +407,14 @@ class EditList
 
 					if ($col->type == 'password' && $col->name != 'rcon_password')
 					{
-						$value = md5($value);
-					}
-					$qvals .= "'" . $db->escape($value) . "'";
+						$value = password_hash($value, PASSWORD_DEFAULT);
+						$qvals .= "'" . $value . "'";
+
+						// Set new_password to 1 when updating the password
+						$qcols .= ', new_password';
+						$qvals .= ", '1'";
+					} else {
+					$qvals .= "'" . $db->escape($value) . "'"; }
 
 					if ($col->type != 'select' && $col->type != 'hidden' && $value != $col->datasource)
 					{
