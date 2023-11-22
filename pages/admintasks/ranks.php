@@ -44,6 +44,16 @@ For support and installation notes visit http://www.hlxcommunity.com
         die ("Access denied!");
 	}
 
+	// Check if the 'game' parameter is set in the URL
+	if (isset($_GET['game'])) {
+		// Assign the value of 'game' to the variable $gamemode
+		$gamecode = $_GET['game'];
+
+	} else {
+		// 'game' parameter is not set in the URL
+		$gamecode = null;
+	}
+
 	$edlist = new EditList("rankId", "hlstats_Ranks", "", false);
 	$edlist->columns[] = new EditListColumn("game", "Game", 0, true, "hidden", $gamecode);
 	$edlist->columns[] = new EditListColumn("image", "Image file", 45, true, "text", "", 64);
@@ -68,7 +78,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 		?>
 		<p class="ms-4">Note: be sure to set the minKills/maxKills values correctly (no gap).</p>
 		<p class="ms-4">Images have to be given without ".gif" and "_small" extension!</p>
-		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
+		<form method="post" name="<?php echo $code; ?>form" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
 			<?php
 				

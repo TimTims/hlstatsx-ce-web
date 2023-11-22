@@ -44,6 +44,16 @@ For support and installation notes visit http://www.hlxcommunity.com
         die ("Access denied!");
 	}
 
+	// Check if the 'game' parameter is set in the URL
+	if (isset($_GET['game'])) {
+		// Assign the value of 'game' to the variable $gamemode
+		$gamecode = $_GET['game'];
+
+	} else {
+		// 'game' parameter is not set in the URL
+		$gamecode = null;
+	}
+
 	$edlist = new EditList("ribbonTriggerId", "hlstats_Ribbons_Trigger", "game");
 	$edlist->columns[] = new EditListColumn("game", "Game", 0, true, "hidden", $gamecode);
 	$edlist->columns[] = new EditListColumn("ribbonId", "Ribbon", 0, true, "select", "hlstats_Ribbons.ribbonName/ribbonId/game='$gamecode'");
@@ -67,7 +77,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 			}
 		?>
 		<p class="ms-4">Always set special logic = 0 unless you know what you're doing!</p>
-		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
+		<form method="post" name="<?php echo $code; ?>form" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
 			<?php
 				

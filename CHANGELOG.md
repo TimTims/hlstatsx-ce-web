@@ -1,5 +1,13 @@
 # Changelog
 
+## 23/11/2023 - Git Commit 102 & 103
+**103**
+* Fixed oversight in admin game settings posting to wrong form
+* Fixed gamecode variable not being set in admin game settings pages
+
+**102**
+* Updated TODO.md
+
 ## 22/11/2023 - Git Commit 101
 * Fixed "game.php" row extending too far when awards enabled
 * Fixed progress bars alignment in "roles", "maps" & "players"

@@ -44,6 +44,16 @@ For support and installation notes visit http://www.hlxcommunity.com
         die ("Access denied!");
 	}
 
+	// Check if the 'game' parameter is set in the URL
+	if (isset($_GET['game'])) {
+		// Assign the value of 'game' to the variable $gamemode
+		$gamecode = $_GET['game'];
+
+	} else {
+		// 'game' parameter is not set in the URL
+		$gamecode = null;
+	}
+
 	$edlist = new EditList("weaponId", "hlstats_Weapons", "gun", false);
 	$edlist->columns[] = new EditListColumn("game", "Game", 0, true, "hidden", $gamecode);
 	$edlist->columns[] = new EditListColumn("code", "Weapon Code", 15, true, "text", "", 32);
@@ -66,7 +76,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 		?>
 		<p class="ms-4 me-4">You can give each weapon a <i>points modifier</i>, a multiplier which determines how many points will be gained or lost for killing with or being killed by that weapon. (Refer to <a href="<?php echo $g_options["scripturl"]; ?>?mode=help#points">Help</a> for a full description of how points ratings are 
 		calculated.) The baseline points modifier for weapons is 1.00. A points modifier of 0.00 will cause kills with that weapon to have no effect on players' points.</p>
-		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
+		<form method="post" name="<?php echo $code; ?>form" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">	
 
 		<?php
 	

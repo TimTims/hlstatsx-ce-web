@@ -43,14 +43,24 @@ For support and installation notes visit http://www.hlxcommunity.com
 	if ($auth->userdata["acclevel"] < 80) {
         die ("Access denied!");
 	}
-	
+
+	// Check if the 'game' parameter is set in the URL
+	if (isset($_GET['game'])) {
+		// Assign the value of 'game' to the variable $gamemode
+		$gamecode = $_GET['game'];
+
+	} else {
+		// 'game' parameter is not set in the URL
+		$gamecode = null;
+	}
+
     function delete_server($server)
     {
     	global $db;
 		$db->query("DELETE FROM `hlstats_Servers_Config` WHERE `serverId` = '" . $db->escape($server) . "';");
 		$db->query("DELETE FROM `hlstats_server_load` WHERE `server_id`  = '" . $db->escape($server) . "'");
     }
-	
+
 	$edlist = new EditList("serverId", "hlstats_Servers", "server",true,true,"serversettings", 'delete_server');
 	$edlist->columns[] = new EditListColumn("address", "IP Address", 15, true, "ipaddress", "", 15);
 	$edlist->columns[] = new EditListColumn("port", "Port", 5, true, "text", "27015", 5);
@@ -74,7 +84,7 @@ For support and installation notes visit http://www.hlxcommunity.com
 					echo '<div class="alert alert-danger col-8 text-center mx-auto" role="alert"><strong>' . $edlist->error() . '</strong></div>';
 			}
 		?>
-		<form method="post" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;task=<?php echo $code; ?>#<?php echo $code; ?>">	
+		<form method="post" name="<?php echo $code; ?>form" action="<?php echo $g_options['scripturl']; ?>?mode=admin&amp;game=<?php echo $gamecode; ?>&task=<?php echo $code; ?>#<?php echo $code; ?>">		
 		<?php
 		$result = $db->query("
 			SELECT
