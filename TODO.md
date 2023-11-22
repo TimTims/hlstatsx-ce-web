@@ -15,7 +15,7 @@
 * Format code on all pages to look neater
 * ~~Create new login page~~ (Git Commit 94)
 * ~~Change versioning~~ (Git Commit 95)
-* Fix footer properly to work with all pages (Temporary fixed added Git Commit 98)
+* ~~Fix footer properly to work with all pages~~ (Temporary fixed added Git Commit 98)
 * ~~Fix sidebar~~ (Git Commit 99)
 * ~~Fix progress bars not centering in tables (horizontally and vertically)~~ (Git Commit 99)
 * ~~Add custom menu options (Discord etc)~~ (Git Commit 100)
