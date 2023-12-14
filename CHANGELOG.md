@@ -1,5 +1,9 @@
 # Changelog
 
+## 14/12/2023 - Git Commit 104
+* Begin preperations for GUI install and updater
+* Fixed layout of updater and installer warnings when directories persent
+
 ## 23/11/2023 - Git Commit 102 & 103
 **103**
 * Fixed oversight in admin game settings posting to wrong form

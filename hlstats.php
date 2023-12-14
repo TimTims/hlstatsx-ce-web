@@ -205,17 +205,41 @@ $valid_modes = array(
 	'ventrilo',
 	'updater',
 	'profile',
-	'privacypolicy'
+	'privacypolicy',
+	'install'
 );
-   
+
+if (file_exists('./install'))
+{
+	pageHeader(array('Install'), array('Install Notice' => ''));
+	echo '<div class="container-fluid py-4">' .
+			'<div class="row">' .
+				'<div class="col-6 mx-auto">' .
+					'<div class="alert alert-warning col-10 mx-auto text-center" role="alert">' .
+						'<h4 class="alert-heading">Install folder detected!</h4>' .
+						'<p>If you have succesfully installed HLstats, you can safely remove the "install" folder to remove this error.</p>' .
+					'</div>' .
+				'</div>' .
+			'</div>' .
+		'</div>';
+	pageFooter();
+	die();
+}
+
 if (file_exists('./updater') && $mode != 'updater')
 {
 	pageHeader(array('Update Notice'), array('Update Notice' => ''));
-	echo "<div class=\"warning\">\n" . 
-	"<span class=\"warning-heading\"><img src=\"".IMAGE_PATH."/warning.gif\" alt=\"Warning\"> Warning:</span><br />\n" .
-	"<span class=\"warning-text\">The updater folder was detected in your web directory.<br />
-	To perform a Database Update, please go to <strong><a href=\"{$g_options['scripturl']}?mode=updater\">HLX:CE Database Updater</a></strong> to perform the database update.<br /><br />
-	<strong>If you have already performed the database update, <strong>you must delete the \"updater\" folder from your web folder.</span>\n</div>";
+	echo '<div class="container-fluid py-4">' .
+			'<div class="row">' .
+				'<div class="col-6 mx-auto">' .
+					'<div class="alert alert-warning col-10 mx-auto text-center" role="alert">' .
+						'<h4 class="alert-heading">Update folder detected!</h4>' .
+						'<p>To perform a Database Update, please go to <strong><a href="' . $g_options['scripturl'] . '?mode=updater">HLX:CE Database Updater</a></strong> to perform the database update.</p>' .
+                        '<p>If you have already performed the database update, you must delete the "updater" folder from your web folder.</p>' .
+					'</div>' .
+				'</div>' .
+			'</div>' .
+		'</div>';
 	pageFooter();
 	die();
 }
