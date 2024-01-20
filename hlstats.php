@@ -37,7 +37,12 @@ For support and installation notes visit http://www.hlxcommunity.com
 */
 
 define('IN_HLSTATS', true);
-require('configs/config.php');
+if ( file_exists("configs/config.php") ){
+	require('configs/config.php');
+} else {
+	echo "Please use the installer before accessing this page.";
+	die;
+}
 $historical_cache=0;
 if(defined('HISTORICAL_CACHE'))
 {

@@ -1,5 +1,8 @@
 # Changelog
 
+## 20/01/2024 - Git Commit 105
+* Create an INCREDIBLY rough draft of the install script, this will be changed at a later date to be more secure and efficient, moreso just proof of concept for now
+
 ## 14/12/2023 - Git Commit 104
 * Begin preperations for GUI install and updater
 * Fixed layout of updater and installer warnings when directories persent
