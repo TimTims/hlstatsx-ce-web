@@ -318,8 +318,8 @@ For support and installation notes visit http://www.hlxcommunity.com
               <input type="text" class="form-control" placeholder="Type here..." name="general-search" id="general-search">
             </div>
           </div>
-          <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item me-2 d-flex align-items-center">
               <a href="<?php echo $g_options['scripturl']; ?>?mode=admin" class="nav-link text-white font-weight-bold px-0">
                 <i class="bi bi-door-open-fill me-sm-1"></i>
                 <span class="d-sm-inline d-none">Admin</span>
@@ -327,7 +327,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             </li>
             <?php
             if (isset($_SESSION['loggedin'])) {
-              echo '<li class="nav-item px-3 d-flex align-items-center">
+              echo '<li class="nav-item ms-1 me-2 d-flex align-items-center">
               <a href="hlstats.php?logout=1" class="nav-link text-white font-weight-bold px-0">
                 <i class="bi bi-door-closed-fill me-sm-1"></i>
                 <span class="d-sm-inline d-none">Logout</span>
@@ -335,7 +335,7 @@ For support and installation notes visit http://www.hlxcommunity.com
             </li>';
             }
             ?>
-            <li class="nav-item d-xl-none d-flex align-items-center">
+            <li class="nav-item d-xl-none ms-1 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
                   <i class="sidenav-toggler-line bg-white"></i>
@@ -344,7 +344,7 @@ For support and installation notes visit http://www.hlxcommunity.com
                 </div>
               </a>
             </li>
-            <li class="nav-item px-3 d-flex align-items-center">
+            <li class="nav-item ms-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0">
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>

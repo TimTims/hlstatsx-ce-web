@@ -1,5 +1,9 @@
 # Changelog
 
+## 22/01/2024 - Git Commit 106
+* Fix top bar spacing on mobile
+* Fix servers.php
+
 ## 20/01/2024 - Git Commit 105
 * Create an INCREDIBLY rough draft of the install script, this will be changed at a later date to be more secure and efficient, moreso just proof of concept for now
 

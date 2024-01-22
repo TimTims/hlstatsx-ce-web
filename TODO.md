@@ -2,10 +2,9 @@
 * Fix-up pages I haven't gotten to yet
 * Complete changes to user profiles (fix table alignment and maybe add tabs or accordions)
 * Improve performance of DB queries
-* Make updater and install template for GUI install/update
+* Make updater and install template for GUI install/update (Started creating install script)
 * Fix obsolete CSS classes
 * Add "Top of page" button
-* Fix customiser
 * Find some better icons
 * Remove obsolete features and code that no longer work or aren't required
 * Add theme licencing in folders and to header after reading licence (Thanks to Creative Tim)
@@ -24,3 +23,4 @@
 * ~~Fix tables not aligning properly in admin pages~~ (Git Commit 100)
 * ~~Fix checkboxes in lightmode (Forgot to add div tags to checkboxes, will add as I go)~~ (Git Commit 100)
 * ~~Make new icon and update favicon~~ (Git Commit 101)
+* ~~Fix customiser~~ 

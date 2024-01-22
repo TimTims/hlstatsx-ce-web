@@ -114,127 +114,144 @@ For support and installation notes visit http://www.hlxcommunity.com
         
 ?>
 
-<div class="block">
-<?php
-	printSectionTitle('Server Live View');
-	$i=0;
-	for ($i=0; $i<count($servers); $i++)
-	{
-		$rowdata = $servers[$i]; 
-	
-		$server_id = $rowdata['serverId'];
-		$game = $rowdata['game'];
-	
-		$addr = $rowdata['addr'];          
-		$kills     = $rowdata['kills'];
-		$headshots = $rowdata['headshots'];
-		$player_string = $rowdata['act_players']."/".$rowdata['max_players'];
-		$map_teama_wins = $rowdata['map_ct_wins'];
-		$map_teamb_wins = $rowdata['map_ts_wins'];
-?>
-	<div class="subblock">
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall" style="width:37%;">&nbsp;Server</td>
-				<td class="fSmall" style="width:23%;">&nbsp;Address</td>
-				<td class="fSmall" style="width:6%;text-align:center;">&nbsp;Map</td>
-				<td class="fSmall" style="width:6%;text-align:center;">&nbsp;Played</td>
-				<td class="fSmall" style="width:10%;text-align:center;">&nbsp;Players</td>
-				<td class="fSmall" style="width:6%;text-align:center;">&nbsp;Kills</td>
-				<td class="fSmall" style="width:6%;text-align:center;">&nbsp;Headshots</td>
-				<td class="fSmall" style="width:6%;text-align:center;">&nbsp;Hpk</td>
-			</tr>
-			<tr class="game-table-row">
-				<td class="game-table-cell"><?php
-		$image = getImage("/games/$game/game");
-		echo '<img style="vertical-align:middle;" src="';
-		if ($image)
-			echo $image['url'];
-		else
-			echo IMAGE_PATH . '/game.gif';
-		echo "\" alt=\"$game\" />&nbsp;";
-		echo '<b>'.htmlspecialchars($rowdata['name']).'</b>';
-                        ?></td>
-			<td class="game-table-cell"><?php
-		echo "$addr <a href=\"steam://connect/$addr\" style=\"color:black\">(Join)</a>";
-                    ?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		echo $rowdata['act_map'];
-                    ?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		$stamp = $rowdata['map_started']==0?0:time() - $rowdata['map_started'];
-		$hours = sprintf("%02d", floor($stamp / 3600));
-		$min   = sprintf("%02d", floor(($stamp % 3600) / 60));
-		$sec   = sprintf("%02d", floor($stamp % 60)); 
-		echo $hours.":".$min.":".$sec;
-                    ?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		echo $player_string;
-                    ?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		echo number_format($kills);
-					?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		echo number_format($headshots);
-					?></td>
-			<td class="game-table-cell" style="text-align:center;"><?php
-		if ($kills>0)
-			echo sprintf("%.4f", ($headshots/$kills));
-		else  
-			echo sprintf("%.4f", 0);
-                    ?></td>
-		</tr>
-	</table>        
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Server Live View</h6>
+				</div>
+				<?php
+					$i=0;
+					for ($i=0; $i<count($servers); $i++)
+					{
+						$rowdata = $servers[$i]; 
+					
+						$server_id = $rowdata['serverId'];
+						$game = $rowdata['game'];
+					
+						$addr = $rowdata['addr'];          
+						$kills     = $rowdata['kills'];
+						$headshots = $rowdata['headshots'];
+						$player_string = $rowdata['act_players']."/".$rowdata['max_players'];
+						$map_teama_wins = $rowdata['map_ct_wins'];
+						$map_teamb_wins = $rowdata['map_ts_wins'];
+				?>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td>Server</td>
+							<td>Address</td>
+							<td>Map</td>
+							<td>Played</td>
+							<td>Players</td>
+							<td>Kills</td>
+							<td>Headshots</td>
+							<td>Hpk</td>
+						</tr>
+						<tr>
+							<td><?php
+						$image = getImage("/games/$game/game");
+						echo '<img style="vertical-align:middle;" src="';
+						if ($image)
+							echo $image['url'];
+						else
+							echo IMAGE_PATH . '/game.gif';
+						echo "\" alt=\"$game\" />&nbsp;";
+						echo '<b>'.htmlspecialchars($rowdata['name']).'</b>';
+										?></td>
+							<td><?php
+						echo "$addr <a href=\"steam://connect/$addr\" style=\"color:black\">(Join)</a>";
+									?></td>
+							<td style="text-align:center;"><?php
+						echo $rowdata['act_map'];
+									?></td>
+							<td style="text-align:center;"><?php
+						$stamp = $rowdata['map_started']==0?0:time() - $rowdata['map_started'];
+						$hours = sprintf("%02d", floor($stamp / 3600));
+						$min   = sprintf("%02d", floor(($stamp % 3600) / 60));
+						$sec   = sprintf("%02d", floor($stamp % 60)); 
+						echo $hours.":".$min.":".$sec;
+									?></td>
+							<td style="text-align:center;"><?php
+						echo $player_string;
+									?></td>
+							<td style="text-align:center;"><?php
+						echo number_format($kills);
+									?></td>
+							<td style="text-align:center;"><?php
+						echo number_format($headshots);
+									?></td>
+							<td style="text-align:center;"><?php
+						if ($kills>0)
+							echo sprintf("%.4f", ($headshots/$kills));
+						else  
+							echo sprintf("%.4f", 0);
+									?></td>
+						</tr>
+					</table>
+				</div>
 <?php
 		printserverstats($server_id);
 	}  //for servers
-?>	</div>
-</div>
-<div class="block">
-	<?php printSectionTitle('Server Load History'); ?>
-	<div class="subblock">
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall">&nbsp;24h View</td>
-			</tr>
-			<tr class="data-table-row">
-				<td style="text-align:center; height: 200px; vertical-align:middle;">
-					<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=1" alt="24h View" />
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall">&nbsp;Last Week</td>
-			</tr>
-			<tr class="data-table-row">
-				<td style="text-align:center; height: 200px; vertical-align:middle;">
-					<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=2" alt="Last Week" />
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall">&nbsp;Last Month</td>
-			</tr>
-			<tr class="data-table-row">
-				<td style="text-align:center; height: 200px; vertical-align:middle;">
-					<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=3" alt="Last Month" />
-				</td>
-			</tr>
-		</table>
-		<br /><br />
-		<table class="data-table">
-			<tr class="data-table-head">
-				<td class="fSmall">&nbsp;Last Year</td>
-			</tr>
-			<tr class="data-table-row">
-				<td style="text-align:center; height: 200px; vertical-align:middle;">
-					<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=4" alt="Last Year" />
-				</td>
-			</tr>
-		</table>
+?>
+			</div>
+		</div>
 	</div>
-</div>
+	<div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+				<div class="card-header pb-0">
+              		<h6>Server Load History</h6>
+				</div>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td>24h View</td>
+						</tr>
+						<tr>
+							<td style="text-align:center; height: 200px; vertical-align:middle;">
+								<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=1" alt="24h View" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td>Last Week</td>
+						</tr>
+						<tr>
+							<td style="text-align:center; height: 200px; vertical-align:middle;">
+								<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=2" alt="Last Week" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td>Last Month</td>
+						</tr>
+						<tr>
+							<td style="text-align:center; height: 200px; vertical-align:middle;">
+								<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=3" alt="Last Month" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td>Last Year</td>
+						</tr>
+						<tr>
+							<td style="text-align:center; height: 200px; vertical-align:middle;">
+								<img src="show_graph.php?type=0&amp;game=<?php echo $game; ?>&amp;width=870&amp;height=200&amp;server_id=<?php echo $server_id ?>&amp;bgcolor=<?php echo $g_options['graphbg_load']; ?>&amp;color=<?php echo $g_options['graphtxt_load']; ?>&amp;range=4" alt="Last Year" />
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
