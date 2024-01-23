@@ -1,5 +1,11 @@
 # Changelog
 
+## 23/01/2024 - Git Commit 107
+* Fix livestats.php table and colors for TF2 (others need testing to fix)
+* Updated install.sql
+* Removed remnants of coding attempts
+* Removed styles/
+
 ## 22/01/2024 - Git Commit 106
 * Fix top bar spacing on mobile
 * Fix servers.php

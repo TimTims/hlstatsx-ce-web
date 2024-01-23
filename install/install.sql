@@ -3949,6 +3949,9 @@ INSERT INTO `hlstats_Options` (`keyname`, `value`, `opttype`) VALUES
 ('sourcebans_address', '', 2),
 ('forum_address', '', 2),
 ('discord_address', '', 2),
+('custom_link_1', '', 2),
+('custom_link_2', '', 2),
+('custom_link_3', '', 2),
 ('display_gamelist', '1', 2),
 ('display_style_selector', '0', 2);
 
@@ -6647,6 +6650,7 @@ CREATE TABLE IF NOT EXISTS `hlstats_Trend` (
 CREATE TABLE IF NOT EXISTS `hlstats_Users` (
   `username` varchar(32) NOT NULL default '',
   `password` varchar(255) NOT NULL default '',
+  `new_password` varchar(2) NOT NULL default '',
   `acclevel` int(11) NOT NULL default '0',
   `playerId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`username`)

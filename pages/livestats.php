@@ -125,7 +125,9 @@ function printserverstats($server_id)
 			<tr>
 				<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
 				<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Player</th>
-				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kills</th>
+				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">&nbsp;</th>
+				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">K:D</th>
+				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">&nbsp;</th>
 				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hs</th>
 				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HS:K</th>
 				<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acc</th>
@@ -150,7 +152,7 @@ function printserverstats($server_id)
 					teamhits, 
 					teamjointime, 
 					IFNULL(playerlist_bgcolor,'#D5D5D5') as playerlist_bgcolor, 
-					IFNULL(playerlist_color,'#050505') AS playerlist_color, 
+					IFNULL(playerlist_color,'#040504') AS playerlist_color, 
 					IFNULL( playerlist_index, 99 ) AS playerlist_index
 				FROM 
 					hlstats_Teams
@@ -226,8 +228,9 @@ function printserverstats($server_id)
 				$j = 0;
 
 				$thisteam = $teamdata[$curteam];
-				$teamcolor = 'background:'.$thisteam['playerlist_bgcolor'].';color:'.$thisteam['playerlist_color'];
-				$bordercolor = 'background:'.$thisteam['playerlist_bgcolor'].';color:'.$thisteam['playerlist_color'].';border-top:1px '.$thisteam['playerlist_color'].' solid';
+				$teamcolor = 'background:'.$thisteam['playerlist_bgcolor'].';';
+				$teamcolor_text = 'color:'.$thisteam['playerlist_color'].';';
+				$bordercolor = 'background:'.$thisteam['playerlist_bgcolor'].';border-top:1px '.$thisteam['playerlist_color'].' solid';
 				$team_display_name = empty($thisteam['name']) ? "Unknown team" : htmlspecialchars($thisteam['name']);
 
 				while (isset($playerdata[$curteam][$j]))
@@ -236,7 +239,7 @@ function printserverstats($server_id)
 
 	?>
 		<tr style="<?php echo $teamcolor ?>">
-			<td><?php
+			<td><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer) && $team_display_name)
 					{
 						echo ($j+1);
@@ -245,8 +248,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="text-align:left;<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:left;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						if (strlen($thisplayer['name'])>50)
@@ -257,15 +260,15 @@ function printserverstats($server_id)
 						{
 							echo '<img src="'.getFlag($thisplayer['cli_flag']).'" alt="'.ucfirst(strtolower($thisplayer['cli_country'])).'" title="'.ucfirst(strtolower($thisplayer['cli_country'])).'" />&nbsp;';
 						}
-						echo '<a style="color:'.$thisteam['playerlist_color'].'" href="'.$g_options['scripturl'].'?mode='.$mode.'&amp;player='.$thisplayer['player_id'].'">';
+						echo '<a style="'.$teamcolor_text.'" href="'.$g_options['scripturl'].'?mode='.$mode.'&amp;player='.$thisplayer['player_id'].'">';
 						echo htmlspecialchars($thisplayer['name'], ENT_COMPAT).'</a>';
 					}
 					else
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="text-align:right;<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:right;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo $thisplayer['kills'];
@@ -274,8 +277,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo ':';
@@ -284,8 +287,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="text-align:left;<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:left;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo $thisplayer['deaths'];
@@ -294,8 +297,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo $thisplayer['headshots'];
@@ -304,8 +307,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>""><?php
 					if (isset($thisplayer))
 					{
 						$hpk = sprintf('%.2f', 0);
@@ -319,8 +322,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						$acc = sprintf('%.0f', 0);
@@ -334,8 +337,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo sprintf('%.0f', $thisplayer['ping'] / 2);
@@ -344,8 +347,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						if ($thisplayer['connected']>0)
@@ -365,8 +368,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (isset($thisplayer))
 					{
 						echo $thisplayer['skill_change'];
@@ -375,8 +378,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $teamcolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $teamcolor ?>"><div style=<?php echo $teamcolor_text; ?>><?php
 					if (isset($thisplayer))
 					{
 						echo number_format($thisplayer['skill']);
@@ -385,7 +388,7 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
+	?>		</div></td>
 		</tr>
 
 	<?php
@@ -397,14 +400,14 @@ function printserverstats($server_id)
 		?>
 		<tr style="<?php echo $teamcolor ?>">
 			<td style="<?php echo $bordercolor ?>">&nbsp;</td>
-			<td style="text-align:left;<?php echo $bordercolor ?>"><?php
+			<td style="text-align:left;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					echo "<strong>$team_display_name</strong>";
 					if (($map_teama_wins > 0) || ($map_teamb_wins > 0))
 					{
 						echo '&nbsp;('.$map_teama_wins.' wins)';
 					}
-	?>		</td>
-			<td style="text-align:right;<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:right;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						echo $teamdata[$curteam]['teamkills'];
@@ -413,8 +416,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						echo ':';
@@ -423,8 +426,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="text-align:left;<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:left;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						echo $teamdata[$curteam]['teamdeaths'];
@@ -433,8 +436,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						echo $teamdata[$curteam]['teamheadshots'];
@@ -443,8 +446,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						$hpk = sprintf('%.2f', 0);
@@ -458,8 +461,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>">
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>">
 				<?php
 					if (count($teamdata[$curteam]) > 0)
 					{
@@ -476,8 +479,8 @@ function printserverstats($server_id)
 						echo '&nbsp;';
 					}
 				?>
-			</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+			</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						echo sprintf('%.0f', $teamdata[$curteam]['teamping'] / count($teamdata[$curteam]));
@@ -486,8 +489,8 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam]) > 0)
 					{
 						if ($teamdata[$curteam]['teamjointime'] > 0)
@@ -507,9 +510,9 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
-			<td style="<?php echo $bordercolor ?>">-</td>
-			<td style="<?php echo $bordercolor ?>"><?php
+	?>		</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>">-</div></td>
+			<td style="text-align:center;<?php echo $bordercolor ?>"><div style="<?php echo $teamcolor_text; ?>"><?php
 					if (count($teamdata[$curteam])>0)
 					{
 						echo number_format(sprintf('%.0f', $teamdata[$curteam]['teamskill']));
@@ -518,7 +521,7 @@ function printserverstats($server_id)
 					{
 						echo '&nbsp;';
 					}
-	?>		</td>
+	?>		</div></td>
 		</tr>
 
 	<?php
